@@ -1,5 +1,4 @@
 package io.github.the_dagger.movies;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,7 +59,10 @@ public class MainActivityFragment extends Fragment {
         }
         if (id == R.id.action_sort) {
             MovieDetails weather = new MovieDetails();
-            sort = true;
+            if(sort)
+                sort = false;
+            else if(!sort)
+                sort = true;
             weather.execute();
             return true;
         }
@@ -70,13 +72,14 @@ public class MainActivityFragment extends Fragment {
 
     HttpURLConnection urlConnection = null;
     BufferedReader reader = null;
-    // Will contain the raw JSON response as a string.
     String movieinfo = null;
     private final String LOG_TAG = MovieDetails.class.getSimpleName();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         SingleMovie[] movieList = {};
         adapter = new MovieAdapter(getActivity(), new ArrayList<SingleMovie>());
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -123,10 +126,10 @@ public class MainActivityFragment extends Fragment {
         protected SingleMovie[] doInBackground(Void... params) {
             try {
                 URL url;
-                if (sort == true)
-                    url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=top_rated&api_key=9ee088a6d3ed11d3c10ee27466d39427");
+                if (sort)
+                    url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&api_key=9ee088a6d3ed11d3c10ee27466d39427");
                 else
-                    url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=9ee088a6d3ed11d3c10ee27466d39427");
+                    url = new URL("http://api.themoviedb.org/3/discover/movie?&sort_by=popularity.desc&api_key=9ee088a6d3ed11d3c10ee27466d39427");
                 movieDbUrl = url.toString();
                 Log.v(LOG_TAG, movieDbUrl);
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -143,9 +146,6 @@ public class MainActivityFragment extends Fragment {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
                     buffer.append(line + "\n");
                 }
 
@@ -154,11 +154,8 @@ public class MainActivityFragment extends Fragment {
                     return null;
                 }
                 movieinfo = buffer.toString();
-                Log.v(LOG_TAG, movieinfo);
             } catch (IOException e) {
                 Log.e("PlaceholderFragment", "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
                 return null;
             } finally {
                 if (urlConnection != null) {
