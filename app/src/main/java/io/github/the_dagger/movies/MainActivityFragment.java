@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,20 +33,46 @@ public class MainActivityFragment extends Fragment {
     public MainActivityFragment() {
 
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater Inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        Inflater.inflate(R.menu.moviefragment, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            MovieDetails weather = new MovieDetails();
+            weather.execute();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     HttpURLConnection urlConnection = null;
     BufferedReader reader = null;
     // Will contain the raw JSON response as a string.
     String movieinfo = null;
     private final String LOG_TAG = MovieDetails.class.getSimpleName();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        SingleMovie[] movieList = {new SingleMovie(R.drawable.acdisplay, "ACdisplay"),
-                new SingleMovie(R.drawable.cabinet, "Cabinet"),
-                new SingleMovie(R.drawable.chrome, "Chrome"),
-                new SingleMovie(R.drawable.compass, "Compass"),
-                new SingleMovie(R.drawable.maps, "Maps"),
-                new SingleMovie(R.drawable.soundcloud, "SoundCloud")};
+        SingleMovie[] movieList = {};
         adapter = new MovieAdapter(getActivity(), Arrays.asList(movieList));
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         GridView gridview = (GridView) rootView.findViewById(R.id.gridView);
@@ -53,25 +80,41 @@ public class MainActivityFragment extends Fragment {
 
         return rootView;
     }
-    public class MovieDetails extends AsyncTask<Void, Void, SingleMovie[]> {
-        private SingleMovie[] getmovieData(String movieDbUrl)
-                throws JSONException {
-            JSONObject moviejson = new JSONObject(movieDbUrl);
-            JSONArray movieArray = moviejson.getJSONArray("results");
-            String baseURL = "http://image.tmdb.org/t/p/w185/";
-            SingleMovie[] movieDetails = new SingleMovie[20];
-            for(int i =0;i<movieArray.length();i++){
-                String title;
-                int poster;
-            JSONObject currentMovie = movieArray.getJSONObject(i);
-                JSONObject movietitle = currentMovie.getJSONObject("title");
-                JSONObject moviePosterendURL = currentMovie.getJSONObject("poster_path");
-                String moviePosterURL = baseURL + moviePosterendURL;
-                String actualTitle = movietitle.getString("title");
-                int posterpicasso = Picasso.with(getContext()).load(moviePosterURL);
-                return movieDetails[i] = (,actualTitle);
-            }
 
+    public class MovieDetails extends AsyncTask<Void, Void, SingleMovie[]> {
+        @Override
+        protected void onPostExecute(SingleMovie[] singleMovies) {
+            if (singleMovies != null) {
+                adapter.clear();
+                for (int i = 0; i < singleMovies.length; i++) {
+                    SingleMovie oneMovie = singleMovies[i];
+                    adapter.add(oneMovie);
+                }
+            }
+            super.onPostExecute(singleMovies);
+        }
+
+        private SingleMovie[] getmovieData(String movieInfo)
+                throws JSONException {
+            final String MDB_RESULT = "results";
+            final String MDB_TITLE = "title";
+            final String MDB_POSTER = "poster_path";
+            JSONObject moviejson = new JSONObject(movieInfo);
+            JSONArray movieArray = moviejson.getJSONArray(MDB_RESULT);
+          //  Log.e(LOG_TAG, String.valueOf(movieArray));
+            String baseURL = "http://image.tmdb.org/t/p/w185/";
+            SingleMovie[] movieDetails = new SingleMovie[5];
+            for (int i = 0; i < 5; i++) {
+                JSONObject currentMovie = movieArray.getJSONObject(i);
+              //  Log.e(LOG_TAG, String.valueOf(currentMovie));
+                String movietitle = currentMovie.getString(MDB_TITLE);
+                String moviePosterendURL = currentMovie.getString(MDB_POSTER);
+                String moviePosterURL = baseURL + moviePosterendURL;
+             //   Log.e(LOG_TAG,moviePosterURL);
+                //String actualTitle = movietitle.getString(MDB_TITLE);
+                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle);
+            }
+            return movieDetails;
         }
 
         @Override
@@ -93,8 +136,8 @@ public class MainActivityFragment extends Fragment {
 //                        .appendQueryParameter("units", "metric")
 //                        .appendQueryParameter("cnt", "7")
 //                        .appendQueryParameter("appid", "232730d9c646236b0cf445becaaf2240");
-                String actualURL = url.toString();
-                Log.v(LOG_TAG, actualURL);
+                String movieDbUrl = url.toString();
+                Log.v(LOG_TAG, movieDbUrl);
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -150,4 +193,4 @@ public class MainActivityFragment extends Fragment {
     }
 
 
-    }
+}

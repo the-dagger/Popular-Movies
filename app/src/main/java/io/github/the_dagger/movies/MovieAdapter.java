@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -19,7 +21,7 @@ public class MovieAdapter extends ArrayAdapter<SingleMovie>{
         SingleMovie singleMovie = getItem(position);
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
         ImageView poster = (ImageView) rootView.findViewById(R.id.movie_poster_image);
-        poster.setImageResource(singleMovie.movieImage);
+        Picasso.with(getContext()).load(singleMovie.movieImage).into(poster);
         TextView name = (TextView) rootView.findViewById(R.id.movie_name);
         name.setText(singleMovie.movieTitle);
         return rootView;
