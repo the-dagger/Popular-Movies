@@ -29,6 +29,8 @@ import java.util.ArrayList;
  */
 public class MainActivityFragment extends Fragment {
     MovieAdapter adapter;
+    Boolean sort = false;
+    String movieDbUrl = null;
 
     public MainActivityFragment() {
 
@@ -53,6 +55,12 @@ public class MainActivityFragment extends Fragment {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             MovieDetails weather = new MovieDetails();
+            weather.execute();
+            return true;
+        }
+        if (id == R.id.action_sort) {
+            MovieDetails weather = new MovieDetails();
+            sort = true;
             weather.execute();
             return true;
         }
@@ -114,8 +122,12 @@ public class MainActivityFragment extends Fragment {
         @Override
         protected SingleMovie[] doInBackground(Void... params) {
             try {
-                URL url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=9ee088a6d3ed11d3c10ee27466d39427");
-                String movieDbUrl = url.toString();
+                URL url;
+                if (sort == true)
+                    url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=top_rated&api_key=9ee088a6d3ed11d3c10ee27466d39427");
+                else
+                    url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=9ee088a6d3ed11d3c10ee27466d39427");
+                movieDbUrl = url.toString();
                 Log.v(LOG_TAG, movieDbUrl);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
