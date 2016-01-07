@@ -103,8 +103,8 @@ public class MainActivityFragment extends Fragment {
             JSONArray movieArray = moviejson.getJSONArray(MDB_RESULT);
           //  Log.e(LOG_TAG, String.valueOf(movieArray));
             String baseURL = "http://image.tmdb.org/t/p/w185/";
-            SingleMovie[] movieDetails = new SingleMovie[5];
-            for (int i = 0; i < 5; i++) {
+            SingleMovie[] movieDetails = new SingleMovie[20];
+            for (int i = 0; i < 20; i++) {
                 JSONObject currentMovie = movieArray.getJSONObject(i);
               //  Log.e(LOG_TAG, String.valueOf(currentMovie));
                 String movietitle = currentMovie.getString(MDB_TITLE);
