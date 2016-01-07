@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -73,7 +73,7 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         SingleMovie[] movieList = {};
-        adapter = new MovieAdapter(getActivity(), Arrays.asList(movieList));
+        adapter = new MovieAdapter(getActivity(), new ArrayList<SingleMovie>());
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         GridView gridview = (GridView) rootView.findViewById(R.id.gridView);
         gridview.setAdapter(adapter);
