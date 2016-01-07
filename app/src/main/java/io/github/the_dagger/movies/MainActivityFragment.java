@@ -1,4 +1,5 @@
 package io.github.the_dagger.movies;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,15 +56,15 @@ public class MainActivityFragment extends Fragment {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             MovieDetails weather = new MovieDetails();
+            sort = true;
+            Toast.makeText(getActivity(), "Sorted By Ratings", Toast.LENGTH_SHORT).show();
             weather.execute();
             return true;
         }
         if (id == R.id.action_sort) {
             MovieDetails weather = new MovieDetails();
-            if(sort)
                 sort = false;
-            else if(!sort)
-                sort = true;
+                Toast.makeText(getActivity(), "Sorted By Popularity", Toast.LENGTH_SHORT).show();
             weather.execute();
             return true;
         }
@@ -131,7 +133,6 @@ public class MainActivityFragment extends Fragment {
                 else
                     url = new URL("http://api.themoviedb.org/3/discover/movie?&sort_by=popularity.desc&api_key=9ee088a6d3ed11d3c10ee27466d39427");
                 movieDbUrl = url.toString();
-                Log.v(LOG_TAG, movieDbUrl);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();

@@ -9,7 +9,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_sort"
-        android:orderInCategory="100"
-        android:title="Sort"
+        android:orderInCategory="200"
+        android:title="@string/action_sort"
         app:showAsAction="never" />
 </menu>

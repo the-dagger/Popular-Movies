@@ -19,9 +19,9 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:textSize="14sp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical|center_horizontal"/>
 </LinearLayout>
