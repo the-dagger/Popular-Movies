@@ -23,7 +23,7 @@ public class MovieAdapter extends ArrayAdapter<SingleMovie>{
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
         ImageView poster = (ImageView) rootView.findViewById(R.id.movie_poster_image);
         TextView name = (TextView) rootView.findViewById(R.id.movie_name);
-        Picasso.with(getContext()).load(singleMovie.movieImage).into(poster, PicassoPalette.with(singleMovie.movieImage,poster).use(PicassoPalette.Profile.MUTED_LIGHT).intoBackground(name));
+        Picasso.with(getContext()).load(singleMovie.movieImage).into(poster, PicassoPalette.with(singleMovie.movieImage,poster).use(PicassoPalette.Profile.MUTED).intoBackground(name));
         name.setText(singleMovie.movieTitle);
         return rootView;
     }
