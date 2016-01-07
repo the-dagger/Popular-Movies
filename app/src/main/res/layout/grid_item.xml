@@ -13,12 +13,11 @@
         android:scaleType="centerCrop"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/movie_name"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:layout_gravity="bottom"/>
 </LinearLayout>
