@@ -1,5 +1,6 @@
 package io.github.the_dagger.movies;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -32,7 +34,10 @@ public class MainActivityFragment extends Fragment {
     MovieAdapter adapter;
     Boolean sort = false;
     String movieDbUrl = null;
-
+    String[] movieOverView = null;
+    String[] rating = null;
+    String[] releaseDate = null;
+    String[] backDropImage = null;
     public MainActivityFragment() {
 
     }
@@ -89,6 +94,18 @@ public class MainActivityFragment extends Fragment {
         gridview.setAdapter(adapter);
         MovieDetails weather = new MovieDetails();
         weather.execute();
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
+                        .putExtra("OverView", movieOverView[position])
+                        .putExtra("Backdrop",backDropImage[position])
+                        .putExtra("Rating",rating[position])
+                        .putExtra("ReleaseDate",releaseDate[position])
+                        ;
+                startActivity(switchIntent);
+            }
+        });
         return rootView;
     }
 
@@ -110,12 +127,21 @@ public class MainActivityFragment extends Fragment {
             final String MDB_RESULT = "results";
             final String MDB_TITLE = "title";
             final String MDB_POSTER = "poster_path";
+            backDropImage = new String[20];
+            releaseDate = new String[20];
+            rating = new String[20];
+            movieOverView = new String[20];
             JSONObject moviejson = new JSONObject(movieInfo);
             JSONArray movieArray = moviejson.getJSONArray(MDB_RESULT);
-            String baseURL = "http://image.tmdb.org/t/p/w185/";
+            String baseURL = "http://image.tmdb.org/t/p/w342/";
             SingleMovie[] movieDetails = new SingleMovie[20];
             for (int i = 0; i < 20; i++) {
                 JSONObject currentMovie = movieArray.getJSONObject(i);
+                backDropImage[i] = baseURL + currentMovie.getString("backdrop_path");
+               // Log.v(LOG_TAG,backDropImage[i]);
+                releaseDate[i] = currentMovie.getString("release_date");
+                movieOverView[i] = currentMovie.getString("overview");
+                rating[i] = currentMovie.getString("vote_average");
                 String movietitle = currentMovie.getString(MDB_TITLE);
                 String moviePosterendURL = currentMovie.getString(MDB_POSTER);
                 String moviePosterURL = baseURL + moviePosterendURL;
