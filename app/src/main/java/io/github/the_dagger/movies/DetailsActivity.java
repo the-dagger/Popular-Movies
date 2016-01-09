@@ -48,9 +48,9 @@ public class DetailsActivity extends AppCompatActivity {
                         .intoBackground(r)
                         .intoBackground(s)
                         .intoBackground(f)
-                        .intoTextColor(title)
-                        .intoTextColor(vote)
-                        .intoTextColor(releaseTitle)
+//                        .intoTextColor(title)
+//                        .intoTextColor(vote)
+//                        .intoTextColor(releaseTitle)
                 );
         String overView = intent.getStringExtra("OverView");
         String bkDrop = intent.getStringExtra("Backdrop");
@@ -60,6 +60,9 @@ public class DetailsActivity extends AppCompatActivity {
         movieRating.setText(rating+"/10");
         releaseTextView.setText(releaseDate);
         for (String sum:overView.split("(?<=[.])\\s+"))
+            if(summary == "")
+                summary = sum;
+            else
             summary = summary + "\n" + sum;
         overviewTextView.setText(summary);
         Picasso.with(getApplicationContext()).load(bkDrop).into(backDrop);
