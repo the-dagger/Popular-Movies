@@ -5,27 +5,15 @@
     android:layout_height="match_parent"
     tools:context="io.github.the_dagger.movies.DetailsActivityFragment"
     tools:showIn="@layout/activity_details">
-
-    <android.support.v4.widget.NestedScrollView
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <RelativeLayout
-            android:id="@+id/detail_activity_relative_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/place"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        android:layout_height="match_parent">
 
                 <android.support.design.widget.AppBarLayout
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:id="@+id/place"
                     android:theme="@style/AppTheme.AppBarOverlay">
 
                     <android.support.design.widget.CollapsingToolbarLayout
@@ -49,14 +37,20 @@
                             app:layout_collapseMode="pin" />
                     </android.support.design.widget.CollapsingToolbarLayout>
                 </android.support.design.widget.AppBarLayout>
-            </android.support.design.widget.CoordinatorLayout>
-
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:id="@+id/scrollView"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <RelativeLayout
+            android:id="@+id/detail_activity_relative_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/posterImageDetail"
                 android:layout_width="180dp"
                 android:layout_height="250dp"
-                android:layout_below="@+id/place"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp" />
@@ -66,13 +60,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/posterImageDetail"
-                android:layout_below="@id/place"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_toEndOf="@id/posterImageDetail"
                 android:layout_toRightOf="@id/posterImageDetail"
                 android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_alignTop="@+id/posterImageDetail">
 
                 <TextView
                     android:id="@+id/vote"
@@ -132,4 +125,5 @@
                 android:textSize="20sp" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>
