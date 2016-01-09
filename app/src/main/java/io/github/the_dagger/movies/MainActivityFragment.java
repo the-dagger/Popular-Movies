@@ -102,7 +102,8 @@ public class MainActivityFragment extends Fragment {
                         .putExtra("Backdrop",backDropImage[position])
                         .putExtra("Rating",rating[position])
                         .putExtra("ReleaseDate",releaseDate[position])
-                        ;
+                        .putExtra("PosterImage",adapter.getItem(position))
+                        .putExtra("Poster",adapter.getItem(position));
                 startActivity(switchIntent);
             }
         });
