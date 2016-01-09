@@ -108,12 +108,7 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
-                        .putExtra("PosterImage", adapter.getItem(position))
-                        .putExtra("Poster", adapter.getItem(position))
-                        .putExtra("OverView", adapter.getItem(position))
-                        .putExtra("Backdrop", adapter.getItem(position))
-                        .putExtra("Rating", adapter.getItem(position))
-                        .putExtra("ReleaseDate", adapter.getItem(position));
+                        .putExtra(getString(R.string.Poster), adapter.getItem(position));
                 startActivity(switchIntent);
             }
         });
@@ -160,7 +155,7 @@ public class MainActivityFragment extends Fragment {
             try {
                 URL url;
                 if (sort)
-                    url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&api_key=9ee088a6d3ed11d3c10ee27466d39427");
+                    url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&api_key="+"9ee088a6d3ed11d3c10ee27466d39427");
                 else
                     url = new URL("http://api.themoviedb.org/3/discover/movie?&sort_by=popularity.desc&api_key=9ee088a6d3ed11d3c10ee27466d39427");
                 movieDbUrl = url.toString();

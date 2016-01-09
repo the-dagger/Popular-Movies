@@ -50,7 +50,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
+                <com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:rv_framerate = "10"
+                    app:rv_color="@color/colorAccent"
+                    app:rv_zoomDuration="150"
+                    app:rv_zoom="true">
                 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -78,7 +86,7 @@
                             android:layout_toRightOf="@id/posterImageDetail"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:paddingLeft="10dp">
+                            android:paddingLeft="4dp">
 
                             <TextView
                                 android:id="@+id/vote"
@@ -89,13 +97,17 @@
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/ratingDetail"
+                            <io.techery.properratingbar.ProperRatingBar
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:gravity="center"
-                                android:textSize="18sp" />
+                                android:textSize="32sp"
+                                android:id="@+id/ratingBar1"
+                                android:textStyle="bold"
+                                app:prb_symbolicTick="*"
+                                app:prb_symbolicTickNormalColor="@android:color/darker_gray"
+                                app:prb_symbolicTickSelectedColor="@color/colorAccent"
+                                app:prb_totalTicks="10"
+                                />
 
                             <TextView
                                 android:id="@+id/releaseDateTitle"
@@ -141,6 +153,7 @@
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
+                </com.andexert.library.RippleView>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>

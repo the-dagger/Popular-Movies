@@ -8,6 +8,7 @@
     tools:showIn="@layout/activity_main">
 
     <GridView
+        android:background="#E0E0E0"
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

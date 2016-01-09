@@ -3,4 +3,10 @@
     <string name="action_settings">Sort by Ratings</string>
     <string name="action_sort">Sort by Popularity</string>
     <string name="title_activity_details">Movie Details</string>
+    <string name="PosterImage">PosterImage</string>
+    <string name="Poster">Poster</string>
+    <string name="OverView">OverView</string>
+    <string name="Backdrop">Backdrop</string>
+    <string name="Rating">Rating</string>
+    <string name="ReleaseDate">ReleaseDate</string>
 </resources>
