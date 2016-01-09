@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     app:rv_framerate = "10"
     app:rv_color="@color/colorAccent"
-    app:rv_zoomDuration="60">
+    app:rv_zoomDuration="150"
+    app:rv_zoom="true">
 <LinearLayout
     android:layout_width="match_parent"
     android:animateLayoutChanges="true"
