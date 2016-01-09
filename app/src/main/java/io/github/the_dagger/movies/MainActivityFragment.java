@@ -3,6 +3,7 @@ package io.github.the_dagger.movies;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,14 +40,29 @@ public class MainActivityFragment extends Fragment {
     String[] releaseDate = null;
     String[] backDropImage = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
+    ArrayList<SingleMovie> list;
+    SingleMovie[] movieList = {};
     public MainActivityFragment() {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("movies", list);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+            list = new ArrayList<SingleMovie>(Arrays.asList(movieList));
+            MovieDetails weather = new MovieDetails();
+            weather.execute();
+        }
+        else {
+            list = savedInstanceState.getParcelableArrayList("movies");
+        }
         setHasOptionsMenu(true);
        }
 
@@ -64,14 +80,14 @@ public class MainActivityFragment extends Fragment {
         if (id == R.id.action_settings) {
             MovieDetails weather = new MovieDetails();
             sort = true;
-            Toast.makeText(getActivity(), "Sorted By Ratings", Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), "Sorted by Ratings", Snackbar.LENGTH_LONG).show();
             weather.execute();
             return true;
         }
         if (id == R.id.action_sort) {
             MovieDetails weather = new MovieDetails();
             sort = false;
-            Toast.makeText(getActivity(), "Sorted By Popularity", Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), "Sorted by Popularity", Snackbar.LENGTH_LONG).show();
             weather.execute();
             return true;
         }
@@ -88,25 +104,20 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        adapter = new MovieAdapter(getActivity(), new ArrayList<SingleMovie>());
+        adapter = new MovieAdapter(getActivity(), list);
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        MovieDetails weather = new MovieDetails();
-            SingleMovie[] movieList = {};
-            weather.execute();
         GridView gridview = (GridView) rootView.findViewById(R.id.gridView);
         gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
+                        .putExtra("PosterImage", adapter.getItem(position))
+                        .putExtra("Poster", adapter.getItem(position))
                         .putExtra("OverView", movieOverView[position])
                         .putExtra("Backdrop", backDropImage[position])
                         .putExtra("Rating", rating[position])
-                        .putExtra("ReleaseDate", releaseDate[position])
-                        .putExtra("PosterImage", adapter.getItem(position))
-                        .putExtra("Poster", adapter.getItem(position));
+                        .putExtra("ReleaseDate", releaseDate[position]);
                 startActivity(switchIntent);
             }
         });
@@ -141,7 +152,6 @@ public class MainActivityFragment extends Fragment {
             for (int i = 0; i < 20; i++) {
                 JSONObject currentMovie = movieArray.getJSONObject(i);
                 backDropImage[i] = baseURL + currentMovie.getString("backdrop_path");
-                // Log.v(LOG_TAG,backDropImage[i]);
                 releaseDate[i] = currentMovie.getString("release_date");
                 movieOverView[i] = currentMovie.getString("overview");
                 rating[i] = currentMovie.getString("vote_average");

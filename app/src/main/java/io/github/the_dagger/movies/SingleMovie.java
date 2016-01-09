@@ -9,6 +9,7 @@ import android.os.Parcelable;
 public class SingleMovie implements Parcelable{
     String movieImage;
     String movieTitle;
+
     public SingleMovie(String image, String title){
         this.movieImage = image;
         this.movieTitle = title;
