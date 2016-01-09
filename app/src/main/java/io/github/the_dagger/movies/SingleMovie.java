@@ -6,17 +6,31 @@ import android.os.Parcelable;
 /**
  * Created by Harshit on 1/6/2016.
  */
-public class SingleMovie implements Parcelable{
+public class SingleMovie implements Parcelable {
     String movieImage;
     String movieTitle;
+    String movieOverView;
+    String movieRating;
+    String movieReleaseDate;
+    String movieBackDropImage;
 
-    public SingleMovie(String image, String title){
+    public SingleMovie(String image, String title, String overView, String rating, String releaseDate, String backDropImage) {
         this.movieImage = image;
         this.movieTitle = title;
+        this.movieOverView = overView;
+        this.movieRating = rating;
+        this.movieReleaseDate = releaseDate;
+        this.movieBackDropImage = backDropImage;
     }
-    public SingleMovie(Parcel in){
+
+    public SingleMovie(Parcel in) {
         this.movieImage = in.readString();
-        this.movieTitle = in.readString();}
+        this.movieTitle = in.readString();
+        this.movieOverView = in.readString();
+        this.movieRating = in.readString();
+        this.movieReleaseDate = in.readString();
+        this.movieBackDropImage = in.readString();
+    }
 
     public static final Creator<SingleMovie> CREATOR = new Creator<SingleMovie>() {
         @Override
@@ -39,5 +53,9 @@ public class SingleMovie implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(movieImage);
         dest.writeString(movieTitle);
+        dest.writeString(movieOverView);
+        dest.writeString(movieRating);
+        dest.writeString(movieReleaseDate);
+        dest.writeString(movieBackDropImage);
     }
 }

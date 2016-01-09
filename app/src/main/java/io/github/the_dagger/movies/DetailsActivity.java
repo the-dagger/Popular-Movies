@@ -37,20 +37,20 @@ public class DetailsActivity extends AppCompatActivity {
         Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
                         .intoBackground(s)
                 );
-        String overView = intent.getStringExtra("OverView");
-        String bkDrop = intent.getStringExtra("Backdrop");
-        String rating = intent.getStringExtra("Rating");
+        overviewTextView.setText(movie.movieOverView);
+//        String bkDrop = intent.getStringExtra("Backdrop");
+//        String rating = intent.getStringExtra("Rating");
         String summary = "";
-        String releaseDate = intent.getStringExtra("ReleaseDate");
-        movieRating.setText(rating+"/10");
-        releaseTextView.setText(releaseDate);
-        for (String sum:overView.split("(?<=[.])\\s+"))
-            if(summary == "")
-                summary = sum;
-            else
-            summary = summary + "\n" + sum;
-        overviewTextView.setText(summary);
-        Picasso.with(getApplicationContext()).load(bkDrop).into(backDrop);
+//        String releaseDate = intent.getStringExtra("ReleaseDate");
+        movieRating.setText(movie.movieRating+"/10");
+        releaseTextView.setText(movie.movieReleaseDate);
+//        for (String sum:overView.split("(?<=[.])\\s+"))
+//            if(summary == "")
+//                summary = sum;
+//            else
+//            summary = summary + "\n" + sum;
+//        overviewTextView.setText(summary);
+        Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
         f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -35,10 +35,6 @@ public class MainActivityFragment extends Fragment {
     MovieAdapter adapter;
     Boolean sort = false;
     String movieDbUrl = null;
-    String[] movieOverView = null;
-    String[] rating = null;
-    String[] releaseDate = null;
-    String[] backDropImage = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
     SingleMovie[] movieList = {};
@@ -114,10 +110,10 @@ public class MainActivityFragment extends Fragment {
                 Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
                         .putExtra("PosterImage", adapter.getItem(position))
                         .putExtra("Poster", adapter.getItem(position))
-                        .putExtra("OverView", movieOverView[position])
-                        .putExtra("Backdrop", backDropImage[position])
-                        .putExtra("Rating", rating[position])
-                        .putExtra("ReleaseDate", releaseDate[position]);
+                        .putExtra("OverView", adapter.getItem(position))
+                        .putExtra("Backdrop", adapter.getItem(position))
+                        .putExtra("Rating", adapter.getItem(position))
+                        .putExtra("ReleaseDate", adapter.getItem(position));
                 startActivity(switchIntent);
             }
         });
@@ -142,23 +138,19 @@ public class MainActivityFragment extends Fragment {
             final String MDB_RESULT = "results";
             final String MDB_TITLE = "title";
             final String MDB_POSTER = "poster_path";
-            backDropImage = new String[20];
-            releaseDate = new String[20];
-            rating = new String[20];
-            movieOverView = new String[20];
             JSONObject moviejson = new JSONObject(movieInfo);
             JSONArray movieArray = moviejson.getJSONArray(MDB_RESULT);
             String baseURL = "http://image.tmdb.org/t/p/w342/";
             for (int i = 0; i < 20; i++) {
                 JSONObject currentMovie = movieArray.getJSONObject(i);
-                backDropImage[i] = baseURL + currentMovie.getString("backdrop_path");
-                releaseDate[i] = currentMovie.getString("release_date");
-                movieOverView[i] = currentMovie.getString("overview");
-                rating[i] = currentMovie.getString("vote_average");
+                String tempbackDropImage = baseURL + currentMovie.getString("backdrop_path");
+                String tempreleaseDate = currentMovie.getString("release_date");
+                String movietempOverView = currentMovie.getString("overview");
+                String temprating = currentMovie.getString("vote_average");
                 String movietitle = currentMovie.getString(MDB_TITLE);
                 String moviePosterendURL = currentMovie.getString(MDB_POSTER);
                 String moviePosterURL = baseURL + moviePosterendURL;
-                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle);
+                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle,movietempOverView,temprating,tempreleaseDate,tempbackDropImage);
             }
             return movieDetails;
         }
