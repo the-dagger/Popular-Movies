@@ -38,15 +38,17 @@ public class MainActivityFragment extends Fragment {
     String[] rating = null;
     String[] releaseDate = null;
     String[] backDropImage = null;
+    SingleMovie[] movieDetails = new SingleMovie[20];
     public MainActivityFragment() {
 
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
+       }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater Inflater) {
@@ -68,8 +70,8 @@ public class MainActivityFragment extends Fragment {
         }
         if (id == R.id.action_sort) {
             MovieDetails weather = new MovieDetails();
-                sort = false;
-                Toast.makeText(getActivity(), "Sorted By Popularity", Toast.LENGTH_SHORT).show();
+            sort = false;
+            Toast.makeText(getActivity(), "Sorted By Popularity", Toast.LENGTH_SHORT).show();
             weather.execute();
             return true;
         }
@@ -87,23 +89,24 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        SingleMovie[] movieList = {};
         adapter = new MovieAdapter(getActivity(), new ArrayList<SingleMovie>());
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        MovieDetails weather = new MovieDetails();
+            SingleMovie[] movieList = {};
+            weather.execute();
         GridView gridview = (GridView) rootView.findViewById(R.id.gridView);
         gridview.setAdapter(adapter);
-        MovieDetails weather = new MovieDetails();
-        weather.execute();
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
                         .putExtra("OverView", movieOverView[position])
-                        .putExtra("Backdrop",backDropImage[position])
-                        .putExtra("Rating",rating[position])
-                        .putExtra("ReleaseDate",releaseDate[position])
-                        .putExtra("PosterImage",adapter.getItem(position))
-                        .putExtra("Poster",adapter.getItem(position));
+                        .putExtra("Backdrop", backDropImage[position])
+                        .putExtra("Rating", rating[position])
+                        .putExtra("ReleaseDate", releaseDate[position])
+                        .putExtra("PosterImage", adapter.getItem(position))
+                        .putExtra("Poster", adapter.getItem(position));
                 startActivity(switchIntent);
             }
         });
@@ -135,11 +138,10 @@ public class MainActivityFragment extends Fragment {
             JSONObject moviejson = new JSONObject(movieInfo);
             JSONArray movieArray = moviejson.getJSONArray(MDB_RESULT);
             String baseURL = "http://image.tmdb.org/t/p/w342/";
-            SingleMovie[] movieDetails = new SingleMovie[20];
             for (int i = 0; i < 20; i++) {
                 JSONObject currentMovie = movieArray.getJSONObject(i);
                 backDropImage[i] = baseURL + currentMovie.getString("backdrop_path");
-               // Log.v(LOG_TAG,backDropImage[i]);
+                // Log.v(LOG_TAG,backDropImage[i]);
                 releaseDate[i] = currentMovie.getString("release_date");
                 movieOverView[i] = currentMovie.getString("overview");
                 rating[i] = currentMovie.getString("vote_average");
