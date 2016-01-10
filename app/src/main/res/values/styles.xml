@@ -10,7 +10,7 @@
     </style>
 
     <style name="OverFlowStyle" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:src">@android:drawable/ic_menu_more</item>
+        <item name="android:src">@drawable/ic_sort_white_24dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
