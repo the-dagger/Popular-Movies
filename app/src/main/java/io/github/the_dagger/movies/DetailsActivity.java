@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,7 +25,6 @@ public class DetailsActivity extends AppCompatActivity {
         RatingBar rb = (RatingBar) findViewById(R.id.ratingBar1);
         FloatingActionButton f = (FloatingActionButton) findViewById(R.id.fab);
         TextView title = (TextView) findViewById(R.id.movieDetailTitle);
-        NestedScrollView s = (NestedScrollView) findViewById(R.id.scrollView);
         TextView overviewTextView = (TextView) findViewById(R.id.movieSummary);
         ImageView backDrop = (ImageView) findViewById(R.id.backdrop);
         TextView releaseTextView = (TextView) findViewById(R.id.releaseDate);
@@ -35,7 +33,6 @@ public class DetailsActivity extends AppCompatActivity {
         SingleMovie movie = intent.getParcelableExtra("Poster");
         title.setText(movie.movieTitle);
         Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
-                        .intoBackground(s)
                 );
         String overView = movie.movieOverView;
         String summary = "";
