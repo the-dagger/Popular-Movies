@@ -52,7 +52,7 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
-            list = new ArrayList<SingleMovie>(Arrays.asList(movieList));
+            list = new ArrayList<>(Arrays.asList(movieList));
             MovieDetails weather = new MovieDetails();
             weather.execute();
         }
@@ -64,7 +64,6 @@ public class MainActivityFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater Inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         Inflater.inflate(R.menu.moviefragment, menu);
     }
 

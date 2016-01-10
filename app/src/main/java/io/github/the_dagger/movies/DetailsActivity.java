@@ -1,7 +1,6 @@
 package io.github.the_dagger.movies;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,8 +18,6 @@ import com.squareup.picasso.Picasso;
 import io.techery.properratingbar.ProperRatingBar;
 
 public class DetailsActivity extends AppCompatActivity {
-   // private CollapsingToolbarLayout collapsingToolbarLayout = null;
-    Bitmap bitmap = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +25,6 @@ public class DetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ProperRatingBar rb = (ProperRatingBar) findViewById(R.id.ratingBar1);
-//        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         FloatingActionButton f = (FloatingActionButton) findViewById(R.id.fab);
         TextView title = (TextView) findViewById(R.id.movieDetailTitle);
         NestedScrollView s = (NestedScrollView) findViewById(R.id.scrollView);
@@ -38,16 +34,6 @@ public class DetailsActivity extends AppCompatActivity {
         ImageView posterImage = (ImageView) findViewById(R.id.posterImageDetail);
         Intent intent = getIntent();
         SingleMovie movie = intent.getParcelableExtra("Poster");
-//        getImagebit a = new getImagebit();
-//        a.execute(movie.movieImage);
-//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-//
-//            @Override
-//            public void onGenerated(Palette palette) {
-//                collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(R.attr.colorPrimary));
-//                collapsingToolbarLayout.setStatusBarScrimColor(palette.getMutedColor(R.attr.colorPrimaryDark));
-//            }
-//        });
         title.setText(movie.movieTitle);
         Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
                         .intoBackground(s)
@@ -55,7 +41,6 @@ public class DetailsActivity extends AppCompatActivity {
         String overView = movie.movieOverView;
         String summary = "";
         float d = Float.parseFloat(movie.movieRating);
-        //movieRating.setText(movie.movieRating+"/10");
         rb.setRating(Math.round(d));
         releaseTextView.setText(movie.movieReleaseDate);
         for (String sum:overView.split("(?<=[.])\\s+"))
@@ -74,23 +59,5 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
     }
-//    public class getImagebit extends AsyncTask<String,Void,Bitmap>{
-//        @Override
-//        protected void onPostExecute(Bitmap bitmap1) {
-//            bitmap = bitmap1;
-//            super.onPostExecute(bitmap1);
-//        }
-//
-//        @Override
-//        protected Bitmap doInBackground(String... params) {
-//            Bitmap bitmap = null;
-//            try {
-//                bitmap = Picasso.with(getApplicationContext()).load(params[0]).get();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return bitmap;
-//        }
-//    }
 
 }

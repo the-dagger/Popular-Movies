@@ -20,16 +20,11 @@ public class MovieAdapter extends ArrayAdapter<SingleMovie> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         SingleMovie singleMovie = getItem(position);
- //       View anotherView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_details, parent,false);
- //       ImageView backDrop = (ImageView) anotherView.findViewById(R.id.backdrop);
- //       Picasso.with(getContext()).load(singleMovie.movieBackDropImage).into(backDrop);
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
         ImageView poster = (ImageView) rootView.findViewById(R.id.movie_poster_image);
         TextView name = (TextView) rootView.findViewById(R.id.movie_name);
-//        NestedScrollView s = (NestedScrollView) anotherView.findViewById(R.id.scrollView);
         Picasso.with(getContext()).load(singleMovie.movieImage).into(poster, PicassoPalette.with(singleMovie.movieImage, poster).use(PicassoPalette.Profile.MUTED)
                 .intoBackground(name));
-//                .intoBackground(s));
         name.setText(singleMovie.movieTitle);
         return rootView;
     }

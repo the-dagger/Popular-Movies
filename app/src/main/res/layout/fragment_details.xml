@@ -49,82 +49,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
                 android:orientation="vertical">
-                <com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rv_framerate = "10"
-                    app:rv_color="@color/colorAccent"
-                    app:rv_zoomDuration="150"
-                    app:rv_zoom="true">
-                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                <com.balysv.materialripple.MaterialRippleLayout
+                    app:mrl_rippleOverlay="true"
+                    android:id="@+id/ripple"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_margin="4dp"
+                    app:mrl_rippleDuration="500"
+                    app:mrl_rippleDelayClick="true"
+                    app:mrl_rippleColor="#FF4081">
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:elevation="8dp"
+                    android:layout_height="wrap_content"
                     android:background="#ffe5e5e5">
 
                     <RelativeLayout
                         android:id="@+id/detail_activity_relative_layout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <ImageView
                             android:id="@+id/posterImageDetail"
                             android:layout_width="180dp"
                             android:layout_height="250dp"
-                            android:layout_marginTop="8dp" />
+                            android:layout_marginTop="8dp"
+                            />
 
-                        <LinearLayout
-                            android:id="@+id/linearLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/posterImageDetail"
-                            android:layout_alignTop="@+id/posterImageDetail"
-                            android:layout_toEndOf="@id/posterImageDetail"
-                            android:layout_toRightOf="@id/posterImageDetail"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:paddingLeft="4dp">
-
-                            <TextView
-                                android:id="@+id/vote"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:text="Votes"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
-
-                            <io.techery.properratingbar.ProperRatingBar
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="32sp"
-                                android:id="@+id/ratingBar1"
-                                android:textStyle="bold"
-                                app:prb_symbolicTick="*"
-                                app:prb_symbolicTickNormalColor="@android:color/darker_gray"
-                                app:prb_symbolicTickSelectedColor="@color/colorAccent"
-                                app:prb_totalTicks="10"
-                                />
-
-                            <TextView
-                                android:id="@+id/releaseDateTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:text="Release Date"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/releaseDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
 
 
                         <TextView
@@ -153,7 +106,75 @@
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
-                </com.andexert.library.RippleView>
+                </com.balysv.materialripple.MaterialRippleLayout>
+
+                <com.balysv.materialripple.MaterialRippleLayout
+                    app:mrl_rippleOverlay="true"
+                    android:id="@+id/ripple2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    app:mrl_rippleDuration="500"
+                    app:mrl_rippleDelayClick="true"
+                    app:mrl_rippleColor="#FF4081">
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:elevation="8dp"
+                    android:layout_height="wrap_content"
+                    android:background="#ffe5e5e5">
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBottom="@+id/posterImageDetail"
+                        android:layout_alignTop="@+id/posterImageDetail"
+                        android:layout_toEndOf="@id/posterImageDetail"
+                        android:layout_toRightOf="@id/posterImageDetail"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_margin="8dp">
+
+                        <TextView
+                            android:id="@+id/vote"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Votes"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <io.techery.properratingbar.ProperRatingBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="32sp"
+                            android:id="@+id/ratingBar1"
+                            android:textStyle="bold"
+                            app:prb_symbolicTick="*"
+                            app:prb_symbolicTickNormalColor="@android:color/darker_gray"
+                            app:prb_symbolicTickSelectedColor="@color/colorAccent"
+                            app:prb_totalTicks="10"
+                            />
+
+                        <TextView
+                            android:id="@+id/releaseDateTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Release Date"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/releaseDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+                </com.balysv.materialripple.MaterialRippleLayout>
+
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>

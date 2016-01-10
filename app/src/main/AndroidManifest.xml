@@ -23,6 +23,7 @@
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details"
+            android:launchMode = "singleInstance"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

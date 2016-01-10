@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/more"
-    android:layout_width="wrap_content"
+<com.balysv.materialripple.MaterialRippleLayout
+    android:id="@+id/ripple"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:rv_framerate = "10"
-    app:rv_color="@color/colorAccent"
-    app:rv_zoomDuration="150"
-    app:rv_zoom="true">
+    app:mrl_rippleOverlay="true"
+    app:mrl_rippleDelayClick="true"
+    app:mrl_rippleDuration="500"
+    android:layout_margin="8dp"
+    app:mrl_rippleColor="#FF4081"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:mrl_rippleInAdapter="true">
 <LinearLayout
     android:layout_width="match_parent"
     android:animateLayoutChanges="true"
@@ -36,4 +39,4 @@
         android:gravity="center_vertical|center_horizontal"/>
 
 </LinearLayout>
-</com.andexert.library.RippleView>
+</com.balysv.materialripple.MaterialRippleLayout>
