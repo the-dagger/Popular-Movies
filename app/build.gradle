@@ -19,7 +19,7 @@ android {
         }
     }
     buildTypes.each{
-        it.buildConfigField 'String', 'MOBDB_API_KEY',"\"9ee088a6d3ed11d3c10ee27466d39427\""
+        it.buildConfigField 'String', 'MOBDB_API_KEY',"\"your key here\""
     }
 }
 
