@@ -15,24 +15,28 @@ import com.github.florent37.picassopalette.BitmapPalette;
 import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class DetailsActivity extends AppCompatActivity {
+    @Bind(R.id.toolbar)Toolbar toolbar;
+    @Bind(R.id.fab) FloatingActionButton f;
+    @Bind(R.id.movieDetailTitle) TextView title;
+    @Bind(R.id.movieSummary) TextView overviewTextView;
+    @Bind(R.id.backdrop) ImageView backDrop;
+    @Bind(R.id.releaseDate) TextView releaseTextView;
+    @Bind(R.id.posterImageDetail) ImageView posterImage;
+    @Bind(R.id.ratingBar1) RatingBar rb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        RatingBar rb = (RatingBar) findViewById(R.id.ratingBar1);
-        FloatingActionButton f = (FloatingActionButton) findViewById(R.id.fab);
-        TextView title = (TextView) findViewById(R.id.movieDetailTitle);
-        TextView overviewTextView = (TextView) findViewById(R.id.movieSummary);
-        ImageView backDrop = (ImageView) findViewById(R.id.backdrop);
-        TextView releaseTextView = (TextView) findViewById(R.id.releaseDate);
-        ImageView posterImage = (ImageView) findViewById(R.id.posterImageDetail);
         Intent intent = getIntent();
         SingleMovie movie = intent.getParcelableExtra("Poster");
         title.setText(movie.movieTitle);
-        Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
+        Picasso.with(getApplicationContext()).load(movie.movieImage).error(R.drawable.placeholder).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
                 );
         String overView = movie.movieOverView;
         String summary = "";
