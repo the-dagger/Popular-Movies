@@ -58,6 +58,7 @@ public class DetailsLandscapeFragment extends Fragment {
             overviewTextView.setText("Summary");
         }
         return view;
+
     }
     public void getMovie(SingleMovie singleMovie){
         movie = singleMovie;
