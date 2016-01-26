@@ -1,6 +1,5 @@
 package io.github.the_dagger.movies;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -38,6 +37,7 @@ public class MainActivityFragment extends Fragment {
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
     SingleMovie[] movieList = {};
+    Communicator com;
     public MainActivityFragment() {
 
     }
@@ -103,12 +103,17 @@ public class MainActivityFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         GridView gridview = (GridView) rootView.findViewById(R.id.gridView);
         gridview.setAdapter(adapter);
+        com = (Communicator) getActivity();
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
-                        .putExtra(getString(R.string.Poster), adapter.getItem(position));
-                startActivity(switchIntent);
+//                if(f!=null && f.isVisible()){
+//
+//                }
+//                Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
+//                        .putExtra(getString(R.string.Poster), adapter.getItem(position));
+//                startActivity(switchIntent);
+                com.respond(adapter.getItem(position));
             }
         });
         return rootView;
