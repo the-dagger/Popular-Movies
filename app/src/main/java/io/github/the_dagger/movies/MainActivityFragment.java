@@ -1,5 +1,6 @@
 package io.github.the_dagger.movies;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -36,6 +37,7 @@ public class MainActivityFragment extends Fragment {
     String movieDbUrl = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
+    int Position = 0;
     SingleMovie[] movieList = {};
     Communicator com;
     public MainActivityFragment() {
@@ -45,19 +47,21 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("movies", list);
+        outState.putParcelable("movieTest",movieDetails[Position]);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+        if(savedInstanceState == null || !savedInstanceState.containsKey("movies") || !savedInstanceState.containsKey("movieTest")) {
             list = new ArrayList<>(Arrays.asList(movieList));
             MovieDetails weather = new MovieDetails();
             weather.execute();
         }
         else {
             list = savedInstanceState.getParcelableArrayList("movies");
+            movieDetails[Position] = savedInstanceState.getParcelable("movieTest");
         }
         setHasOptionsMenu(true);
        }
@@ -107,14 +111,18 @@ public class MainActivityFragment extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-//                if(f!=null && f.isVisible()){
-//
-//                }
-//                Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
-//                        .putExtra(getString(R.string.Poster), adapter.getItem(position));
-//                startActivity(switchIntent);
-                com.respond(adapter.getItem(position));
-            }
+
+                Position = position;
+                boolean tabletSize = getResources().getBoolean(R.bool.isTab);
+                if (!tabletSize) {
+                    Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
+                            .putExtra(getString(R.string.Poster), adapter.getItem(position));
+                    startActivity(switchIntent);
+                }
+                else{
+                com.respond(movieDetails[position]);
+//                Log.v(LOG_TAG,movieDetails[position].movieTitle);
+            }}
         });
         return rootView;
     }

@@ -35,21 +35,23 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         SingleMovie movie = intent.getParcelableExtra("Poster");
-        title.setText(movie.movieTitle);
-        Picasso.with(getApplicationContext()).load(movie.movieImage).error(R.drawable.placeholder).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
-                );
-        String overView = movie.movieOverView;
-        String summary = "";
-        float d = Float.parseFloat(movie.movieRating);
-        rb.setRating((Math.round(d)/2));
-        releaseTextView.setText(movie.movieReleaseDate);
-        for (String sum:overView.split("(?<=[.])\\s+"))
-            if(summary == "")
-                summary = sum;
-            else
-                summary = summary + "\n" + sum;
-        overviewTextView.setText(summary);
-        Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
+        if(movie!=null) {
+            title.setText(movie.movieTitle);
+            Picasso.with(getApplicationContext()).load(movie.movieImage).error(R.drawable.placeholder).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
+            );
+            String overView = movie.movieOverView;
+            String summary = "";
+            float d = Float.parseFloat(movie.movieRating);
+            rb.setRating((Math.round(d) / 2));
+            releaseTextView.setText(movie.movieReleaseDate);
+            for (String sum : overView.split("(?<=[.])\\s+"))
+                if (summary == "")
+                    summary = sum;
+                else
+                    summary = summary + "\n" + sum;
+            overviewTextView.setText(summary);
+            Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
+        }
         f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
