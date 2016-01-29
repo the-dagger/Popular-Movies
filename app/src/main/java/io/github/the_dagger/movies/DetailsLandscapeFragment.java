@@ -122,6 +122,5 @@ public class DetailsLandscapeFragment extends Fragment {
         posterImage = (ImageView) view.findViewById(R.id.posterImageDetail1);
         rb = (RatingBar) view.findViewById(R.id.ratingBar11);
         return view;
-
     }
 }

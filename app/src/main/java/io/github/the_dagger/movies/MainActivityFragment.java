@@ -37,7 +37,8 @@ public class MainActivityFragment extends Fragment {
     String movieDbUrl = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
-    int Position = 0;
+    int Position ;
+    MovieDetails weather1;
     SingleMovie[] movieList = {};
     Communicator com;
     public MainActivityFragment() {
@@ -47,7 +48,8 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("movies", list);
-        outState.putParcelable("movieTest",movieDetails[Position]);
+       // outState.putParcelableArray("movieTest",movieDetails);
+        outState.putInt("position",Position);
         super.onSaveInstanceState(outState);
     }
 
@@ -56,11 +58,13 @@ public class MainActivityFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(savedInstanceState == null || !savedInstanceState.containsKey("movies") || !savedInstanceState.containsKey("movieTest")) {
             list = new ArrayList<>(Arrays.asList(movieList));
-            MovieDetails weather = new MovieDetails();
-            weather.execute();
+            weather1 = new MovieDetails();
+            Position = 0;
+            weather1.execute();
         }
         else {
             list = savedInstanceState.getParcelableArrayList("movies");
+            Position = savedInstanceState.getInt("position");
             movieDetails[Position] = savedInstanceState.getParcelable("movieTest");
         }
         setHasOptionsMenu(true);
@@ -111,12 +115,12 @@ public class MainActivityFragment extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-
+               // MainActivityFragment mainActivityFragment = (MainActivityFragment) getFragmentManager().findFragmentById(R.id.fragment);
                 Position = position;
                 boolean tabletSize = getResources().getBoolean(R.bool.isTab);
                 if (!tabletSize) {
                     Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
-                            .putExtra(getString(R.string.Poster), adapter.getItem(position));
+                            .putExtra(getString(R.string.Poster), adapter.getItem(Position));
                     startActivity(switchIntent);
                 }
                 else{

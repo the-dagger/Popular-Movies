@@ -17,6 +17,5 @@
         android:layout_height="match_parent"
         android:name="io.github.the_dagger.movies.DetailsLandscapeFragment"
         android:id="@+id/fragment2"
-        android:layout_gravity="center_vertical"
         tools:layout="@layout/details_land_frag" />
 </LinearLayout>
