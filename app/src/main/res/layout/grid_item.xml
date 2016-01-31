@@ -28,6 +28,7 @@
         android:id="@+id/movie_poster_image"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
+        android:transitionName="profile"
         />
     <TextView
         android:layout_width="match_parent"

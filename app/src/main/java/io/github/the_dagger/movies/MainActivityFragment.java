@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +41,7 @@ public class MainActivityFragment extends Fragment {
     int Position ;
     boolean tabletSize;
     MovieDetails weather1;
+    LinearLayout l;
     SingleMovie[] movieList = {};
     Communicator com;
     public MainActivityFragment() {
@@ -139,6 +141,7 @@ public class MainActivityFragment extends Fragment {
                     SingleMovie oneMovie = singleMovies[i];
                     adapter.add(oneMovie);
                 }
+                com.respond(singleMovies[0]);
             }
             super.onPostExecute(singleMovies);
         }

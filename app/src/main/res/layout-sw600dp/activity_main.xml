@@ -29,8 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_save"
+        android:src="@drawable/ic_favorite_border_white_24dp"
         android:visibility="visible"
         />
-
 </android.support.design.widget.CoordinatorLayout>

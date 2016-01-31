@@ -1,10 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
     <fragment  android:id="@+id/fragment"
         android:name="io.github.the_dagger.movies.MainActivityFragment"
         android:layout_width="0dp" android:layout_height="match_parent"
