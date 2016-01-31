@@ -35,12 +35,47 @@
 
                     <ImageView
                         android:layout_marginTop="8dp"
+                        android:layout_marginLeft="8dp"
                         android:id="@+id/posterImageDetail1"
                         android:src="@drawable/placeholder"
-                        android:layout_width="180dp"
-                        android:layout_marginLeft="8dp"
                         android:scaleType="fitXY"
+                        android:layout_width="180dp"
                         android:layout_height="250dp" />
+                    <ImageView
+                        android:id="@+id/backdrop1"
+                        android:src="@drawable/placeholderbackdrop"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@+id/posterImageDetail1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:id="@+id/linearLayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_below="@+id/backdrop1"
+                        android:layout_toRightOf="@+id/posterImageDetail1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <RatingBar
+                            android:id="@+id/ratingBar11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:numStars="5"
+                            android:layout_gravity="center"
+                            android:stepSize="0.5"
+                            android:theme="@style/RatingBar" />
+                        <TextView
+                            android:id="@+id/releaseDate1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="18sp" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/movieDetailTitle1"
@@ -66,70 +101,6 @@
                         android:singleLine="false"
                         android:textSize="18sp" />
                 </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
-        </com.balysv.materialripple.MaterialRippleLayout>
-
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/ripple21"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            app:mrl_rippleColor="#FF4081"
-            app:mrl_rippleDelayClick="true"
-            app:mrl_rippleDuration="500"
-            app:mrl_rippleOverlay="true">
-
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffe5e5e5"
-                android:elevation="8dp">
-
-                <LinearLayout
-                    android:id="@+id/linearLayout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/vote1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Votes"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <RatingBar
-                        android:id="@+id/ratingBar11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:stepSize="0.5"
-                        android:theme="@style/RatingBar" />
-
-                    <TextView
-                        android:id="@+id/releaseDateTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Release Date"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/releaseDate1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:gravity="center"
-                        android:textSize="18sp" />
-                </LinearLayout>
 
             </android.support.v7.widget.CardView>
         </com.balysv.materialripple.MaterialRippleLayout>

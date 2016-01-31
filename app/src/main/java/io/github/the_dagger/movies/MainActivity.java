@@ -10,19 +10,13 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements Communicator{
     DetailsLandscapeFragment f;
-    SingleMovie Movie = new SingleMovie("lol","lol","lol","5","n/a","lol2");
+    SingleMovie Movie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
-            Movie = new SingleMovie("lol","lol","lol","5","n/a","lol2");
-        }
-        else{
-            Movie = savedInstanceState.getParcelable("movieMain");
-        }
         f = (DetailsLandscapeFragment) getFragmentManager().findFragmentById(R.id.fragment2);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -35,15 +29,8 @@ public class MainActivity extends AppCompatActivity implements Communicator{
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable("movieMain",Movie);
-    }
-
-    @Override
     public void respond(SingleMovie movie) {
         Movie = movie;
-//        Log.e("lol",movie.movieTitle);
         if(f != null && f.isVisible()){
             f.getMovie(movie);
         }
