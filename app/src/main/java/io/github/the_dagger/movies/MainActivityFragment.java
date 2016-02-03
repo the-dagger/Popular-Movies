@@ -45,7 +45,6 @@ public class MainActivityFragment extends Fragment{
     MovieDetails weather1;
     LinearLayout l;
     GridView gridview;
-    Fragment f;
     SingleMovie[] movieList = {};
     Communicator com;
     public MainActivityFragment() {
@@ -55,8 +54,6 @@ public class MainActivityFragment extends Fragment{
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("movies", list);
-     //   outState.putParcelableArray("movieTest",movieDetails);
-        //outState.putInt("position",Position);
         super.onSaveInstanceState(outState);
     }
 
@@ -70,7 +67,6 @@ public class MainActivityFragment extends Fragment{
         }
         else {
             list = savedInstanceState.getParcelableArrayList("movies");
-     //       movieDetails = savedInstanceState.getParcelableArray("movieTest");
         }
         setHasOptionsMenu(true);
        }
