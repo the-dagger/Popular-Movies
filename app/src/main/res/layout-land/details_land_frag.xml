@@ -41,21 +41,27 @@
                         android:scaleType="fitXY"
                         android:layout_width="180dp"
                         android:layout_height="250dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/linearLayout122"
+                        android:gravity="center"
+                        android:layout_toRightOf="@+id/posterImageDetail1">
                     <ImageView
                         android:id="@+id/backdrop1"
                         android:src="@drawable/placeholderbackdrop"
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginLeft="16dp"
-                        android:layout_toRightOf="@+id/posterImageDetail1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/linearLayout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
-                        android:layout_below="@+id/backdrop1"
+                        android:layout_below="@+id/linearLayout122"
                         android:layout_toRightOf="@+id/posterImageDetail1"
                         android:gravity="center"
                         android:orientation="vertical">
