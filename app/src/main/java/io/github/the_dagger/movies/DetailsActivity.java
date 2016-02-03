@@ -27,6 +27,7 @@ public class DetailsActivity extends AppCompatActivity {
     @Bind(R.id.releaseDate) TextView releaseTextView;
     @Bind(R.id.posterImageDetail) ImageView posterImage;
     @Bind(R.id.ratingBar1) RatingBar rb;
+    SingleMovie movie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        SingleMovie movie = intent.getParcelableExtra("Poster");
+        movie = intent.getParcelableExtra("Poster");
         if(movie!=null) {
             title.setText(movie.movieTitle);
             Picasso.with(getApplicationContext()).load(movie.movieImage).error(R.drawable.placeholder).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)

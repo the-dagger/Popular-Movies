@@ -32,16 +32,20 @@ import java.util.Arrays;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment{
     MovieAdapter adapter;
     Boolean sort = false;
+    MovieAdapter adapterFav;
     String movieDbUrl = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
     int Position ;
+    ArrayList<SingleMovie> listFav;
     boolean tabletSize;
     MovieDetails weather1;
     LinearLayout l;
+    GridView gridview;
+    Fragment f;
     SingleMovie[] movieList = {};
     Communicator com;
     public MainActivityFragment() {
@@ -110,7 +114,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         adapter = new MovieAdapter(getActivity(), list);
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        GridView gridview = (GridView) rootView.findViewById(R.id.gridView);
+        gridview = (GridView) rootView.findViewById(R.id.gridView);
         gridview.setAdapter(adapter);
         com = (Communicator) getActivity();
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,6 +136,7 @@ public class MainActivityFragment extends Fragment {
         return rootView;
     }
 
+
     public class MovieDetails extends AsyncTask<Void, Void, SingleMovie[]> {
         @Override
         protected void onPostExecute(SingleMovie[] singleMovies) {
@@ -141,6 +146,8 @@ public class MainActivityFragment extends Fragment {
                     SingleMovie oneMovie = singleMovies[i];
                     adapter.add(oneMovie);
                 }
+//                f = getFragmentManager().findFragmentById(R.id.fragment2);
+//                if(f != null && f.isVisible())
                 com.respond(singleMovies[0]);
             }
             super.onPostExecute(singleMovies);

@@ -1,6 +1,5 @@
 package io.github.the_dagger.movies;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -35,9 +34,9 @@ public class MainActivity extends AppCompatActivity implements Communicator{
             f.getMovie(movie);
         }
         else{
-            Intent switchIntent = new Intent(this, DetailsActivity.class)
-                        .putExtra(getString(R.string.Poster), movie);
-            startActivity(switchIntent);
+//            Intent switchIntent = new Intent(this, DetailsActivity.class)
+//                        .putExtra(getString(R.string.Poster), movie);
+//            startActivity(switchIntent);
         }
     }
 }
