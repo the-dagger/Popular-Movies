@@ -35,12 +35,12 @@ import java.util.Arrays;
 public class MainActivityFragment extends Fragment{
     MovieAdapter adapter;
     Boolean sort = false;
-    MovieAdapter adapterFav;
+//    MovieAdapter adapterFav;
     String movieDbUrl = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
     int Position ;
-    ArrayList<SingleMovie> listFav;
+//    ArrayList<SingleMovie> listFav;
     boolean tabletSize;
     MovieDetails weather1;
     LinearLayout l;

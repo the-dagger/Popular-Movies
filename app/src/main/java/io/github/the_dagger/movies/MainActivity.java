@@ -5,13 +5,46 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements Communicator{
     DetailsLandscapeFragment f;
     SingleMovie Movie;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("onDestroy","onDestroy");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("onStart","onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("onResume","onResume");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop","onStop");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("onPause","onPause");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("onCreate","onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

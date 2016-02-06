@@ -59,7 +59,9 @@ public class DetailsActivity extends AppCompatActivity {
                 Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        try{
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);}
+        catch(NullPointerException e){};
         getSupportActionBar().setTitle("");
     }
 
