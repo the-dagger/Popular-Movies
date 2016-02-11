@@ -12,15 +12,17 @@ public class SingleMovie implements Parcelable {
     String movieOverView;
     String movieRating;
     String movieReleaseDate;
+    String id;
     String movieBackDropImage;
 
-    public SingleMovie(String image, String title, String overView, String rating, String releaseDate, String backDropImage) {
+    public SingleMovie(String image, String title, String overView, String rating, String releaseDate, String backDropImage,String id) {
         this.movieImage = image;
         this.movieTitle = title;
         this.movieOverView = overView;
         this.movieRating = rating;
         this.movieReleaseDate = releaseDate;
         this.movieBackDropImage = backDropImage;
+        this.id = id;
     }
 
     public SingleMovie(Parcel in) {
@@ -28,6 +30,7 @@ public class SingleMovie implements Parcelable {
         this.movieTitle = in.readString();
         this.movieOverView = in.readString();
         this.movieRating = in.readString();
+        this.id = in.readString();
         this.movieReleaseDate = in.readString();
         this.movieBackDropImage = in.readString();
     }
@@ -55,6 +58,7 @@ public class SingleMovie implements Parcelable {
         dest.writeString(movieTitle);
         dest.writeString(movieOverView);
         dest.writeString(movieRating);
+        dest.writeString(id);
         dest.writeString(movieReleaseDate);
         dest.writeString(movieBackDropImage);
     }
