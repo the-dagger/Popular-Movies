@@ -8,16 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.github.florent37.picassopalette.BitmapPalette;
 import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Picasso;
-
-import java.io.BufferedReader;
-import java.net.HttpURLConnection;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,13 +27,7 @@ public class DetailsActivity extends AppCompatActivity{
     @Bind(R.id.releaseDate) TextView releaseTextView;
     @Bind(R.id.posterImageDetail) ImageView posterImage;
     @Bind(R.id.ratingBar1) RatingBar rb;
-    @Bind(R.id.lViewTrailers)
-    ListView lv;
-    String movieDbUrl = null;
     SingleMovie movie;
-    HttpURLConnection urlConnection = null;
-    BufferedReader reader = null;
-    String movieinfo = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
