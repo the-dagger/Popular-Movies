@@ -62,4 +62,5 @@ public class SingleMovie implements Parcelable {
         dest.writeString(movieReleaseDate);
         dest.writeString(movieBackDropImage);
     }
+
 }

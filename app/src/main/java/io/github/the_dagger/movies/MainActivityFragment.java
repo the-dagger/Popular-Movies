@@ -1,10 +1,14 @@
 package io.github.the_dagger.movies;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,9 +16,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.github.florent37.picassopalette.PicassoPalette;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,8 +36,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import retrofit2.Call;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,11 +44,9 @@ import retrofit2.Call;
 public class MainActivityFragment extends Fragment{
     MovieAdapter adapter;
     Boolean sort = false;
-    private TrailerModel model;
     String movieDbUrl = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
-    ArrayList<TrailerModel> listTrailer;
     int Position ;
     boolean tabletSize;
     String MOVIE_ID;
@@ -50,7 +55,6 @@ public class MainActivityFragment extends Fragment{
     GridView gridview;
     String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie[] movieList = {};
-    Call<TrailerModel> call;
     Communicator com;
     public MainActivityFragment() {
 
@@ -114,41 +118,22 @@ public class MainActivityFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         adapter = new MovieAdapter(getActivity(), list);
-        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        gridview = (GridView) rootView.findViewById(R.id.gridView);
-        gridview.setAdapter(adapter);
+        RecyclerView rv = (RecyclerView) inflater.inflate(R.layout.fragment_main,container,false);
+        rv.setLayoutManager(new GridLayoutManager(rv.getContext(),2));
+        rv.setAdapter(adapter);
         com = (Communicator) getActivity();
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-               // MainActivityFragment mainActivityFragment = (MainActivityFragment) getFragmentManager().findFragmentById(R.id.fragment);
-                Position = position;
-                tabletSize = getResources().getBoolean(R.bool.isTab);
-                if (!tabletSize) {
-                    Intent switchIntent = new Intent(getActivity(), DetailsActivity.class)
-                            .putExtra(getString(R.string.Poster), adapter.getItem(Position));
-                    startActivity(switchIntent);
-                }
-                else{
-                com.respond(adapter.getItem(Position));
-//                Log.v(LOG_TAG,movieDetails[position].movieTitle);
-            }}
-        });
-        return rootView;
+        return rv;
     }
-
 
     public class MovieDetails extends AsyncTask<Void, Void, SingleMovie[]> {
         @Override
         protected void onPostExecute(SingleMovie[] singleMovies) {
             if (singleMovies != null) {
-                adapter.clear();
+                list.clear();
                 for (int i = 0; i < singleMovies.length; i++) {
                     SingleMovie oneMovie = singleMovies[i];
-                    adapter.add(oneMovie);
+                    list.add(oneMovie);
                 }
-//                f = getFragmentManager().findFragmentById(R.id.fragment2);
-//                if(f != null && f.isVisible())
                 com.respond(singleMovies[0]);
             }
             super.onPostExecute(singleMovies);
@@ -231,6 +216,64 @@ public class MainActivityFragment extends Fragment{
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+
+    //Movie Adapter
+    public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+
+        List<SingleMovie> listSM;
+        Context c;
+        public MovieAdapter(FragmentActivity context, List<SingleMovie> resource) {
+            c = context;
+            listSM = resource;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item,parent,false);
+            ViewHolder h = new ViewHolder(view);
+            return h;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, final int position) {
+            holder.tView.setText(listSM.get(position).movieTitle);
+            Picasso.with(this.c).load(listSM.get(position).movieImage).error(R.drawable.placeholder).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED)
+                    .intoBackground(holder.tView));
+            com = (Communicator) getActivity();
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tabletSize = getResources().getBoolean(R.bool.isTab);
+                if (!tabletSize) {
+                    Intent switchIntent = new Intent(getContext(), DetailsActivity.class)
+                            .putExtra("Poster", listSM.get(position));
+                    startActivity(switchIntent);}
+                else{
+                com.respond(listSM.get(position));}
+
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return listSM.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            ImageView iView;
+            View mView;
+            TextView tView;
+            public ViewHolder(View itemView) {
+                super(itemView);
+                mView = itemView;
+                iView = (ImageView) itemView.findViewById(R.id.movie_poster_image);
+                tView = (TextView) itemView.findViewById(R.id.movie_name);
+
+            }
+
         }
     }
 

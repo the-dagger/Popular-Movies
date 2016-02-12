@@ -16,6 +16,9 @@ import com.github.florent37.picassopalette.BitmapPalette;
 import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedReader;
+import java.net.HttpURLConnection;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -30,7 +33,11 @@ public class DetailsActivity extends AppCompatActivity{
     @Bind(R.id.ratingBar1) RatingBar rb;
     @Bind(R.id.lViewTrailers)
     ListView lv;
+    String movieDbUrl = null;
     SingleMovie movie;
+    HttpURLConnection urlConnection = null;
+    BufferedReader reader = null;
+    String movieinfo = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,4 +75,5 @@ public class DetailsActivity extends AppCompatActivity{
         catch(NullPointerException e){};
         getSupportActionBar().setTitle("");
     }
+
 }
