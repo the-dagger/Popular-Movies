@@ -13,36 +13,6 @@ public class MainActivity extends AppCompatActivity implements Communicator{
     SingleMovie Movie;
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e("onDestroy","onDestroy");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.e("onStart","onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e("onResume","onResume");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e("onStop","onStop");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e("onPause","onPause");
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.e("onCreate","onCreate");
         super.onCreate(savedInstanceState);

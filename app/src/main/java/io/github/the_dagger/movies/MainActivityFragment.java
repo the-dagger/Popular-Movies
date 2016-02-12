@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,12 +46,10 @@ public class MainActivityFragment extends Fragment{
     String movieDbUrl = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
-    int Position ;
-    boolean tabletSize;
+    static boolean tabletSize;
     String MOVIE_ID;
     MovieDetails weather1;
     LinearLayout l;
-    GridView gridview;
     String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie[] movieList = {};
     Communicator com;
@@ -232,8 +229,8 @@ public class MainActivityFragment extends Fragment{
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item,parent,false);
-            ViewHolder h = new ViewHolder(view);
-            return h;
+            return  new ViewHolder(view);
+//            return h;
         }
 
         @Override
@@ -276,6 +273,5 @@ public class MainActivityFragment extends Fragment{
 
         }
     }
-
 
 }
