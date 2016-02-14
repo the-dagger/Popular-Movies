@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.florent37.picassopalette.PicassoPalette;
@@ -47,10 +46,7 @@ public class MainActivityFragment extends Fragment{
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
     static boolean tabletSize;
-    String MOVIE_ID;
     MovieDetails weather1;
-    LinearLayout l;
-    String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie[] movieList = {};
     Communicator com;
     public MainActivityFragment() {
@@ -133,6 +129,7 @@ public class MainActivityFragment extends Fragment{
                 }
                 com.respond(singleMovies[0]);
             }
+            adapter.notifyDataSetChanged();
             super.onPostExecute(singleMovies);
         }
 
@@ -147,7 +144,7 @@ public class MainActivityFragment extends Fragment{
             String baseURL = "http://image.tmdb.org/t/p/w342/";
             for (int i = 0; i < 20; i++) {
                 JSONObject currentMovie = movieArray.getJSONObject(i);
-                MOVIE_ID = currentMovie.getString("id");
+                String movieID = currentMovie.getString("id");
                 String tempbackDropImage = baseURL + currentMovie.getString("backdrop_path");
                 String tempreleaseDate = currentMovie.getString("release_date");
                 String movietempOverView = currentMovie.getString("overview");
@@ -155,7 +152,7 @@ public class MainActivityFragment extends Fragment{
                 String movietitle = currentMovie.getString(MDB_TITLE);
                 String moviePosterendURL = currentMovie.getString(MDB_POSTER);
                 String moviePosterURL = baseURL + moviePosterendURL;
-                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle,movietempOverView,temprating,tempreleaseDate,tempbackDropImage,MOVIE_ID);
+                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle,movietempOverView,temprating,tempreleaseDate,tempbackDropImage,movieID);
             }
             return movieDetails;
         }

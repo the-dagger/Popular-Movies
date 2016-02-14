@@ -30,9 +30,9 @@ public class SingleMovie implements Parcelable {
         this.movieTitle = in.readString();
         this.movieOverView = in.readString();
         this.movieRating = in.readString();
-        this.id = in.readString();
         this.movieReleaseDate = in.readString();
         this.movieBackDropImage = in.readString();
+        this.id = in.readString();
     }
 
     public static final Creator<SingleMovie> CREATOR = new Creator<SingleMovie>() {
@@ -58,9 +58,9 @@ public class SingleMovie implements Parcelable {
         dest.writeString(movieTitle);
         dest.writeString(movieOverView);
         dest.writeString(movieRating);
-        dest.writeString(id);
         dest.writeString(movieReleaseDate);
         dest.writeString(movieBackDropImage);
+        dest.writeString(id);
     }
 
 }
