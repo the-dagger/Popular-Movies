@@ -38,12 +38,18 @@ public class DetailsActivity extends AppCompatActivity{
     @Bind(R.id.releaseDate) TextView releaseTextView;
     @Bind(R.id.posterImageDetail) ImageView posterImage;
     @Bind(R.id.ratingBar1) RatingBar rb;
-    @Bind(R.id.trailerRv) RecyclerView rv;
-    Call<Trailers> call;
-    List<Trailers.SingleTrailer> list1;
+    @Bind(R.id.trailerRv) RecyclerView rvTrailer;
+    @Bind(R.id.reviewRv) RecyclerView rvReview;
+    Call<Trailers> callTr;
+    Call<Reviews> callRv;
+
+    List<Trailers.SingleTrailer> listTr;
+    List<Reviews.SingleReview> listRv;
     String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie movie;
     private Trailers trailers;
+    private Reviews reviews;
+    private ReviewAdapter reviewAdapter;
     private TrailerAdapter trailerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,25 +59,28 @@ public class DetailsActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("Poster");
-        trailerAdapter = new TrailerAdapter(list1);
-        rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        rv.setAdapter(trailerAdapter);
+        reviewAdapter = new ReviewAdapter(listRv);
+        rvReview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvReview.setAdapter(reviewAdapter);
+        trailerAdapter = new TrailerAdapter(listTr);
+        rvTrailer.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvTrailer.setAdapter(trailerAdapter);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Base_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         TmdbAPI tmdbApi = retrofit.create(TmdbAPI.class);
         if(movie!=null) {
-//            Log.e("Movie ID",movie.id);
-            call = tmdbApi.getTrailers(movie.id);
-            call.enqueue(new Callback<Trailers>() {
+            callTr = tmdbApi.getTrailers(movie.id);
+            callTr.enqueue(new Callback<Trailers>() {
                 @Override
                 public void onResponse(Call<Trailers> call, Response<Trailers> response) {
+                    Log.e("responseTrailer",response.raw().toString());
                     try {
                         trailers = response.body();
-                        list1 = trailers.getTrailers();
-//                        trailerAdapter.swapList(list1);
-                        trailerAdapter.notifyDataSetChanged();
+                        listTr = trailers.getTrailers();
+                        trailerAdapter.swapList(listTr);
+//                        trailerAdapter.notifyDataSetChanged();
                     } catch (Exception e) {
                         Toast toast = null;
                         if (response.code() == 401){
@@ -91,6 +100,38 @@ public class DetailsActivity extends AppCompatActivity{
                 @Override
                 public void onFailure(Call<Trailers> call, Throwable t) {
                     Log.e("getQuestions threw: ", t.getMessage());
+                }
+            });
+
+            callRv = tmdbApi.getReview(movie.id);
+            callRv.enqueue(new Callback<Reviews>() {
+                @Override
+                public void onResponse(Call<Reviews> call, Response<Reviews> response) {
+                    Log.e("responseReview",response.raw().toString());
+                    try {
+                        reviews = response.body();
+                        listRv = reviews.getReviews();
+                        reviewAdapter.swapList(listRv);
+//                        trailerAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        Toast toast = null;
+                        if (response.code() == 401){
+                            toast = Toast.makeText(DetailsActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);
+                        } else if (response.code() >= 400){
+                            toast = Toast.makeText(DetailsActivity.this, "Client Error " + response.code()
+                                    + " " + response.message(), Toast.LENGTH_SHORT);
+                        }
+                        try {
+                            toast.show();
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Reviews> call, Throwable t) {
+
                 }
             });
             title.setText(movie.movieTitle);
