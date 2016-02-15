@@ -23,6 +23,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -65,9 +67,19 @@ public class DetailsActivity extends AppCompatActivity{
         trailerAdapter = new TrailerAdapter(listTr);
         rvTrailer.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         rvTrailer.setAdapter(trailerAdapter);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+// set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient httpClient = new OkHttpClient();
+// add your other interceptors …
+
+// add logging as last interceptor
+        httpClient.interceptors().add(logging);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Base_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient)
                 .build();
         TmdbAPI tmdbApi = retrofit.create(TmdbAPI.class);
         if(movie!=null) {
