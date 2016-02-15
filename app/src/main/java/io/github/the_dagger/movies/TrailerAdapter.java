@@ -17,30 +17,25 @@ import java.util.List;
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHolder> {
     List<Trailers.SingleTrailer> list;
     public TrailerAdapter(List<Trailers.SingleTrailer> list) {
+        Log.e("Constructor","I ran");//Gets Executed
         this.list = list;
-        Log.e("Constructor","Constructor Called");
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_trailer_item,parent,false);
-//        Toast.makeText(parent.getContext(),list.get(0).getKey(),Toast.LENGTH_LONG).show();
-        Log.e("onCreate","I ran");
+        Log.e("onCreate","I ran"); //Isn't Executed
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        Trailers.SingleTrailer trailer = list.get(position);
-        holder.i.setImageResource(R.drawable.placeholder);
         holder.setImage(holder.i,position);
-        Log.e("onBind","I ran");
-//        Picasso.with(c).load("http://img.youtube.com/vi/"+holder.trailer.key+"/0.jpg").error(R.drawable.placeholder).into(holder.i);
+        Log.e("onBind","I ran"); //Isn't Ecexuted
     }
 
     @Override
     public int getItemCount() {
-        Log.e("itemCount","I ran");
         if (list == null){
             return -1;
         }

@@ -8,12 +8,12 @@ import retrofit2.http.Path;
  * Created by Harshit on 2/13/2016.
  */
     public interface TmdbAPI {
-        @GET ("movie/{id}/videos?api_key=9ee088a6d3ed11d3c10ee27466d39427")
+        @GET ("movie/{id}/videos?api_key="+BuildConfig.MOBDB_API_KEY)
         Call<Trailers> getTrailers(
             @Path("id") String id
 
         );
-        @GET ("movie/{id}/reviews?api_key=9ee088a6d3ed11d3c10ee27466d39427")
+        @GET ("movie/{id}/reviews?api_key="+BuildConfig.MOBDB_API_KEY)
         Call<Reviews> getReview(
                 @Path("id") String id
         );
