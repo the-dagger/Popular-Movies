@@ -13,7 +13,7 @@ public class Trailers {
     public void setTrailers(List<SingleTrailer> trailers) {
         this.trailers = trailers;
     }
-    public class SingleTrailer{
+    public static class SingleTrailer{
         String key;
         public String getKey(){
             return key;

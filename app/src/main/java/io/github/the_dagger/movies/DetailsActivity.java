@@ -75,7 +75,7 @@ public class DetailsActivity extends AppCompatActivity{
             callTr.enqueue(new Callback<Trailers>() {
                 @Override
                 public void onResponse(Call<Trailers> call, Response<Trailers> response) {
-                    Log.e(getClass().getSimpleName(),response.raw().toString());
+//                    Log.e(getClass().getSimpleName(),response.raw().toString());
                     try {
                         trailers = response.body();
                         listTr = trailers.getTrailers();
@@ -107,7 +107,7 @@ public class DetailsActivity extends AppCompatActivity{
             callRv.enqueue(new Callback<Reviews>() {
                 @Override
                 public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-                    Log.e(getClass().getSimpleName(),response.raw().toString());
+//                    Log.e(getClass().getSimpleName(),response.raw().toString());
                     try {
                         reviews = response.body();
                         listRv = reviews.getReviews();

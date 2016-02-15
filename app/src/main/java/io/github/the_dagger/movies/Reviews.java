@@ -13,7 +13,7 @@ public class Reviews {
     public void setReviews(List<SingleReview> reviews) {
         this.reviews = reviews;
     }
-    public class SingleReview{
+    public static class SingleReview{
         String content;
         public String getContent(){
             return content;

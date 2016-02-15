@@ -27,7 +27,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.t.setText(listReview.get(position).getContent());
+//        Log.e(getClass().getSimpleName(),"onBind called");
+        Reviews.SingleReview review = listReview.get(position);
+        holder.t.setText(review.getContent());
     }
 
     @Override
@@ -38,8 +40,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         return listReview.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView t;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        public TextView t;
         public ViewHolder(View v){
             super(v);
             t = (TextView) v.findViewById(R.id.review_single_item);

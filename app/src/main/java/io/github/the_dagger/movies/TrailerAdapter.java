@@ -17,14 +17,14 @@ import java.util.List;
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHolder> {
     List<Trailers.SingleTrailer> list;
     public TrailerAdapter(List<Trailers.SingleTrailer> list) {
-        Log.e("Constructor","I ran");//Gets Executed
+//        Log.e("Constructor","I ran");//Gets Executed
         this.list = list;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_trailer_item,parent,false);
-        Log.e("onCreate","I ran"); //Isn't Executed
+//        Log.e("onCreate","I ran"); //Is Executed
         return new ViewHolder(itemView);
     }
 
@@ -49,7 +49,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHold
             i = (ImageView) itemView.findViewById(R.id.singleTrailerImageView);
         }
         public void setImage(ImageView v,int position){
-            Picasso.with(itemView.getContext()).load("http://img.youtube.com/vi/"+list.get(position).getKey()+"/0.jpg").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(v);
+            Trailers.SingleTrailer trailer = list.get(position);
+            Picasso.with(itemView.getContext()).load("http://img.youtube.com/vi/"+trailer.getKey()+"/0.jpg").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(v);
         }
     }
     public void swapList(List<Trailers.SingleTrailer> items){
