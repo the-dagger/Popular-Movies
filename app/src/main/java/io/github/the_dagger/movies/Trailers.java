@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Harshit on 2/13/2016.
  */
 public class Trailers {
-    public List<SingleTrailer> trailers;
+    private List<SingleTrailer> trailers;
     public List<SingleTrailer> getTrailers(){
         return trailers;
     }

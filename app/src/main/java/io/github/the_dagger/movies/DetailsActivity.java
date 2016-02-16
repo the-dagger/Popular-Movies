@@ -40,19 +40,18 @@ public class DetailsActivity extends AppCompatActivity{
     @Bind(R.id.releaseDate) TextView releaseTextView;
     @Bind(R.id.posterImageDetail) ImageView posterImage;
     @Bind(R.id.ratingBar1) RatingBar rb;
-    @Bind(R.id.trailerRv) RecyclerView rvTrailer;
-    @Bind(R.id.reviewRv) RecyclerView rvReview;
-    Call<Trailers> callTr;
-    Call<Reviews> callRv;
-
-    List<Trailers.SingleTrailer> listTr;
-    List<Reviews.SingleReview> listRv;
+//    @Bind(R.id.trailerRv) RecyclerView rvTrailer;
+//    @Bind(R.id.reviewRv) RecyclerView rvReview;
+    private Call<Trailers> callTr;
+    private Trailers trailers;
+//    Call<Reviews> callRv;
+    private List<Trailers.SingleTrailer> listTr;
+//    List<Reviews.SingleReview> listRv;
     String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie movie;
-    private Trailers trailers;
-    private Reviews reviews;
-    private ReviewAdapter reviewAdapter;
-    private TrailerAdapter trailerAdapter;
+//    private Reviews reviews;
+//    private ReviewAdapter reviewAdapter;
+    private TrailersAdapter trailersAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,91 +60,86 @@ public class DetailsActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("Poster");
-        reviewAdapter = new ReviewAdapter(listRv);
-        rvReview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        rvReview.setAdapter(reviewAdapter);
-        trailerAdapter = new TrailerAdapter(listTr);
-        rvTrailer.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        rvTrailer.setAdapter(trailerAdapter);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-// set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        OkHttpClient httpClient = new OkHttpClient();
-// add your other interceptors …
-
-// add logging as last interceptor
-        httpClient.interceptors().add(logging);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Base_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient)
+                .client(httpClient.build())
                 .build();
+//        reviewAdapter = new ReviewAdapter(listRv);
+//        rvReview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+//        rvReview.setAdapter(reviewAdapter);
+        trailersAdapter = new TrailersAdapter(listTr,this);
+        RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
+        rvTrailer.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvTrailer.setAdapter(trailersAdapter);
         TmdbAPI tmdbApi = retrofit.create(TmdbAPI.class);
-        if(movie!=null) {
-            callTr = tmdbApi.getTrailers(movie.id);
-            callTr.enqueue(new Callback<Trailers>() {
-                @Override
-                public void onResponse(Call<Trailers> call, Response<Trailers> response) {
-//                    Log.e(getClass().getSimpleName(),response.raw().toString());
+        callTr = tmdbApi.getTrailers(movie.id);
+        callTr.enqueue(new Callback<Trailers>() {
+            @Override
+            public void onResponse(Call<Trailers> call, Response<Trailers> response) {
+                Log.e(getClass().getSimpleName(),response.raw().toString());
+                try {
+                    trailers = response.body();
+                    listTr = trailers.getTrailers();
+                    trailersAdapter.swapList(listTr);
+//                        trailersAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Toast toast = null;
+                    if (response.code() == 401){
+                        toast = Toast.makeText(DetailsActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);
+                    } else if (response.code() >= 400){
+                        toast = Toast.makeText(DetailsActivity.this, "Client Error " + response.code()
+                                + " " + response.message(), Toast.LENGTH_SHORT);
+                    }
                     try {
-                        trailers = response.body();
-                        listTr = trailers.getTrailers();
-                        trailerAdapter.swapList(listTr);
-//                        trailerAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                        Toast toast = null;
-                        if (response.code() == 401){
-                            toast = Toast.makeText(DetailsActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);
-                        } else if (response.code() >= 400){
-                            toast = Toast.makeText(DetailsActivity.this, "Client Error " + response.code()
-                                    + " " + response.message(), Toast.LENGTH_SHORT);
-                        }
-                        try {
-                            toast.show();
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
+                        toast.show();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<Trailers> call, Throwable t) {
-                    Log.e("getQuestions threw: ", t.getMessage());
-                }
-            });
-
-            callRv = tmdbApi.getReview(movie.id);
-            callRv.enqueue(new Callback<Reviews>() {
-                @Override
-                public void onResponse(Call<Reviews> call, Response<Reviews> response) {
+            @Override
+            public void onFailure(Call<Trailers> call, Throwable t) {
+                Log.e("getQuestions threw: ", t.getMessage());
+            }
+        });
+//        if(movie!=null) {
+//            callRv = tmdbApi.getReview(movie.id);
+//            callRv.enqueue(new Callback<Reviews>() {
+//                @Override
+//                public void onResponse(Call<Reviews> call, Response<Reviews> response) {
 //                    Log.e(getClass().getSimpleName(),response.raw().toString());
-                    try {
-                        reviews = response.body();
-                        listRv = reviews.getReviews();
-                        reviewAdapter.swapList(listRv);
-//                        trailerAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                        Toast toast = null;
-                        if (response.code() == 401){
-                            toast = Toast.makeText(DetailsActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);
-                        } else if (response.code() >= 400){
-                            toast = Toast.makeText(DetailsActivity.this, "Client Error " + response.code()
-                                    + " " + response.message(), Toast.LENGTH_SHORT);
-                        }
-                        try {
-                            toast.show();
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Reviews> call, Throwable t) {
-
-                }
-            });
+//                    try {
+//                        reviews = response.body();
+//                        listRv = reviews.getReviews();
+//                        reviewAdapter.swapList(listRv);
+////                        trailersAdapter.notifyDataSetChanged();
+//                    } catch (Exception e) {
+//                        Toast toast = null;
+//                        if (response.code() == 401){
+//                            toast = Toast.makeText(DetailsActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);
+//                        } else if (response.code() >= 400){
+//                            toast = Toast.makeText(DetailsActivity.this, "Client Error " + response.code()
+//                                    + " " + response.message(), Toast.LENGTH_SHORT);
+//                        }
+//                        try {
+//                            toast.show();
+//                        } catch (Exception e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Reviews> call, Throwable t) {
+//
+//                }
+//            });
             title.setText(movie.movieTitle);
             Picasso.with(getApplicationContext()).load(movie.movieImage).error(R.drawable.placeholder).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
             );
@@ -161,7 +155,7 @@ public class DetailsActivity extends AppCompatActivity{
                     summary = summary + "\n" + sum;
             overviewTextView.setText(summary);
             Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
-        }
+//        }
         f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,7 +163,7 @@ public class DetailsActivity extends AppCompatActivity{
             }
         });
         try{
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);}
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);}
         catch(NullPointerException e){};
         getSupportActionBar().setTitle("");
     }
