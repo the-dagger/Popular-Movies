@@ -69,9 +69,6 @@ public class DetailsActivity extends AppCompatActivity{
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
-//        reviewAdapter = new ReviewAdapter(listRv);
-//        rvReview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-//        rvReview.setAdapter(reviewAdapter);
         trailersAdapter = new TrailersAdapter(listTr,this);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
         rvTrailer.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
