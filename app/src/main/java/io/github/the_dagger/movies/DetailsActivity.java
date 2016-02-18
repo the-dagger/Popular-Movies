@@ -30,6 +30,9 @@ import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+//import retrofit2.converter.gson.GsonConverterFactory;
+
+//import retrofit2.GsonConverterFactory;
 
 public class DetailsActivity extends AppCompatActivity{
     @Bind(R.id.toolbar)Toolbar toolbar;
@@ -77,7 +80,7 @@ public class DetailsActivity extends AppCompatActivity{
         callTr = tmdbApi.getTrailers(movie.id);
         callTr.enqueue(new Callback<Trailers>() {
             @Override
-            public void onResponse(Call<Trailers> call, Response<Trailers> response) {
+            public void onResponse(Response<Trailers> response) {
                 Log.e(getClass().getSimpleName(),response.raw().toString());
                 try {
                     trailers = response.body();
@@ -104,7 +107,7 @@ public class DetailsActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onFailure(Call<Trailers> call, Throwable t) {
+            public void onFailure(Throwable t) {
                 Log.e("getQuestions threw: ", t.getMessage());
             }
         });

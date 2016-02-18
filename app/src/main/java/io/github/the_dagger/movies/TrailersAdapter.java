@@ -33,10 +33,11 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Picasso.with(c).load("http://img.youtube.com/vi/"+list.get(position).getKey()+"/0.jpg").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.i);
-        Log.e("onBind","I ran"); //Isn't Ecexuted
+        for (int i = 0; i < getItemCount(); i++) {
+            Picasso.with(c).load("http://img.youtube.com/vi/" + list.get(position).getKey() + "/0.jpg").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.i);
+            Log.e("onBind", "I ran"); //Isn't Ecexuted
+        }
     }
-
     @Override
     public int getItemCount() {
         if (list == null){
