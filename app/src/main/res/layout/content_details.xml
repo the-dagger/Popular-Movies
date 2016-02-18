@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/activity_details"
+    android:background="#000"
     tools:context="io.github.the_dagger.movies.DetailsActivity"
     android:layout_height="match_parent">
 

@@ -42,7 +42,6 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
         if (list == null){
             return -1;
         }
-        Log.e("getItemCount","I ran");
         return list.size();
     }
 

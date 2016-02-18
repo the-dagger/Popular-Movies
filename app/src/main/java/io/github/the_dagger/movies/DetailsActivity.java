@@ -82,9 +82,12 @@ public class DetailsActivity extends AppCompatActivity{
                 try {
                     trailers = response.body();
                     listTr = trailers.getTrailers();
+                    listTr.size();       //ListTr is null here
                     trailersAdapter.swapList(listTr);
 //                        trailersAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
+                    Log.e("Exception","Exception");   //This statement is executed
+                    e.printStackTrace();
                     Toast toast = null;
                     if (response.code() == 401){
                         toast = Toast.makeText(DetailsActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);

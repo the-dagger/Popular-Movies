@@ -227,13 +227,12 @@ public class MainActivityFragment extends Fragment{
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item,parent,false);
             return  new ViewHolder(view);
-//            return h;
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.tView.setText(listSM.get(position).movieTitle);
-            Picasso.with(this.c).load(listSM.get(position).movieImage).error(R.drawable.placeholder).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED)
+            Picasso.with(this.c).load(listSM.get(position).movieImage).error(R.drawable.placeholder).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED_DARK)
                     .intoBackground(holder.tView));
             com = (Communicator) getActivity();
             holder.mView.setOnClickListener(new View.OnClickListener() {
