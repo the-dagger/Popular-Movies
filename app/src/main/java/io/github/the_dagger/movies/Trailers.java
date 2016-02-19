@@ -15,6 +15,8 @@ public class Trailers {
     }
     public static class SingleTrailer{
         String key;
+        String name;
+        public String getTitle(){return name;}
         public String getKey(){
             return key;
         }

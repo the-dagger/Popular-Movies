@@ -1,5 +1,6 @@
 package io.github.the_dagger.movies;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -119,8 +120,20 @@ public class MainActivityFragment extends Fragment{
     }
 
     public class MovieDetails extends AsyncTask<Void, Void, SingleMovie[]> {
+        private ProgressDialog dialog = new ProgressDialog(getActivity());
+
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Please wait");
+            this.dialog.show();
+        }
+
         @Override
         protected void onPostExecute(SingleMovie[] singleMovies) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             if (singleMovies != null) {
                 list.clear();
                 for (int i = 0; i < singleMovies.length; i++) {
@@ -141,7 +154,7 @@ public class MainActivityFragment extends Fragment{
 
             JSONObject moviejson = new JSONObject(movieInfo);
             JSONArray movieArray = moviejson.getJSONArray(MDB_RESULT);
-            String baseURL = "http://image.tmdb.org/t/p/w342/";
+            String baseURL = "http://image.tmdb.org/t/p/w500/";
             for (int i = 0; i < 20; i++) {
                 JSONObject currentMovie = movieArray.getJSONObject(i);
                 String movieID = currentMovie.getString("id");

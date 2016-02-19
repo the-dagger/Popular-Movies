@@ -21,7 +21,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_trailer_item,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_resource_item,parent,false);
         return new ViewHolder(itemView); //What is the use of this command?
     }
 
@@ -29,7 +29,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
 //        Log.e(getClass().getSimpleName(),"onBind called");
         Reviews.SingleReview review = listReview.get(position);
-        holder.t.setText(review.getContent());
+        holder.t.setText("Trailer"+position);
     }
 
     @Override

@@ -1,4 +1,8 @@
 <TextView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/review_single_item"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:layout_weight="1"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="8dp"
+    android:textSize="14sp"
+    android:typeface="sans"/>

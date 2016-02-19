@@ -44,16 +44,16 @@ public class DetailsActivity extends AppCompatActivity{
     @Bind(R.id.posterImageDetail) ImageView posterImage;
     @Bind(R.id.ratingBar1) RatingBar rb;
 //    @Bind(R.id.trailerRv) RecyclerView rvTrailer;
-//    @Bind(R.id.reviewRv) RecyclerView rvReview;
+    @Bind(R.id.reviewRv) RecyclerView rvReview;
     private Call<Trailers> callTr;
     private Trailers trailers;
-//    Call<Reviews> callRv;
+    Call<Reviews> callRv;
     private List<Trailers.SingleTrailer> listTr;
-//    List<Reviews.SingleReview> listRv;
+    List<Reviews.SingleReview> listRv;
     String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie movie;
-//    private Reviews reviews;
-//    private ReviewAdapter reviewAdapter;
+    private Reviews reviews;
+    private ReviewAdapter reviewAdapter;
     private TrailersAdapter trailersAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +74,12 @@ public class DetailsActivity extends AppCompatActivity{
                 .build();
         trailersAdapter = new TrailersAdapter(listTr,this);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
-        rvTrailer.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvTrailer.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         rvTrailer.setAdapter(trailersAdapter);
+        reviewAdapter = new ReviewAdapter(listRv);
+        RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
+        rvReview.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        rvReview.setAdapter(reviewAdapter);
         TmdbAPI tmdbApi = retrofit.create(TmdbAPI.class);
         callTr = tmdbApi.getTrailers(movie.id);
         callTr.enqueue(new Callback<Trailers>() {
@@ -112,37 +116,37 @@ public class DetailsActivity extends AppCompatActivity{
             }
         });
 //        if(movie!=null) {
-//            callRv = tmdbApi.getReview(movie.id);
-//            callRv.enqueue(new Callback<Reviews>() {
-//                @Override
-//                public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-//                    Log.e(getClass().getSimpleName(),response.raw().toString());
-//                    try {
-//                        reviews = response.body();
-//                        listRv = reviews.getReviews();
-//                        reviewAdapter.swapList(listRv);
-////                        trailersAdapter.notifyDataSetChanged();
-//                    } catch (Exception e) {
-//                        Toast toast = null;
-//                        if (response.code() == 401){
-//                            toast = Toast.makeText(DetailsActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);
-//                        } else if (response.code() >= 400){
-//                            toast = Toast.makeText(DetailsActivity.this, "Client Error " + response.code()
-//                                    + " " + response.message(), Toast.LENGTH_SHORT);
-//                        }
-//                        try {
-//                            toast.show();
-//                        } catch (Exception e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Reviews> call, Throwable t) {
-//
-//                }
-//            });
+            callRv = tmdbApi.getReview(movie.id);
+            callRv.enqueue(new Callback<Reviews>() {
+                @Override
+                public void onResponse(Response<Reviews> response) {
+                    Log.e(getClass().getSimpleName(),response.raw().toString());
+                    try {
+                        reviews = response.body();
+                        listRv = reviews.getReviews();
+                        reviewAdapter.swapList(listRv);
+//                        trailersAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        Toast toast = null;
+                        if (response.code() == 401){
+                            toast = Toast.makeText(DetailsActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);
+                        } else if (response.code() >= 400){
+                            toast = Toast.makeText(DetailsActivity.this, "Client Error " + response.code()
+                                    + " " + response.message(), Toast.LENGTH_SHORT);
+                        }
+                        try {
+                            toast.show();
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.e("getQuestions threw: ", t.getMessage());
+                }
+            });
             title.setText(movie.movieTitle);
             Picasso.with(getApplicationContext()).load(movie.movieImage).error(R.drawable.placeholder).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
             );

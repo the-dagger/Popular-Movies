@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,7 +20,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
     List<Trailers.SingleTrailer> list;
     Context c;
     public TrailersAdapter(List<Trailers.SingleTrailer> list,Context c) {
-        Log.e("Constructor","I ran");//Gets Executed
+        Log.e("Constructor","I ran");
         this.list = list;
         this.c = c;
     }
@@ -27,7 +28,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_trailer_item,parent,false);
-        Log.e("onCreate","I ran"); //Isn't Executed
+        Log.e("onCreate","I ran");
         return new ViewHolder(itemView);
     }
 
@@ -35,7 +36,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         for (int i = 0; i < getItemCount(); i++) {
             Picasso.with(c).load("http://img.youtube.com/vi/" + list.get(position).getKey() + "/0.jpg").error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.i);
-            Log.e("onBind", "I ran"); //Isn't Ecexuted
+            holder.t.setText(list.get(position).getTitle());
         }
     }
     @Override
@@ -48,8 +49,10 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView i;
+        public TextView t;
         public ViewHolder(View itemView) {
             super(itemView);
+            t = (TextView) itemView.findViewById(R.id.trailer_name);
             i = (ImageView) itemView.findViewById(R.id.singleTrailerImageView);
         }
     }
