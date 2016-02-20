@@ -66,8 +66,9 @@
                         android:id="@+id/posterImageDetail"
                         android:layout_width="180dp"
                         android:layout_height="250dp"
+                        android:transitionName="@string/transition_album_cover"
                         android:layout_marginTop="8dp"
-                        android:transitionName="profile" />
+                        />
 
 
                     <TextView
@@ -140,6 +141,7 @@
                         android:layout_height="wrap_content"
                         android:numStars="5"
                         android:stepSize="0.5"
+                        android:isIndicator="true"
                         android:theme="@style/RatingBar" />
 
                     <TextView

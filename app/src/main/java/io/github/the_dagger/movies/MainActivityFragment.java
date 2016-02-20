@@ -50,6 +50,7 @@ public class MainActivityFragment extends Fragment{
     MovieDetails weather1;
     SingleMovie[] movieList = {};
     Communicator com;
+    ImageView poster;
     public MainActivityFragment() {
 
     }
@@ -115,14 +116,13 @@ public class MainActivityFragment extends Fragment{
         RecyclerView rv = (RecyclerView) inflater.inflate(R.layout.fragment_main,container,false);
         rv.setLayoutManager(new GridLayoutManager(rv.getContext(),2));
         rv.setAdapter(adapter);
+        poster = (ImageView) rv.findViewById(R.id.movie_poster_image);
         com = (Communicator) getActivity();
         return rv;
     }
 
     public class MovieDetails extends AsyncTask<Void, Void, SingleMovie[]> {
         private ProgressDialog dialog = new ProgressDialog(getActivity());
-
-
         @Override
         protected void onPreExecute() {
             this.dialog.setMessage("Please wait");
@@ -255,7 +255,12 @@ public class MainActivityFragment extends Fragment{
                 if (!tabletSize) {
                     Intent switchIntent = new Intent(getContext(), DetailsActivity.class)
                             .putExtra("Poster", listSM.get(position));
-                    startActivity(switchIntent);}
+//                    String transitionName = getString(R.string.transition_album_cover);
+//                    ActivityOptionsCompat options =
+//                            ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),poster,transitionName);
+//                    ActivityCompat.startActivity(getActivity(), switchIntent, options.toBundle());
+                    startActivity(switchIntent);
+                }
                 else{
                 com.respond(listSM.get(position));}
 

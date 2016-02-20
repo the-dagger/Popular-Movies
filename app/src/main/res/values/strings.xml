@@ -9,4 +9,5 @@
     <string name="Backdrop">Backdrop</string>
     <string name="Rating">Rating</string>
     <string name="ReleaseDate">ReleaseDate</string>
+    <string name="transition_album_cover">transition</string>
 </resources>
