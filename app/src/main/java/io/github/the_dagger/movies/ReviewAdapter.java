@@ -1,5 +1,8 @@
 package io.github.the_dagger.movies;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +16,13 @@ import java.util.List;
  */
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder>{
 
+    Context c;
+    int position;
     List<Reviews.SingleReview> listReview;
 
-    public ReviewAdapter(List<Reviews.SingleReview> listReview){
+    public ReviewAdapter(List<Reviews.SingleReview> listReview,Context c){
         this.listReview = listReview;
+        this.c = c;
     }
 
     @Override
@@ -27,9 +33,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        Log.e(getClass().getSimpleName(),"onBind called");
+        this.position = position;
         Reviews.SingleReview review = listReview.get(position);
-        holder.t.setText("Trailer"+position);
+        if(getItemCount() == -1){
+            holder.t.setText("No Reviews");
+            holder.t.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        }
+        else{
+            holder.t.setText(review.getContent());
+        }
+
     }
 
     @Override
@@ -40,11 +53,19 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         return listReview.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView t;
         public ViewHolder(View v){
             super(v);
             t = (TextView) v.findViewById(R.id.review_single_item);
+            t.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Uri reviewLink = Uri.parse(listReview.get(position).getUrl());
+            Intent reviewIntent = new Intent(Intent.ACTION_VIEW,reviewLink);
+            c.startActivity(reviewIntent);
         }
     }
 

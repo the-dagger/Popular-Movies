@@ -19,6 +19,8 @@ import com.github.florent37.picassopalette.BitmapPalette;
 import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Picasso;
 
+import org.solovyev.android.views.llm.DividerItemDecoration;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -75,10 +77,12 @@ public class DetailsActivity extends AppCompatActivity{
         trailersAdapter = new TrailersAdapter(listTr,this);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
         rvTrailer.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        rvTrailer.addItemDecoration(new DividerItemDecoration(this, null));
         rvTrailer.setAdapter(trailersAdapter);
-        reviewAdapter = new ReviewAdapter(listRv);
+        reviewAdapter = new ReviewAdapter(listRv,this);
         RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
         rvReview.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        rvReview.addItemDecoration(new DividerItemDecoration(this,null));
         rvReview.setAdapter(reviewAdapter);
         TmdbAPI tmdbApi = retrofit.create(TmdbAPI.class);
         callTr = tmdbApi.getTrailers(movie.id);

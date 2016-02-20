@@ -53,7 +53,7 @@
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="#ffe5e5e5"
                 android:elevation="8dp">
 
@@ -76,12 +76,14 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/posterImageDetail"
                         android:layout_marginLeft="8dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:gravity="center_vertical"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:typeface="sans" />
+                        android:typeface="sans"
+                        tools:targetApi="lollipop" />
 
                     <TextView
                         android:id="@+id/movieSummary"
@@ -89,12 +91,14 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/movieDetailTitle"
                         android:layout_marginBottom="8dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:singleLine="false"
                         android:textSize="14sp"
-                        android:typeface="sans" />
+                        android:typeface="sans"
+                        tools:targetApi="lollipop" />
                 </RelativeLayout>
 
             </android.support.v7.widget.CardView>
@@ -102,7 +106,7 @@
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="#ffe5e5e5"
                 android:elevation="8dp">
 
@@ -112,7 +116,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignBottom="@+id/posterImageDetail"
                     android:layout_alignTop="@+id/posterImageDetail"
-                    android:layout_margin="8dp"
+                    android:layout_margin="4dp"
                     android:layout_toEndOf="@id/posterImageDetail"
                     android:layout_toRightOf="@id/posterImageDetail"
                     android:gravity="center_vertical"
@@ -124,9 +128,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="Votes"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:typeface="sans" />
+                        android:typeface="sans"
+                        tools:targetApi="lollipop" />
 
                     <RatingBar
                         android:id="@+id/ratingBar1"
@@ -143,17 +149,21 @@
                         android:layout_marginBottom="8dp"
                         android:text="Release Date"
                         android:textSize="20sp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textStyle="bold"
-                        android:typeface="sans" />
+                        android:typeface="sans"
+                        tools:targetApi="lollipop" />
 
                     <TextView
                         android:id="@+id/releaseDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
                         android:gravity="center"
                         android:textSize="14sp"
-                        android:typeface="sans" />
+                        android:typeface="sans"
+                        tools:targetApi="lollipop" />
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -161,7 +171,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="#ffe5e5e5"
                 android:elevation="8dp">
 
@@ -175,41 +185,46 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="Trailers"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:typeface="sans" />
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/trailerRv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                        android:typeface="sans"
+                        tools:targetApi="lollipop" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/trailerRv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:background="#ffe5e5e5"
                 android:elevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Reviews"
+                        android:layout_margin="4dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:typeface="sans" />
+                        android:typeface="sans"
+                        tools:targetApi="lollipop" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/reviewRv"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"></android.support.v7.widget.RecyclerView>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </android.support.v7.widget.RecyclerView>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
