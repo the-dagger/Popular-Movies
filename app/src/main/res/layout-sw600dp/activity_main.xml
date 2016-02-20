@@ -30,6 +30,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_favorite_border_white_24dp"
-        android:visibility="visible"
+        android:visibility="gone"
         />
 </android.support.design.widget.CoordinatorLayout>

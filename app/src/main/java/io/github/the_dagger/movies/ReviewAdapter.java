@@ -1,6 +1,8 @@
 package io.github.the_dagger.movies;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,19 +63,19 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-//            Uri reviewLink = Uri.parse(listReview.get(position).getUrl());
-//            Intent reviewIntent = new Intent(Intent.ACTION_VIEW,reviewLink);
-//            c.startActivity(reviewIntent);
+            Uri reviewLink = Uri.parse(listReview.get(position).getUrl());
+            Intent reviewIntent = new Intent(Intent.ACTION_VIEW,reviewLink);
+            c.startActivity(reviewIntent);
 
-            if(isTextViewClicked){
-                //This will shrink textview to 2 lines if it is expanded.
-                t.setMaxLines(2);
-                isTextViewClicked = false;
-            } else {
-                //This will expand the textview if it is of 2 lines
-                t.setMaxLines(Integer.MAX_VALUE);
-                isTextViewClicked = true;
-            }
+//            if(isTextViewClicked){
+//                //This will shrink textview to 2 lines if it is expanded.
+//                t.setMaxLines(2);
+//                isTextViewClicked = false;
+//            } else {
+//                //This will expand the textview if it is of 2 lines
+//                t.setMaxLines(Integer.MAX_VALUE);
+//                isTextViewClicked = true;
+//            }
         }
     }
 

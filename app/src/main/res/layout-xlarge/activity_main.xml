@@ -30,7 +30,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_save"
-        android:visibility="visible"
+        android:visibility="gone"
         />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -10,6 +10,6 @@
     android:textAppearance="@android:style/TextAppearance.Material.Body1"
     android:textSize="14sp"
     android:ellipsize="end"
-    android:maxLines="4"
+    android:maxLines="5"
     android:typeface="sans"
     tools:targetApi="lollipop" />
