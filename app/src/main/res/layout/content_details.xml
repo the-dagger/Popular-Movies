@@ -66,9 +66,8 @@
                         android:id="@+id/posterImageDetail"
                         android:layout_width="180dp"
                         android:layout_height="250dp"
-                        android:transitionName="@string/transition_album_cover"
                         android:layout_marginTop="8dp"
-                        />
+                        android:transitionName="@string/transition_album_cover" />
 
 
                     <TextView
@@ -77,10 +76,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/posterImageDetail"
                         android:layout_marginLeft="8dp"
-                        android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:gravity="center_vertical"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:typeface="sans"
@@ -92,11 +91,12 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/movieDetailTitle"
                         android:layout_marginBottom="8dp"
-                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:singleLine="false"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                        android:textColor="#000"
                         android:textSize="14sp"
                         android:typeface="sans"
                         tools:targetApi="lollipop" />
@@ -139,9 +139,9 @@
                         android:id="@+id/ratingBar1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:isIndicator="true"
                         android:numStars="5"
                         android:stepSize="0.5"
-                        android:isIndicator="true"
                         android:theme="@style/RatingBar" />
 
                     <TextView
@@ -150,8 +150,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="Release Date"
-                        android:textSize="20sp"
                         android:textAppearance="@android:style/TextAppearance.Material.Title"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:typeface="sans"
                         tools:targetApi="lollipop" />
@@ -161,8 +161,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
                         android:gravity="center"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                        android:textColor="#000"
                         android:textSize="14sp"
                         android:typeface="sans"
                         tools:targetApi="lollipop" />
@@ -192,6 +193,7 @@
                         android:textStyle="bold"
                         android:typeface="sans"
                         tools:targetApi="lollipop" />
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/trailerRv"
                         android:layout_width="wrap_content"
@@ -214,9 +216,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Reviews"
                         android:layout_margin="4dp"
+                        android:text="Reviews"
                         android:textAppearance="@android:style/TextAppearance.Material.Title"
+                        android:textColor="#000"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:typeface="sans"
@@ -225,8 +228,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/reviewRv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </android.support.v7.widget.RecyclerView>
+                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
