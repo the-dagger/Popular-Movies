@@ -67,7 +67,62 @@
                         android:layout_height="250dp"
                         android:transitionName="@string/transition_album_cover"
                         android:layout_marginTop="8dp" />
+                    <LinearLayout
+                        android:id="@+id/linearLayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBottom="@+id/posterImageDetail1"
+                        android:layout_alignTop="@+id/posterImageDetail1"
+                        android:layout_margin="16dp"
+                        android:layout_toEndOf="@id/posterImageDetail1"
+                        android:layout_toRightOf="@id/posterImageDetail1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/vote1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Votes"
+                            android:textAppearance="@android:style/TextAppearance.Material.Title"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:typeface="sans"
+                            tools:targetApi="lollipop" />
+
+                        <RatingBar
+                            android:id="@+id/ratingBar11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:numStars="5"
+                            android:stepSize="0.5"
+                            android:isIndicator="true"
+                            android:theme="@style/RatingBar" />
+
+                        <TextView
+                            android:id="@+id/releaseDateTitle1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Release Date"
+                            android:textSize="20sp"
+                            android:textAppearance="@android:style/TextAppearance.Material.Title"
+                            android:textStyle="bold"
+                            android:typeface="sans"
+                            tools:targetApi="lollipop" />
+
+                        <TextView
+                            android:id="@+id/releaseDate1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:typeface="sans"
+                            tools:targetApi="lollipop" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/movieDetailTitle1"
@@ -109,62 +164,7 @@
                 android:background="#ffe5e5e5"
                 android:elevation="8dp">
 
-                <LinearLayout
-                    android:id="@+id/linearLayout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignBottom="@+id/posterImageDetail1"
-                    android:layout_alignTop="@+id/posterImageDetail1"
-                    android:layout_margin="4dp"
-                    android:layout_toEndOf="@id/posterImageDetail1"
-                    android:layout_toRightOf="@id/posterImageDetail1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/vote1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Votes"
-                        android:textAppearance="@android:style/TextAppearance.Material.Title"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:typeface="sans"
-                        tools:targetApi="lollipop" />
-
-                    <RatingBar
-                        android:id="@+id/ratingBar11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:stepSize="0.5"
-                        android:isIndicator="true"
-                        android:theme="@style/RatingBar" />
-
-                    <TextView
-                        android:id="@+id/releaseDateTitle1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Release Date"
-                        android:textSize="20sp"
-                        android:textAppearance="@android:style/TextAppearance.Material.Title"
-                        android:textStyle="bold"
-                        android:typeface="sans"
-                        tools:targetApi="lollipop" />
-
-                    <TextView
-                        android:id="@+id/releaseDate1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
-                        android:gravity="center"
-                        android:textSize="14sp"
-                        android:typeface="sans"
-                        tools:targetApi="lollipop" />
-                </LinearLayout>
 
             </android.support.v7.widget.CardView>
 

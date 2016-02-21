@@ -25,8 +25,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -65,14 +63,14 @@ public class DetailsActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("Poster");
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+//        httpClient.addInterceptor(logging);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Base_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
+//                .client(httpClient.build())
                 .build();
         trailersAdapter = new TrailersAdapter(listTr,this);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);

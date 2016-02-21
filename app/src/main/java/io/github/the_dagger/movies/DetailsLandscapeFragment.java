@@ -41,7 +41,7 @@ public class DetailsLandscapeFragment extends Fragment {
     private Call<Trailers> callTr;
     private Trailers trailers;
     Call<Reviews> callRv;
-    private List<Trailers.SingleTrailer> listTr;
+    List<Trailers.SingleTrailer> listTr;
     List<Reviews.SingleReview> listRv;
     String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie movie;
