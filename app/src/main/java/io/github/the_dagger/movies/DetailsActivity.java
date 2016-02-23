@@ -87,9 +87,6 @@ public class DetailsActivity extends AppCompatActivity {
                     trailersAdapter.swapList(listTr);
                     shareIntent.putExtra(Intent.EXTRA_TEXT,"https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
                     shareActionProvider.setShareIntent(shareIntent);
-//                    Log.e("size", String.valueOf(listTr.size()));  //this prints the value "1"
-//                    Log.e("key",listTr.get(0).getKey());  //returns the correct key
-//                    key = listTr.get(0).getKey();  //key is null here
                 } catch (Exception e) {
 //                    Log.e("exception","Exception");
                     e.printStackTrace();

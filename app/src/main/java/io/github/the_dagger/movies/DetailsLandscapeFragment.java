@@ -58,9 +58,9 @@ public class DetailsLandscapeFragment extends Fragment {
     private Reviews reviews;
     private ReviewAdapter reviewAdapter;
     private TrailersAdapter trailersAdapter;
-
+    Intent shareIntent;
     public void getMovie(SingleMovie singleMovie) {
-        Log.e("getmovie","getmovie ran");
+        Log.e("getmovie", "getmovie ran");
         movie = singleMovie;
         if (movie != null) {
             Retrofit retrofit = new Retrofit.Builder()
@@ -79,6 +79,8 @@ public class DetailsLandscapeFragment extends Fragment {
                             listTr = trailers.getTrailers();
                             listTr.size();       //ListTr is null here
                             trailersAdapter.swapList(listTr);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT,"https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
+                            shareActionProvider.setShareIntent(shareIntent);
 //                        trailersAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             Log.e("Exception", "Exception");   //This statement is executed
@@ -157,20 +159,15 @@ public class DetailsLandscapeFragment extends Fragment {
             }
         }
     }
-
+    String EXTRA_MESSAGE = "Sent via Popular Movies app";
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        inflater.inflate(R.menu.share,menu);
-        MenuItem shareItem =  menu.findItem(R.id.action_share);
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        inflater.inflate(R.menu.share, menu);
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-//        try {
-            shareIntent.putExtra(Intent.EXTRA_TEXT,"https://www.youtube.com/watch?v="+trailersAdapter.getShareKey());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v="+"\n" + EXTRA_MESSAGE);
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(shareIntent);
     }
@@ -183,7 +180,7 @@ public class DetailsLandscapeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.e("getmovie","oncreate ran");
+        Log.e("getmovie", "oncreate ran");
         if (savedInstanceState == null || !savedInstanceState.containsKey("movie2")) {
 //            getMovie(movie);
         } else {
@@ -196,7 +193,7 @@ public class DetailsLandscapeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e("getmovie","oncreateview ran");
+        Log.e("getmovie", "oncreateview ran");
         View view = inflater.inflate(R.layout.details_land_frag, container, false);
         title = (TextView) view.findViewById(R.id.movieDetailTitle1);
         overviewTextView = (TextView) view.findViewById(R.id.movieSummary1);
@@ -204,15 +201,15 @@ public class DetailsLandscapeFragment extends Fragment {
         releaseTextView = (TextView) view.findViewById(R.id.releaseDate1);
         posterImage = (ImageView) view.findViewById(R.id.posterImageDetail1);
         rb = (RatingBar) view.findViewById(R.id.ratingBar11);
-        trailersAdapter = new TrailersAdapter(listTr,view.getContext());
+        trailersAdapter = new TrailersAdapter(listTr, view.getContext());
         rvTrailer = (RecyclerView) view.findViewById(R.id.trailerRv1);
-        rvTrailer.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL,false));
+        rvTrailer.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         rvTrailer.addItemDecoration(new DividerItemDecoration(view.getContext(), null));
         rvTrailer.setAdapter(trailersAdapter);
-        reviewAdapter = new ReviewAdapter(listRv,view.getContext());
+        reviewAdapter = new ReviewAdapter(listRv, view.getContext());
         rvReview = (RecyclerView) view.findViewById(R.id.reviewRv1);
-        rvReview.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
-        rvReview.addItemDecoration(new DividerItemDecoration(view.getContext(),null));
+        rvReview.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+        rvReview.addItemDecoration(new DividerItemDecoration(view.getContext(), null));
         rvReview.setAdapter(reviewAdapter);
         getMovie(movie);
         return view;
