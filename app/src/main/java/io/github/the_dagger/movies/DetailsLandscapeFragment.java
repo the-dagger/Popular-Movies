@@ -38,7 +38,7 @@ import retrofit2.Retrofit;
  * Created by Harshit on 1/26/2016.
  */
 public class DetailsLandscapeFragment extends Fragment {
-
+    TextView language;
     TextView title;
     TextView overviewTextView;
     TextView releaseTextView;
@@ -144,6 +144,7 @@ public class DetailsLandscapeFragment extends Fragment {
                 String summary = "";
                 float d = Float.parseFloat(movie.movieRating);
                 rb.setRating((Math.round(d) / 2));
+                language.setText(movie.language.toUpperCase());
                 releaseTextView.setText(movie.movieReleaseDate);
                 for (String sum : overView.split("(?<=[.])\\s+"))
                     if (summary == "")
@@ -196,6 +197,7 @@ public class DetailsLandscapeFragment extends Fragment {
         Log.e("getmovie", "oncreateview ran");
         View view = inflater.inflate(R.layout.details_land_frag, container, false);
         title = (TextView) view.findViewById(R.id.movieDetailTitle1);
+        language = (TextView) view.findViewById(R.id.language1);
         overviewTextView = (TextView) view.findViewById(R.id.movieSummary1);
         backdrop = (ImageView) view.findViewById(R.id.backdrop1);
         releaseTextView = (TextView) view.findViewById(R.id.releaseDate1);

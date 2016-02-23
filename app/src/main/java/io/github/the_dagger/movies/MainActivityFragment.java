@@ -165,7 +165,8 @@ public class MainActivityFragment extends Fragment{
                 String movietitle = currentMovie.getString(MDB_TITLE);
                 String moviePosterendURL = currentMovie.getString(MDB_POSTER);
                 String moviePosterURL = baseURL + moviePosterendURL;
-                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle,movietempOverView,temprating,tempreleaseDate,tempbackDropImage,movieID);
+                String language = currentMovie.getString("original_language");
+                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle,movietempOverView,temprating,tempreleaseDate,tempbackDropImage,movieID,language);
             }
             return movieDetails;
         }
@@ -255,10 +256,6 @@ public class MainActivityFragment extends Fragment{
                 if (!tabletSize) {
                     Intent switchIntent = new Intent(getContext(), DetailsActivity.class)
                             .putExtra("Poster", listSM.get(position));
-//                    String transitionName = getString(R.string.transition_album_cover);
-//                    ActivityOptionsCompat options =
-//                            ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),poster,transitionName);
-//                    ActivityCompat.startActivity(getActivity(), switchIntent, options.toBundle());
                     startActivity(switchIntent);
                 }
                 else{
@@ -282,7 +279,6 @@ public class MainActivityFragment extends Fragment{
                 mView = itemView;
                 iView = (ImageView) itemView.findViewById(R.id.movie_poster_image);
                 tView = (TextView) itemView.findViewById(R.id.movie_name);
-
             }
 
         }

@@ -55,6 +55,8 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView posterImage;
     @Bind(R.id.ratingBar1)
     RatingBar rb;
+    @Bind(R.id.language)
+    TextView language;
     private Trailers trailers;
     Call<Reviews> callRv;
     TmdbAPI tmdbApi;
@@ -150,7 +152,7 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("Poster");
-
+        language.setText(movie.language.toUpperCase());
         trailersAdapter = new TrailersAdapter(listTr, this);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
         rvTrailer.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

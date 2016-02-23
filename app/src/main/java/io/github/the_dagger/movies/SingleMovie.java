@@ -14,8 +14,9 @@ public class SingleMovie implements Parcelable {
     String movieReleaseDate;
     String id;
     String movieBackDropImage;
+    String language;
 
-    public SingleMovie(String image, String title, String overView, String rating, String releaseDate, String backDropImage,String id) {
+    public SingleMovie(String image, String title, String overView, String rating, String releaseDate, String backDropImage,String id,String language) {
         this.movieImage = image;
         this.movieTitle = title;
         this.movieOverView = overView;
@@ -23,6 +24,7 @@ public class SingleMovie implements Parcelable {
         this.movieReleaseDate = releaseDate;
         this.movieBackDropImage = backDropImage;
         this.id = id;
+        this.language=language;
     }
 
     public SingleMovie(Parcel in) {
@@ -33,6 +35,7 @@ public class SingleMovie implements Parcelable {
         this.movieReleaseDate = in.readString();
         this.movieBackDropImage = in.readString();
         this.id = in.readString();
+        this.language=in.readString();
     }
 
     public static final Creator<SingleMovie> CREATOR = new Creator<SingleMovie>() {
@@ -61,6 +64,7 @@ public class SingleMovie implements Parcelable {
         dest.writeString(movieReleaseDate);
         dest.writeString(movieBackDropImage);
         dest.writeString(id);
+        dest.writeString(language);
     }
 
 }

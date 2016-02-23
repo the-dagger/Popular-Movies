@@ -3,6 +3,8 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="actionBarWidgetTheme">@style/Theme.AppCompat.CustomShareIcon</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.AppCompat.CustomShareIcon</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
@@ -10,9 +12,14 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowContentTransitions">true</item>
         <!-- Customize your theme here. -->
+        <item name="actionBarWidgetTheme">@style/Theme.AppCompat.CustomShareIcon</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.AppCompat.CustomShareIcon</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionOverflowButtonStyle">@style/OverFlowStyle</item>
+    </style>
+    <style name="Theme.AppCompat.CustomShareIcon" parent="@style/Theme.AppCompat">
+        <item name="actionModeShareDrawable">@drawable/ic_share_white_24dp</item> <!-- your icon goes here -->
     </style>
 </resources>
