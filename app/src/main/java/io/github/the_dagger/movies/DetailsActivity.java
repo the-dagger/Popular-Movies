@@ -55,7 +55,6 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView posterImage;
     @Bind(R.id.ratingBar1)
     RatingBar rb;
-    private Call<Trailers> callTr;
     private Trailers trailers;
     Call<Reviews> callRv;
     TmdbAPI tmdbApi;
@@ -67,8 +66,9 @@ public class DetailsActivity extends AppCompatActivity {
     private ReviewAdapter reviewAdapter;
     private TrailersAdapter trailersAdapter;
     String EXTRA_MESSAGE = "Sent via Popular Movies app";
-    String key;
-
+    Intent shareIntent;
+    MenuItem shareItem;
+    ShareActionProvider shareActionProvider;
     @Override
     protected void onResume() {
         super.onResume();
@@ -77,7 +77,7 @@ public class DetailsActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         tmdbApi = retrofit.create(TmdbAPI.class);
-        callTr = tmdbApi.getTrailers(movie.id);
+        Call<Trailers> callTr = tmdbApi.getTrailers(movie.id);
         callTr.enqueue(new Callback<Trailers>() {
             @Override
             public void onResponse(Response<Trailers> response) {
@@ -85,9 +85,11 @@ public class DetailsActivity extends AppCompatActivity {
                     trailers = response.body();
                     listTr = trailers.getTrailers();
                     trailersAdapter.swapList(listTr);
-                    Log.e("size", String.valueOf(listTr.size()));  //this prints the value "1"
-                    Log.e("key",listTr.get(0).getKey());  //returns the correct key
-                    key = listTr.get(0).getKey();  //key is null here
+                    shareIntent.putExtra(Intent.EXTRA_TEXT,"https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
+                    shareActionProvider.setShareIntent(shareIntent);
+//                    Log.e("size", String.valueOf(listTr.size()));  //this prints the value "1"
+//                    Log.e("key",listTr.get(0).getKey());  //returns the correct key
+//                    key = listTr.get(0).getKey();  //key is null here
                 } catch (Exception e) {
 //                    Log.e("exception","Exception");
                     e.printStackTrace();
@@ -192,16 +194,18 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.share, menu);
-        MenuItem shareItem = menu.findItem(R.id.action_share);
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareItem = menu.findItem(R.id.action_share);
+        shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
 //        Log.e("key2",key);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + key + "\n" + EXTRA_MESSAGE);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + EXTRA_MESSAGE);
         ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(shareIntent);
         return true;
     }
 }
+

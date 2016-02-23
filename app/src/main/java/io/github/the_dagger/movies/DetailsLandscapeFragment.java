@@ -166,7 +166,7 @@ public class DetailsLandscapeFragment extends Fragment {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
 //        try {
-            shareIntent.putExtra(Intent.EXTRA_TEXT,"https://www.youtube.com/watch?v=");
+            shareIntent.putExtra(Intent.EXTRA_TEXT,"https://www.youtube.com/watch?v="+trailersAdapter.getShareKey());
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
