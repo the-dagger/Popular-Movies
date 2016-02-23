@@ -5,6 +5,7 @@
     <string name="title_activity_details">Movie Details</string>
     <string name="Poster">Poster</string>
     <string name="Title">Title</string>
+    <string name="action_share">Share</string>
     <string name="OverView">OverView</string>
     <string name="Backdrop">Backdrop</string>
     <string name="Rating">Rating</string>

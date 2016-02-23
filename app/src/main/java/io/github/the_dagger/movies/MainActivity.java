@@ -36,10 +36,12 @@ public class MainActivity extends AppCompatActivity implements Communicator{
         if(f != null && f.isVisible()){
             f.getMovie(movie);
         }
-        else{
+//        else{
 //            Intent switchIntent = new Intent(this, DetailsActivity.class)
 //                        .putExtra(getString(R.string.Poster), movie);
 //            startActivity(switchIntent);
-        }
+//        }
     }
+
+
 }

@@ -125,7 +125,7 @@ public class MainActivityFragment extends Fragment{
         private ProgressDialog dialog = new ProgressDialog(getActivity());
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Please wait");
+            this.dialog.setMessage("Hold On...");
             this.dialog.show();
         }
 
