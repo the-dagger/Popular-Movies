@@ -1,6 +1,8 @@
 package io.github.the_dagger.movies;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,6 +31,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.github.the_dagger.movies.data.MoviesContract;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -38,7 +41,7 @@ import retrofit2.Retrofit;
 
 //import retrofit2.GsonConverterFactory;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity{
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.fab)
@@ -64,13 +67,14 @@ public class DetailsActivity extends AppCompatActivity {
     List<Reviews.SingleReview> listRv;
     String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie movie;
+    private static final int CURSOR_LOADER_ID = 0;
     private Reviews reviews;
     private ReviewAdapter reviewAdapter;
     private TrailersAdapter trailersAdapter;
     String EXTRA_MESSAGE = "Sent via Popular Movies app";
     Intent shareIntent;
     MenuItem shareItem;
-    View view1;
+    static int i = 0;
     ShareActionProvider shareActionProvider;
     @Override
     protected void onResume() {
@@ -178,12 +182,19 @@ public class DetailsActivity extends AppCompatActivity {
             else
                 summary = summary + "\n" + sum;
         overviewTextView.setText(summary);
+        Cursor c =
+                this.getContentResolver().query(MoviesContract.MovieEntry.CONTENT_URI,
+                        new String[]{MoviesContract.MovieEntry._ID},
+                        null,
+                        null,
+                        null);
         Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
 //        }
         f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
+                insertData();
             }
         });
         try {
@@ -192,6 +203,13 @@ public class DetailsActivity extends AppCompatActivity {
         }
         ;
         getSupportActionBar().setTitle("");
+    }
+
+    private void insertData() {
+        ContentValues[] moviesValuesarr = new ContentValues[20];
+        moviesValuesarr[i] = new ContentValues();
+        moviesValuesarr[i].put(MoviesContract.MovieEntry.COLUMN_NAME,movie.movieTitle);
+        this.getContentResolver().insert(MoviesContract.MovieEntry.CONTENT_URI,moviesValuesarr[i]);
     }
 
 
@@ -209,12 +227,5 @@ public class DetailsActivity extends AppCompatActivity {
 
         return true;
     }
-
-//    @Override
-//    public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
-//        if(listTr.get(0).key == null)
-//            Toast.makeText(getApplicationContext(),"Trailers not loaded yet",Toast.LENGTH_SHORT).show();
-//        return true;
-//    }
 }
 

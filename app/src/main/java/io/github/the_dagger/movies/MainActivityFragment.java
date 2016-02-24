@@ -176,9 +176,9 @@ public class MainActivityFragment extends Fragment{
             try {
                 URL url;
                 if (sort)
-                    url = new URL("http://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&api_key="+BuildConfig.MOBDB_API_KEY);
+                    url = new URL("http://api.themoviedb.org/3/movie/popular?api_key="+BuildConfig.MOBDB_API_KEY);
                 else
-                    url = new URL("http://api.themoviedb.org/3/discover/movie?&sort_by=popularity.desc&api_key="+BuildConfig.MOBDB_API_KEY);
+                    url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key="+BuildConfig.MOBDB_API_KEY);
                 Log.v(LOG_TAG, String.valueOf(url));
                 movieDbUrl = url.toString();
                 urlConnection = (HttpURLConnection) url.openConnection();
