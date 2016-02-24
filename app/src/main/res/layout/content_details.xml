@@ -38,10 +38,10 @@
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
+        android:background="#303030"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
-        android:background="#E0E0E0"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -69,6 +69,55 @@
                         android:layout_marginTop="8dp"
                         android:transitionName="@string/transition_album_cover" />
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@id/posterImageDetail">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@android:style/TextAppearance.Material.Title"
+                            android:textSize="20sp"
+                            android:layout_marginBottom="4dp"
+                            android:textStyle="bold"
+                            android:typeface="sans"
+                            tools:targetApi="lollipop"
+                            android:text="Language"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/language"
+                            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                            android:textColor="#000"
+                            android:layout_marginBottom="8dp"
+                            android:textSize="14sp"
+                            android:typeface="sans"
+                            tools:targetApi="lollipop"
+                            />
+                        <TextView
+                            android:id="@+id/releaseDateTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="Release Date"
+                            android:textAppearance="@android:style/TextAppearance.Material.Title"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:typeface="sans"
+                            tools:targetApi="lollipop" />
+
+                        <TextView
+                            android:id="@+id/releaseDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                            android:textColor="#000"
+                            android:textSize="14sp"
+                            android:typeface="sans"
+                            tools:targetApi="lollipop" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/movieDetailTitle"
@@ -104,72 +153,30 @@
 
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:background="#ffe5e5e5"
-                android:elevation="8dp">
+            <!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="4dp"-->
+                <!--android:background="#ffe5e5e5"-->
+                <!--android:elevation="8dp">-->
 
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignBottom="@+id/posterImageDetail"
-                    android:layout_alignTop="@+id/posterImageDetail"
-                    android:layout_margin="4dp"
-                    android:layout_toEndOf="@id/posterImageDetail"
-                    android:layout_toRightOf="@id/posterImageDetail"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/linearLayout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_alignBottom="@+id/posterImageDetail"-->
+                    <!--android:layout_alignTop="@+id/posterImageDetail"-->
+                    <!--android:layout_margin="4dp"-->
+                    <!--android:layout_toEndOf="@id/posterImageDetail"-->
+                    <!--android:layout_toRightOf="@id/posterImageDetail"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:orientation="vertical">-->
+                    <!---->
 
-                    <TextView
-                        android:id="@+id/vote"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Votes"
-                        android:textAppearance="@android:style/TextAppearance.Material.Title"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:typeface="sans"
-                        tools:targetApi="lollipop" />
+                    <!---->
+                <!--</LinearLayout>-->
 
-                    <RatingBar
-                        android:id="@+id/ratingBar1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:isIndicator="true"
-                        android:numStars="5"
-                        android:stepSize="0.5"
-                        android:theme="@style/RatingBar" />
-
-                    <TextView
-                        android:id="@+id/releaseDateTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Release Date"
-                        android:textAppearance="@android:style/TextAppearance.Material.Title"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:typeface="sans"
-                        tools:targetApi="lollipop" />
-
-                    <TextView
-                        android:id="@+id/releaseDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:gravity="center"
-                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
-                        android:textColor="#000"
-                        android:textSize="14sp"
-                        android:typeface="sans"
-                        tools:targetApi="lollipop" />
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
+            <!--</android.support.v7.widget.CardView>-->
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -184,9 +191,32 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/vote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="Votes"
+                        android:layout_margin="8dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:typeface="sans"
+                        tools:targetApi="lollipop" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="true"
+                        android:layout_margin="8dp"
+                        android:numStars="5"
+                        android:stepSize="0.5"
+                        android:theme="@style/RatingBar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
                         android:text="Trailers"
                         android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textSize="20sp"
@@ -216,7 +246,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
+                        android:layout_margin="8dp"
                         android:text="Reviews"
                         android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textColor="#000"
@@ -228,7 +258,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/reviewRv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

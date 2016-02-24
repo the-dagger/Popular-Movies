@@ -70,6 +70,7 @@ public class DetailsActivity extends AppCompatActivity {
     String EXTRA_MESSAGE = "Sent via Popular Movies app";
     Intent shareIntent;
     MenuItem shareItem;
+    View view1;
     ShareActionProvider shareActionProvider;
     @Override
     protected void onResume() {
@@ -203,8 +204,17 @@ public class DetailsActivity extends AppCompatActivity {
 //        Log.e("key2",key);
         shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + EXTRA_MESSAGE);
         ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+//        shareActionProvider.setOnShareTargetSelectedListener(this);
         shareActionProvider.setShareIntent(shareIntent);
+
         return true;
     }
+
+//    @Override
+//    public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+//        if(listTr.get(0).key == null)
+//            Toast.makeText(getApplicationContext(),"Trailers not loaded yet",Toast.LENGTH_SHORT).show();
+//        return true;
+//    }
 }
 

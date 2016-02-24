@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#000"
     android:layout_height="match_parent"
     tools:context="io.github.the_dagger.movies.DetailsActivity"
     tools:showIn="@layout/activity_details">
@@ -40,13 +41,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
-        android:background="#E0E0E0"
+        android:background="#303030"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#303030"
             android:layout_gravity="fill_vertical"
             android:orientation="vertical">
 
