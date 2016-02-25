@@ -205,12 +205,12 @@ public class DetailsLandscapeFragment extends Fragment {
         rb = (RatingBar) view.findViewById(R.id.ratingBar11);
         trailersAdapter = new TrailersAdapter(listTr, view.getContext());
         rvTrailer = (RecyclerView) view.findViewById(R.id.trailerRv1);
-        rvTrailer.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+        rvTrailer.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvTrailer.addItemDecoration(new DividerItemDecoration(view.getContext(), null));
         rvTrailer.setAdapter(trailersAdapter);
         reviewAdapter = new ReviewAdapter(listRv, view.getContext());
         rvReview = (RecyclerView) view.findViewById(R.id.reviewRv1);
-        rvReview.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+        rvReview.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         rvReview.addItemDecoration(new DividerItemDecoration(view.getContext(), null));
         rvReview.setAdapter(reviewAdapter);
         getMovie(movie);
