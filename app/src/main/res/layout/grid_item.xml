@@ -3,25 +3,9 @@
     android:layout_width="match_parent"
     android:layout_margin="4dp"
     android:animateLayoutChanges="true"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--<com.balysv.materialripple.MaterialRippleLayout-->
-        <!--android:id="@+id/ripple"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:mrl_rippleOverlay="true"-->
-        <!--app:mrl_rippleDelayClick="true"-->
-        <!--android:layout_margin="4dp"-->
-        <!--app:mrl_rippleDuration="500"-->
-        <!--app:mrl_rippleColor="#FF4081"-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--app:mrl_rippleInAdapter="true">-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="240dp"
@@ -44,7 +28,4 @@
         android:typeface="sans"
         android:textColor="#ffff"
         android:gravity="center_vertical|center_horizontal"/>
-
-</LinearLayout>
-<!--</com.balysv.materialripple.MaterialRippleLayout>-->
 </LinearLayout>

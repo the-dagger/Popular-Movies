@@ -160,12 +160,12 @@ public class DetailsActivity extends AppCompatActivity{
         language.setText(movie.language.toUpperCase());
         trailersAdapter = new TrailersAdapter(listTr, this);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
-        rvTrailer.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvTrailer.addItemDecoration(new DividerItemDecoration(this, null));
         rvTrailer.setAdapter(trailersAdapter);
         reviewAdapter = new ReviewAdapter(listRv, this);
         RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
-        rvReview.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvReview.addItemDecoration(new DividerItemDecoration(this, null));
         rvReview.setAdapter(reviewAdapter);
         title.setText(movie.movieTitle);
