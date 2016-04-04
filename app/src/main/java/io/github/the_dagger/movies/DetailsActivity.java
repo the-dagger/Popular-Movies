@@ -1,8 +1,7 @@
 package io.github.the_dagger.movies;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,21 +24,17 @@ import com.github.florent37.picassopalette.BitmapPalette;
 import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Picasso;
 
-import org.solovyev.android.views.llm.DividerItemDecoration;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.github.the_dagger.movies.data.MoviesContract;
+import io.github.the_dagger.movies.data.ComplexPreferences;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-//import retrofit2.converter.gson.GsonConverterFactory;
-
-//import retrofit2.GsonConverterFactory;
 
 public class DetailsActivity extends AppCompatActivity{
     @Bind(R.id.toolbar)
@@ -60,6 +55,7 @@ public class DetailsActivity extends AppCompatActivity{
     RatingBar rb;
     @Bind(R.id.language)
     TextView language;
+    private static final List<SingleMovie> listsharedPref = new ArrayList<>();;
     private Trailers trailers;
     Call<Reviews> callRv;
     TmdbAPI tmdbApi;
@@ -70,6 +66,7 @@ public class DetailsActivity extends AppCompatActivity{
     private static final int CURSOR_LOADER_ID = 0;
     private Reviews reviews;
     private ReviewAdapter reviewAdapter;
+    ComplexPreferences complexPreferences;
     private TrailersAdapter trailersAdapter;
     String EXTRA_MESSAGE = "Sent via Popular Movies app";
     Intent shareIntent;
@@ -159,17 +156,29 @@ public class DetailsActivity extends AppCompatActivity{
         movie = intent.getParcelableExtra("Poster");
         language.setText(movie.language.toUpperCase());
         trailersAdapter = new TrailersAdapter(listTr, this);
+//        listsharedPref =
+        complexPreferences = ComplexPreferences.getComplexPreferences(this, "mypref", MODE_PRIVATE);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
         rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvTrailer.addItemDecoration(new DividerItemDecoration(this, null));
+        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration(){
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                super.onDraw(c, parent, state);
+            }
+        });
         rvTrailer.setAdapter(trailersAdapter);
         reviewAdapter = new ReviewAdapter(listRv, this);
         RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
         rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvReview.addItemDecoration(new DividerItemDecoration(this, null));
+        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration(){
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                super.onDraw(c, parent, state);
+            }
+        });
         rvReview.setAdapter(reviewAdapter);
         title.setText(movie.movieTitle);
-        Picasso.with(getApplicationContext()).load(movie.movieImage).error(R.drawable.placeholder).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
+        Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
         );
         String overView = movie.movieOverView;
         String summary = "";
@@ -182,19 +191,15 @@ public class DetailsActivity extends AppCompatActivity{
             else
                 summary = summary + "\n" + sum;
         overviewTextView.setText(summary);
-        Cursor c =
-                this.getContentResolver().query(MoviesContract.MovieEntry.CONTENT_URI,
-                        new String[]{MoviesContract.MovieEntry._ID},
-                        null,
-                        null,
-                        null);
         Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
 //        }
         f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
-                insertData();
+                listsharedPref.add(movie);
+                complexPreferences.putObject("favList", listsharedPref);
+                complexPreferences.commit();
             }
         });
         try {
@@ -204,14 +209,6 @@ public class DetailsActivity extends AppCompatActivity{
         ;
         getSupportActionBar().setTitle("");
     }
-
-    private void insertData() {
-        ContentValues[] moviesValuesarr = new ContentValues[20];
-        moviesValuesarr[i] = new ContentValues();
-        moviesValuesarr[i].put(MoviesContract.MovieEntry.COLUMN_NAME,movie.movieTitle);
-        this.getContentResolver().insert(MoviesContract.MovieEntry.CONTENT_URI,moviesValuesarr[i]);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

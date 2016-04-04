@@ -38,7 +38,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         this.position = position;
         for (int i = 0; i < getItemCount(); i++) {
-            Picasso.with(c).load("http://img.youtube.com/vi/" + list.get(position).getKey() + "/0.jpg").error(R.drawable.placeholder).into(holder.i);
+            Picasso.with(c).load("http://img.youtube.com/vi/" + list.get(position).getKey() + "/0.jpg").into(holder.i);
             holder.t.setText(list.get(position).getTitle());
         }
     }

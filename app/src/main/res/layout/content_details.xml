@@ -268,6 +268,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:id="@+id/fab"
         android:src="@drawable/ic_favorite_border_white_24dp"
         app:layout_anchor="@id/place"
         app:layout_anchorGravity="bottom|right|end" />

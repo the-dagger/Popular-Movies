@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 23
@@ -32,8 +31,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
     compile 'com.android.support:palette-v7:23.2.1'
-    apt 'net.simonvt.schematic:schematic-compiler:0.6.4'
-    compile 'net.simonvt.schematic:schematic:0.6.4'
     compile 'com.github.florent37:picassopalette:1.0.2@aar'
     compile 'com.android.support:cardview-v7:23.2.1'
     compile 'com.android.support:recyclerview-v7:23.2.1'
@@ -41,5 +38,4 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
-    compile 'org.solovyev.android.views:linear-layout-manager:0.5@aar'
 }

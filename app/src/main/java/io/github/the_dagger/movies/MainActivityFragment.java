@@ -228,7 +228,7 @@ public class MainActivityFragment extends Fragment{
     }
 
     //Movie Adapter
-    public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+    public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>  {
 
         List<SingleMovie> listSM;
         Context c;
@@ -246,7 +246,7 @@ public class MainActivityFragment extends Fragment{
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.tView.setText(listSM.get(position).movieTitle);
-            Picasso.with(this.c).load(listSM.get(position).movieImage).error(R.drawable.placeholder).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED_DARK)
+            Picasso.with(this.c).load(listSM.get(position).movieImage).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED_DARK)
                     .intoBackground(holder.tView));
             com = (Communicator) getActivity();
             holder.mView.setOnClickListener(new View.OnClickListener() {

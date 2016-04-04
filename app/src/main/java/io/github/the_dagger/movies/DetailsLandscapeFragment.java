@@ -2,6 +2,7 @@ package io.github.the_dagger.movies;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -23,8 +24,6 @@ import android.widget.Toast;
 import com.github.florent37.picassopalette.BitmapPalette;
 import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Picasso;
-
-import org.solovyev.android.views.llm.DividerItemDecoration;
 
 import java.util.List;
 
@@ -59,6 +58,7 @@ public class DetailsLandscapeFragment extends Fragment {
     private ReviewAdapter reviewAdapter;
     private TrailersAdapter trailersAdapter;
     Intent shareIntent;
+
     public void getMovie(SingleMovie singleMovie) {
         Log.e("getmovie", "getmovie ran");
         movie = singleMovie;
@@ -79,7 +79,7 @@ public class DetailsLandscapeFragment extends Fragment {
                             listTr = trailers.getTrailers();
                             listTr.size();       //ListTr is null here
                             trailersAdapter.swapList(listTr);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT,"https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
                             shareActionProvider.setShareIntent(shareIntent);
 //                        trailersAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
@@ -138,7 +138,7 @@ public class DetailsLandscapeFragment extends Fragment {
                     }
                 });
                 title.setText(movie.movieTitle);
-                Picasso.with(getActivity()).load(movie.movieImage).error(R.drawable.placeholder).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
+                Picasso.with(getActivity()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
                 );
                 String overView = movie.movieOverView;
                 String summary = "";
@@ -160,7 +160,9 @@ public class DetailsLandscapeFragment extends Fragment {
             }
         }
     }
+
     String EXTRA_MESSAGE = "Sent via Popular Movies app";
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
@@ -168,7 +170,7 @@ public class DetailsLandscapeFragment extends Fragment {
         MenuItem shareItem = menu.findItem(R.id.action_share);
         shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v="+"\n" + EXTRA_MESSAGE);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + EXTRA_MESSAGE);
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(shareIntent);
     }
@@ -206,12 +208,22 @@ public class DetailsLandscapeFragment extends Fragment {
         trailersAdapter = new TrailersAdapter(listTr, view.getContext());
         rvTrailer = (RecyclerView) view.findViewById(R.id.trailerRv1);
         rvTrailer.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvTrailer.addItemDecoration(new DividerItemDecoration(view.getContext(), null));
+        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                super.onDraw(c, parent, state);
+            }
+        });
         rvTrailer.setAdapter(trailersAdapter);
         reviewAdapter = new ReviewAdapter(listRv, view.getContext());
         rvReview = (RecyclerView) view.findViewById(R.id.reviewRv1);
         rvReview.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-        rvReview.addItemDecoration(new DividerItemDecoration(view.getContext(), null));
+        rvReview.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                super.onDraw(c, parent, state);
+            }
+        });
         rvReview.setAdapter(reviewAdapter);
         getMovie(movie);
         return view;
