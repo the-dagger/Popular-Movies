@@ -1,4 +1,4 @@
-package io.github.the_dagger.movies;
+package io.github.the_dagger.movies.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import io.github.the_dagger.movies.R;
+import io.github.the_dagger.movies.objects.Trailers;
 
 /**
  * Created by Harshit on 2/12/2016.

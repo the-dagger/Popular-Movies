@@ -8,7 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements Communicator{
+import io.github.the_dagger.movies.api.Communicator;
+import io.github.the_dagger.movies.fragments.DetailsLandscapeFragment;
+import io.github.the_dagger.movies.objects.SingleMovie;
+
+public class MainActivity extends AppCompatActivity implements Communicator {
     DetailsLandscapeFragment f;
     SingleMovie Movie;
 

@@ -1,4 +1,4 @@
-package io.github.the_dagger.movies;
+package io.github.the_dagger.movies.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -27,6 +27,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import io.github.the_dagger.movies.R;
+import io.github.the_dagger.movies.objects.Reviews;
+import io.github.the_dagger.movies.objects.SingleMovie;
+import io.github.the_dagger.movies.api.TmdbAPI;
+import io.github.the_dagger.movies.objects.Trailers;
+import io.github.the_dagger.movies.adapter.ReviewAdapter;
+import io.github.the_dagger.movies.adapter.TrailersAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;

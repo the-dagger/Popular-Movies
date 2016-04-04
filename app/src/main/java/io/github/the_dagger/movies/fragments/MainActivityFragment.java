@@ -1,4 +1,4 @@
-package io.github.the_dagger.movies;
+package io.github.the_dagger.movies.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,6 +36,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import io.github.the_dagger.movies.BuildConfig;
+import io.github.the_dagger.movies.api.Communicator;
+import io.github.the_dagger.movies.DetailsActivity;
+import io.github.the_dagger.movies.R;
+import io.github.the_dagger.movies.objects.SingleMovie;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -176,7 +182,7 @@ public class MainActivityFragment extends Fragment{
             try {
                 URL url;
                 if (sort)
-                    url = new URL("http://api.themoviedb.org/3/movie/popular?api_key="+BuildConfig.MOBDB_API_KEY);
+                    url = new URL("http://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.MOBDB_API_KEY);
                 else
                     url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key="+BuildConfig.MOBDB_API_KEY);
                 Log.v(LOG_TAG, String.valueOf(url));

@@ -1,4 +1,4 @@
-package io.github.the_dagger.movies;
+package io.github.the_dagger.movies.fragments;
 
 import android.app.Fragment;
 

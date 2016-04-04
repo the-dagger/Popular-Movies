@@ -29,7 +29,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.github.the_dagger.movies.adapter.ReviewAdapter;
+import io.github.the_dagger.movies.adapter.TrailersAdapter;
+import io.github.the_dagger.movies.api.TmdbAPI;
 import io.github.the_dagger.movies.data.ComplexPreferences;
+import io.github.the_dagger.movies.objects.Reviews;
+import io.github.the_dagger.movies.objects.SingleMovie;
+import io.github.the_dagger.movies.objects.Trailers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;

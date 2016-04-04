@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
     <fragment  android:id="@+id/fragment"
-        android:name="io.github.the_dagger.movies.MainActivityFragment"
+        android:name="io.github.the_dagger.movies.fragments.MainActivityFragment"
         android:layout_width="0dp" android:layout_height="match_parent"
         android:layout_weight="1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:name="io.github.the_dagger.movies.DetailsLandscapeFragment"
+        android:name="io.github.the_dagger.movies.fragments.DetailsLandscapeFragment"
         android:id="@+id/fragment2"
         tools:layout="@layout/details_land_frag" />
 </LinearLayout>

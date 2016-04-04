@@ -245,5 +245,6 @@
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:src="@drawable/ic_favorite_border_white_24dp"
         app:layout_anchor="@id/place"
+        android:id="@+id/fab"
         app:layout_anchorGravity="bottom|right|end" />
 </android.support.design.widget.CoordinatorLayout>

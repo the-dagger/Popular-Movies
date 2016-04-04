@@ -1,4 +1,4 @@
-package io.github.the_dagger.movies;
+package io.github.the_dagger.movies.objects;
 
 import android.database.Cursor;
 import android.os.Parcel;
@@ -8,14 +8,14 @@ import android.os.Parcelable;
  * Created by Harshit on 1/6/2016.
  */
 public class SingleMovie implements Parcelable {
-    String movieImage;
-    String movieTitle;
-    String movieOverView;
-    String movieRating;
-    String movieReleaseDate;
-    String id;
-    String movieBackDropImage;
-    String language;
+    public String movieImage;
+    public String movieTitle;
+    public String movieOverView;
+    public String movieRating;
+    public String movieReleaseDate;
+    public String id;
+    public String movieBackDropImage;
+    public String language;
 
     SingleMovie(){
         movieImage = null;
