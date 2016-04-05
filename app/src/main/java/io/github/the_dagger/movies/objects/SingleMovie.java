@@ -61,6 +61,10 @@ public class SingleMovie implements Parcelable {
         return 0;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(movieImage);

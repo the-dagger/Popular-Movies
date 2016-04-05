@@ -6,8 +6,10 @@
     <string name="Poster">Poster</string>
     <string name="Title">Title</string>
     <string name="action_share">Share</string>
+    <string name="action_fav">Favourites</string>
     <string name="OverView">OverView</string>
     <string name="Backdrop">Backdrop</string>
+
     <string name="Rating">Rating</string>
     <string name="ReleaseDate">ReleaseDate</string>
     <string name="transition_album_cover">transition</string>

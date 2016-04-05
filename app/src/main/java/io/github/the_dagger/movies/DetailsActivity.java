@@ -1,6 +1,8 @@
 package io.github.the_dagger.movies;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,7 +26,6 @@ import com.github.florent37.picassopalette.BitmapPalette;
 import com.github.florent37.picassopalette.PicassoPalette;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -32,7 +33,6 @@ import butterknife.ButterKnife;
 import io.github.the_dagger.movies.adapter.ReviewAdapter;
 import io.github.the_dagger.movies.adapter.TrailersAdapter;
 import io.github.the_dagger.movies.api.TmdbAPI;
-import io.github.the_dagger.movies.data.ComplexPreferences;
 import io.github.the_dagger.movies.objects.Reviews;
 import io.github.the_dagger.movies.objects.SingleMovie;
 import io.github.the_dagger.movies.objects.Trailers;
@@ -42,7 +42,9 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class DetailsActivity extends AppCompatActivity{
+public class DetailsActivity extends AppCompatActivity {
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.fab)
@@ -59,9 +61,10 @@ public class DetailsActivity extends AppCompatActivity{
     ImageView posterImage;
     @Bind(R.id.ratingBar1)
     RatingBar rb;
+    Boolean setAsFav = false;
     @Bind(R.id.language)
     TextView language;
-    private static final List<SingleMovie> listsharedPref = new ArrayList<>();;
+//    List<SingleMovie> listsharedPref = new ArrayList<>();
     private Trailers trailers;
     Call<Reviews> callRv;
     TmdbAPI tmdbApi;
@@ -72,13 +75,13 @@ public class DetailsActivity extends AppCompatActivity{
     private static final int CURSOR_LOADER_ID = 0;
     private Reviews reviews;
     private ReviewAdapter reviewAdapter;
-    ComplexPreferences complexPreferences;
+
     private TrailersAdapter trailersAdapter;
     String EXTRA_MESSAGE = "Sent via Popular Movies app";
     Intent shareIntent;
     MenuItem shareItem;
-    static int i = 0;
     ShareActionProvider shareActionProvider;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -95,7 +98,7 @@ public class DetailsActivity extends AppCompatActivity{
                     trailers = response.body();
                     listTr = trailers.getTrailers();
                     trailersAdapter.swapList(listTr);
-                    shareIntent.putExtra(Intent.EXTRA_TEXT,"https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
                     shareActionProvider.setShareIntent(shareIntent);
                 } catch (Exception e) {
 //                    Log.e("exception","Exception");
@@ -161,12 +164,12 @@ public class DetailsActivity extends AppCompatActivity{
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("Poster");
         language.setText(movie.language.toUpperCase());
+        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
         trailersAdapter = new TrailersAdapter(listTr, this);
-//        listsharedPref =
-        complexPreferences = ComplexPreferences.getComplexPreferences(this, "mypref", MODE_PRIVATE);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
         rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration(){
+        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
                 super.onDraw(c, parent, state);
@@ -176,7 +179,7 @@ public class DetailsActivity extends AppCompatActivity{
         reviewAdapter = new ReviewAdapter(listRv, this);
         RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
         rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration(){
+        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
                 super.onDraw(c, parent, state);
@@ -198,14 +201,29 @@ public class DetailsActivity extends AppCompatActivity{
                 summary = summary + "\n" + sum;
         overviewTextView.setText(summary);
         Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
-//        }
+        if (sharedpreferences.contains(movie.getId())){
+            f.setImageResource(R.drawable.ic_favorite_white_24dp);
+        }
+        else
+            f.setImageResource(R.drawable.ic_favorite_border_white_24dp);
         f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
-                listsharedPref.add(movie);
-                complexPreferences.putObject("favList", listsharedPref);
-                complexPreferences.commit();
+                if (!setAsFav || !sharedpreferences.contains(movie.getId())) {
+                    Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
+                    editor.putInt(movie.getId(), Integer.parseInt(movie.getId()));
+                    editor.apply();
+                    setAsFav = true;
+                    f.setImageResource(R.drawable.ic_favorite_white_24dp);
+
+                } else {
+                    Snackbar.make(view, "Removed from Favourites", Snackbar.LENGTH_LONG).show();
+                    editor.remove(movie.getId());
+                    editor.apply();
+                    setAsFav = false;
+                    f.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                }
+
             }
         });
         try {
