@@ -209,7 +209,7 @@ public class DetailsActivity extends AppCompatActivity {
         f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!setAsFav || !sharedpreferences.contains(movie.getId())) {
+                if (!setAsFav && !sharedpreferences.contains(movie.getId())) {
                     Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
                     editor.putInt(movie.getId(), Integer.parseInt(movie.getId()));
                     editor.apply();

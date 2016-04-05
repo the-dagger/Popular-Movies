@@ -3,6 +3,7 @@ package io.github.the_dagger.movies.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -38,25 +39,34 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.github.the_dagger.movies.BuildConfig;
-import io.github.the_dagger.movies.api.Communicator;
 import io.github.the_dagger.movies.DetailsActivity;
 import io.github.the_dagger.movies.R;
+import io.github.the_dagger.movies.api.Communicator;
 import io.github.the_dagger.movies.objects.SingleMovie;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment{
-    MovieAdapter adapter;
+public class MainActivityFragment extends Fragment {
+    MovieAdapter adapter, favAdapter;
     Boolean sort = false;
     String movieDbUrl = null;
     SingleMovie[] movieDetails = new SingleMovie[20];
     ArrayList<SingleMovie> list;
+    static ArrayList<SingleMovie> testList;
+    static ArrayList<SingleMovie> favList;
     static boolean tabletSize;
     MovieDetails weather1;
+    boolean debug = true;
+    boolean popularity = false;
     SingleMovie[] movieList = {};
+    SingleMovie[] favouriteList = {};
+    SingleMovie[] testListArray = {};
     Communicator com;
     ImageView poster;
+    RecyclerView rv;
+    SharedPreferences sharedpreferences;
+
     public MainActivityFragment() {
 
     }
@@ -70,16 +80,18 @@ public class MainActivityFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+        if (savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
             list = new ArrayList<>(Arrays.asList(movieList));
+            testList = new ArrayList<>(Arrays.asList(testListArray));
             weather1 = new MovieDetails();
-            weather1.execute();
-        }
-        else {
+                sort = true;
+                weather1.execute();
+            sharedpreferences = getActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE);
+        } else {
             list = savedInstanceState.getParcelableArrayList("movies");
         }
         setHasOptionsMenu(true);
-       }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater Inflater) {
@@ -96,6 +108,8 @@ public class MainActivityFragment extends Fragment{
             sort = true;
             Snackbar.make(getView(), "Sorted by Ratings", Snackbar.LENGTH_LONG).show();
             weather.execute();
+            rv.setAdapter(adapter);
+            Log.e("after sorted by ratings", String.valueOf(popularity));
             return true;
         }
         if (id == R.id.action_sort) {
@@ -103,7 +117,18 @@ public class MainActivityFragment extends Fragment{
             sort = false;
             Snackbar.make(getView(), "Sorted by Popularity", Snackbar.LENGTH_LONG).show();
             weather.execute();
+            rv.setAdapter(adapter);
+            Log.e("After sorted by popularity", String.valueOf(popularity));
             return true;
+        }
+        if (id == R.id.action_fav) {
+            for (int i = 0; i < testList.size(); i++) {
+                if (sharedpreferences.contains(testList.get(i).getId())) {    //If the movie is stored in the sharedPref
+                    favList.add(testList.get(i));                             //Add that movie to the favList arraylist
+                }
+                rv.setAdapter(favAdapter);
+            }
+            Log.e("TestList", String.valueOf(testList.size()));
         }
 
         return super.onOptionsItemSelected(item);
@@ -118,9 +143,11 @@ public class MainActivityFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        favList = new ArrayList<>(Arrays.asList(favouriteList));
         adapter = new MovieAdapter(getActivity(), list);
-        RecyclerView rv = (RecyclerView) inflater.inflate(R.layout.fragment_main,container,false);
-        rv.setLayoutManager(new GridLayoutManager(rv.getContext(),2));
+        favAdapter = new MovieAdapter(getActivity(), favList);
+        rv = (RecyclerView) inflater.inflate(R.layout.fragment_main, container, false);
+        rv.setLayoutManager(new GridLayoutManager(rv.getContext(), 2));
         rv.setAdapter(adapter);
         poster = (ImageView) rv.findViewById(R.id.movie_poster_image);
         com = (Communicator) getActivity();
@@ -129,6 +156,7 @@ public class MainActivityFragment extends Fragment{
 
     public class MovieDetails extends AsyncTask<Void, Void, SingleMovie[]> {
         private ProgressDialog dialog = new ProgressDialog(getActivity());
+
         @Override
         protected void onPreExecute() {
             this.dialog.setMessage("Hold On...");
@@ -145,10 +173,19 @@ public class MainActivityFragment extends Fragment{
                 for (int i = 0; i < singleMovies.length; i++) {
                     SingleMovie oneMovie = singleMovies[i];
                     list.add(oneMovie);
+                    testList.add(oneMovie);
                 }
                 com.respond(singleMovies[0]);
+                Log.e("onPost", "ran");
             }
-            adapter.notifyDataSetChanged();
+            if(!debug)
+                adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
+            if(debug){
+                MovieDetails weatherdebug = new MovieDetails();   //Did this to load both popular and top rated in the testList for comparison with sharedPrefs
+                sort = false;
+                debug = false;
+                weatherdebug.execute();
+            }
             super.onPostExecute(singleMovies);
         }
 
@@ -172,7 +209,7 @@ public class MainActivityFragment extends Fragment{
                 String moviePosterendURL = currentMovie.getString(MDB_POSTER);
                 String moviePosterURL = baseURL + moviePosterendURL;
                 String language = currentMovie.getString("original_language");
-                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle,movietempOverView,temprating,tempreleaseDate,tempbackDropImage,movieID,language);
+                movieDetails[i] = new SingleMovie(moviePosterURL, movietitle, movietempOverView, temprating, tempreleaseDate, tempbackDropImage, movieID, language);
             }
             return movieDetails;
         }
@@ -181,10 +218,13 @@ public class MainActivityFragment extends Fragment{
         protected SingleMovie[] doInBackground(Void... params) {
             try {
                 URL url;
-                if (sort)
-                    url = new URL("http://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.MOBDB_API_KEY);
-                else
-                    url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key="+BuildConfig.MOBDB_API_KEY);
+                if (sort) {
+                    url = new URL("http://api.themoviedb.org/3/movie/popular?api_key=" + BuildConfig.MOBDB_API_KEY); //sort by popularity by default
+                    popularity = true;
+                } else {
+                    url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key=" + BuildConfig.MOBDB_API_KEY);  //sort by ratings
+                    popularity = false;
+                }
                 Log.v(LOG_TAG, String.valueOf(url));
                 movieDbUrl = url.toString();
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -234,10 +274,11 @@ public class MainActivityFragment extends Fragment{
     }
 
     //Movie Adapter
-    public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>  {
+    public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
         List<SingleMovie> listSM;
         Context c;
+
         public MovieAdapter(FragmentActivity context, List<SingleMovie> resource) {
             c = context;
             listSM = resource;
@@ -245,8 +286,8 @@ public class MainActivityFragment extends Fragment{
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item,parent,false);
-            return  new ViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item, parent, false);
+            return new ViewHolder(view);
         }
 
         @Override
@@ -259,13 +300,13 @@ public class MainActivityFragment extends Fragment{
                 @Override
                 public void onClick(View v) {
                     tabletSize = getResources().getBoolean(R.bool.isTab);
-                if (!tabletSize) {
-                    Intent switchIntent = new Intent(getContext(), DetailsActivity.class)
-                            .putExtra("Poster", listSM.get(position));
-                    startActivity(switchIntent);
-                }
-                else{
-                com.respond(listSM.get(position));}
+                    if (!tabletSize) {
+                        Intent switchIntent = new Intent(getContext(), DetailsActivity.class)
+                                .putExtra("Poster", listSM.get(position));
+                        startActivity(switchIntent);
+                    } else {
+                        com.respond(listSM.get(position));
+                    }
 
                 }
             });
@@ -280,6 +321,7 @@ public class MainActivityFragment extends Fragment{
             ImageView iView;
             View mView;
             TextView tView;
+
             public ViewHolder(View itemView) {
                 super(itemView);
                 mView = itemView;
