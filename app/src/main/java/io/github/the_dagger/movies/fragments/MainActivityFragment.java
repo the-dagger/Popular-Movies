@@ -57,8 +57,7 @@ public class MainActivityFragment extends Fragment {
     static ArrayList<SingleMovie> favList;
     static boolean tabletSize;
     MovieDetails weather1;
-    boolean debug = true;
-    boolean popularity = false;
+    boolean debug = true;  //For running 2 asynctasks on first launch
     SingleMovie[] movieList = {};
     SingleMovie[] favouriteList = {};
     SingleMovie[] testListArray = {};
@@ -109,7 +108,6 @@ public class MainActivityFragment extends Fragment {
             Snackbar.make(getView(), "Sorted by Ratings", Snackbar.LENGTH_LONG).show();
             weather.execute();
             rv.setAdapter(adapter);
-            Log.e("after sorted by ratings", String.valueOf(popularity));
             return true;
         }
         if (id == R.id.action_sort) {
@@ -118,12 +116,13 @@ public class MainActivityFragment extends Fragment {
             Snackbar.make(getView(), "Sorted by Popularity", Snackbar.LENGTH_LONG).show();
             weather.execute();
             rv.setAdapter(adapter);
-            Log.e("After sorted by popularity", String.valueOf(popularity));
             return true;
         }
         if (id == R.id.action_fav) {
             for (int i = 0; i < testList.size(); i++) {
                 if (sharedpreferences.contains(testList.get(i).getId())) {    //If the movie is stored in the sharedPref
+                    if(favList.contains(testList.get(i))){}
+                    else
                     favList.add(testList.get(i));                             //Add that movie to the favList arraylist
                 }
                 rv.setAdapter(favAdapter);
@@ -220,10 +219,8 @@ public class MainActivityFragment extends Fragment {
                 URL url;
                 if (sort) {
                     url = new URL("http://api.themoviedb.org/3/movie/popular?api_key=" + BuildConfig.MOBDB_API_KEY); //sort by popularity by default
-                    popularity = true;
                 } else {
                     url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key=" + BuildConfig.MOBDB_API_KEY);  //sort by ratings
-                    popularity = false;
                 }
                 Log.v(LOG_TAG, String.valueOf(url));
                 movieDbUrl = url.toString();
