@@ -1,10 +1,14 @@
 package io.github.the_dagger.movies.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +48,8 @@ import retrofit2.Retrofit;
  * Created by Harshit on 1/26/2016.
  */
 public class DetailsLandscapeFragment extends Fragment {
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
     TextView language;
     TextView title;
     TextView overviewTextView;
@@ -51,7 +57,7 @@ public class DetailsLandscapeFragment extends Fragment {
     ImageView posterImage;
     RatingBar rb;
     ImageView backdrop;
-    private Call<Trailers> callTr;
+    FloatingActionButton fab;
     private Trailers trailers;
     Call<Reviews> callRv;
     ShareActionProvider shareActionProvider;
@@ -65,6 +71,7 @@ public class DetailsLandscapeFragment extends Fragment {
     private ReviewAdapter reviewAdapter;
     private TrailersAdapter trailersAdapter;
     Intent shareIntent;
+    Boolean setAsFav = false;
 
     public void getMovie(SingleMovie singleMovie) {
         Log.e("getmovie", "getmovie ran");
@@ -76,7 +83,7 @@ public class DetailsLandscapeFragment extends Fragment {
                     .build();
             TmdbAPI tmdbApi = retrofit.create(TmdbAPI.class);
             if (movie != null) {
-                callTr = tmdbApi.getTrailers(movie.id);
+                Call<Trailers> callTr = tmdbApi.getTrailers(movie.id);
                 callTr.enqueue(new Callback<Trailers>() {
                     @Override
                     public void onResponse(Response<Trailers> response) {
@@ -149,6 +156,11 @@ public class DetailsLandscapeFragment extends Fragment {
                 );
                 String overView = movie.movieOverView;
                 String summary = "";
+                if (sharedpreferences.contains(movie.getId())){
+                    fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+                }
+                else
+                    fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
                 float d = Float.parseFloat(movie.movieRating);
                 rb.setRating((Math.round(d) / 2));
                 language.setText(movie.language.toUpperCase());
@@ -196,8 +208,11 @@ public class DetailsLandscapeFragment extends Fragment {
         } else {
             movie = savedInstanceState.getParcelable("movie2");
         }
+        sharedpreferences = getActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Nullable
@@ -209,6 +224,7 @@ public class DetailsLandscapeFragment extends Fragment {
         language = (TextView) view.findViewById(R.id.language1);
         overviewTextView = (TextView) view.findViewById(R.id.movieSummary1);
         backdrop = (ImageView) view.findViewById(R.id.backdrop1);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_master);
         releaseTextView = (TextView) view.findViewById(R.id.releaseDate1);
         posterImage = (ImageView) view.findViewById(R.id.posterImageDetail1);
         rb = (RatingBar) view.findViewById(R.id.ratingBar11);
@@ -233,6 +249,26 @@ public class DetailsLandscapeFragment extends Fragment {
         });
         rvReview.setAdapter(reviewAdapter);
         getMovie(movie);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!sharedpreferences.contains(movie.getId())) {
+                    Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
+                    editor.putInt(movie.getId(), Integer.parseInt(movie.getId()));
+                    editor.apply();
+                    setAsFav = true;
+                    fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+
+                } else {
+                    Snackbar.make(view, "Removed from Favourites", Snackbar.LENGTH_LONG).show();
+                    editor.remove(movie.getId());
+                    editor.apply();
+                    setAsFav = false;
+                    fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                }
+
+            }
+        });
         return view;
     }
 }
