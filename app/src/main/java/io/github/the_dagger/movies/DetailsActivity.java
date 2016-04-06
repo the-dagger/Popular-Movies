@@ -150,7 +150,11 @@ public class DetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("getQuestions threw: ", t.getMessage());
+                try {
+                    Log.e("getQuestions threw: ", t.getMessage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

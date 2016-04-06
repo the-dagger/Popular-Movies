@@ -56,7 +56,7 @@ public class MainActivityFragment extends Fragment {
     static ArrayList<SingleMovie> testList;
     static ArrayList<SingleMovie> favList;
     static boolean tabletSize;
-    MovieDetails weather1;
+    FetchMovies weather1;
     boolean debug = true;  //For running 2 asynctasks on first launch
     SingleMovie[] movieList = {};
     SingleMovie[] favouriteList = {};
@@ -73,21 +73,26 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("movies", list);
+        outState.putParcelableArrayList("favourites", favList);
+        outState.putParcelableArrayList("test", testList);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+        if (savedInstanceState == null) {
             list = new ArrayList<>(Arrays.asList(movieList));
             testList = new ArrayList<>(Arrays.asList(testListArray));
-            weather1 = new MovieDetails();
-                sort = true;
-                weather1.execute();
+            weather1 = new FetchMovies();
+            sort = true;
+            weather1.execute();
             sharedpreferences = getActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE);
         } else {
             list = savedInstanceState.getParcelableArrayList("movies");
+            favList = savedInstanceState.getParcelableArrayList("favourites");
+            testList = savedInstanceState.getParcelableArrayList("test");
+            sort = true;
         }
         setHasOptionsMenu(true);
     }
@@ -103,7 +108,7 @@ public class MainActivityFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            MovieDetails weather = new MovieDetails();
+            FetchMovies weather = new FetchMovies();
             sort = true;
             Snackbar.make(getView(), "Sorted by Ratings", Snackbar.LENGTH_LONG).show();
             weather.execute();
@@ -111,7 +116,7 @@ public class MainActivityFragment extends Fragment {
             return true;
         }
         if (id == R.id.action_sort) {
-            MovieDetails weather = new MovieDetails();
+            FetchMovies weather = new FetchMovies();
             sort = false;
             Snackbar.make(getView(), "Sorted by Popularity", Snackbar.LENGTH_LONG).show();
             weather.execute();
@@ -119,37 +124,38 @@ public class MainActivityFragment extends Fragment {
             return true;
         }
         if (id == R.id.action_fav) {
-            boolean added = false;
             Log.e("TestList", String.valueOf(testList.size()));
-
-                for (int i = 0; i < testList.size(); i++) {
-                    try {
-                        if (sharedpreferences.contains(testList.get(i).getId())) {    //If the movie is stored in the sharedPref
-                            for(int k =0;k<favList.size();k++){
-                            if(favList.get(k).getId() == testList.get(i).getId()){
-                                added = true;
-                            }}
-                            if(!added)
+            rv.setAdapter(favAdapter);
+            sharedpreferences = getActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE);
+            for (int i = 0; i < 40; i++) {
+                try {
+                    if (sharedpreferences.contains(testList.get(i).getId())) {    //If the movie is stored in the sharedPref
+                        if (favList.contains(testList.get(i))) {
+                        } else {
                             favList.add(testList.get(i));
-                            //Add that movie to the favList arraylist
+                            favAdapter.notifyDataSetChanged();
                         }
-                        else
-                            favList.remove(testList.get(i));
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        //Add that movie to the favList arraylist
                     }
-                    favAdapter.notifyDataSetChanged();
-                    rv.setAdapter(favAdapter);
-
+                    else {
+                        favList.remove(testList.get(i));
+                        favAdapter.notifyDataSetChanged();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
+            }
         }
+
+
         return super.onOptionsItemSelected(item);
     }
 
     HttpURLConnection urlConnection = null;
     BufferedReader reader = null;
     String movieinfo = null;
-    private final String LOG_TAG = MovieDetails.class.getSimpleName();
+    private final String LOG_TAG = FetchMovies.class.getSimpleName();
 
 
     @Override
@@ -166,7 +172,7 @@ public class MainActivityFragment extends Fragment {
         return rv;
     }
 
-    public class MovieDetails extends AsyncTask<Void, Void, SingleMovie[]> {
+    public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
         private ProgressDialog dialog = new ProgressDialog(getActivity());
 
         @Override
@@ -190,10 +196,10 @@ public class MainActivityFragment extends Fragment {
                 com.respond(singleMovies[0]);
                 Log.e("onPost", "ran");
             }
-            if(!debug)
+            if (!debug)
                 adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
-            if(debug){
-                MovieDetails weatherdebug = new MovieDetails();   //Did this to load both popular and top rated in the testList for comparison with sharedPrefs
+            if (debug) {
+                FetchMovies weatherdebug = new FetchMovies();   //Did this to load both popular and top rated in the testList for comparison with sharedPrefs
                 sort = false;
                 debug = false;
                 weatherdebug.execute();
