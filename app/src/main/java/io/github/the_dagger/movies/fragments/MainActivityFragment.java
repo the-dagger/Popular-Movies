@@ -119,17 +119,30 @@ public class MainActivityFragment extends Fragment {
             return true;
         }
         if (id == R.id.action_fav) {
-            for (int i = 0; i < testList.size(); i++) {
-                if (sharedpreferences.contains(testList.get(i).getId())) {    //If the movie is stored in the sharedPref
-                    if(favList.contains(testList.get(i))){}
-                    else
-                    favList.add(testList.get(i));                             //Add that movie to the favList arraylist
-                }
-                rv.setAdapter(favAdapter);
-            }
+            boolean added = false;
             Log.e("TestList", String.valueOf(testList.size()));
-        }
 
+                for (int i = 0; i < testList.size(); i++) {
+                    try {
+                        if (sharedpreferences.contains(testList.get(i).getId())) {    //If the movie is stored in the sharedPref
+                            for(int k =0;k<favList.size();k++){
+                            if(favList.get(k).getId() == testList.get(i).getId()){
+                                added = true;
+                            }}
+                            if(!added)
+                            favList.add(testList.get(i));
+                            //Add that movie to the favList arraylist
+                        }
+                        else
+                            favList.remove(testList.get(i));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    favAdapter.notifyDataSetChanged();
+                    rv.setAdapter(favAdapter);
+
+                }
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -185,6 +198,7 @@ public class MainActivityFragment extends Fragment {
                 debug = false;
                 weatherdebug.execute();
             }
+//            favAdapter.notifyDataSetChanged();
             super.onPostExecute(singleMovies);
         }
 

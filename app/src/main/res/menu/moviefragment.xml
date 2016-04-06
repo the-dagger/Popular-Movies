@@ -16,5 +16,6 @@
         android:id="@+id/action_fav"
         android:orderInCategory="300"
         android:title="@string/action_fav"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_favorite_white_24dp"
+        app:showAsAction="always" />
 </menu>
