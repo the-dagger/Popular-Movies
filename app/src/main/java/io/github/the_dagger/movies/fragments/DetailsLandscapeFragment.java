@@ -220,6 +220,8 @@ public class DetailsLandscapeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.e("getmovie", "oncreateview ran");
         View view = inflater.inflate(R.layout.details_land_frag, container, false);
+//        if(movie==null)
+//            view.setVisibility(View.INVISIBLE);
         title = (TextView) view.findViewById(R.id.movieDetailTitle1);
         language = (TextView) view.findViewById(R.id.language1);
         overviewTextView = (TextView) view.findViewById(R.id.movieSummary1);

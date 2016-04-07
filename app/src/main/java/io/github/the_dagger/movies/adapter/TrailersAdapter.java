@@ -50,7 +50,6 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
         if (list == null){
             return -1;
         }
-//        Log.e("getItemCount",list.get(0).getKey());
         return list.size();
 
     }

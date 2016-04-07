@@ -10,7 +10,7 @@
     android:textColor="#000"
     android:textAppearance="@android:style/TextAppearance.Material.Body1"
     android:textSize="14sp"
+    android:maxLines="4"
     android:ellipsize="end"
-    android:maxLines="5"
     android:typeface="sans"
     tools:targetApi="lollipop" />

@@ -40,6 +40,7 @@ import java.util.List;
 
 import io.github.the_dagger.movies.BuildConfig;
 import io.github.the_dagger.movies.DetailsActivity;
+import io.github.the_dagger.movies.MainActivity;
 import io.github.the_dagger.movies.R;
 import io.github.the_dagger.movies.api.Communicator;
 import io.github.the_dagger.movies.objects.SingleMovie;
@@ -124,7 +125,6 @@ public class MainActivityFragment extends Fragment {
             return true;
         }
         if (id == R.id.action_fav) {
-            Log.e("TestList", String.valueOf(testList.size()));
             rv.setAdapter(favAdapter);
             sharedpreferences = getActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE);
             for (int i = 0; i < 40; i++) {
@@ -136,8 +136,7 @@ public class MainActivityFragment extends Fragment {
                             favAdapter.notifyDataSetChanged();
                         }
                         //Add that movie to the favList arraylist
-                    }
-                    else {
+                    } else {
                         favList.remove(testList.get(i));
                         favAdapter.notifyDataSetChanged();
                     }
@@ -193,9 +192,8 @@ public class MainActivityFragment extends Fragment {
                     list.add(oneMovie);
                     testList.add(oneMovie);
                 }
-                com.respond(singleMovies[0]);
-                Log.e("onPost", "ran");
             }
+            com.respond(singleMovies[0]);
             if (!debug)
                 adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
             if (debug) {
@@ -242,7 +240,7 @@ public class MainActivityFragment extends Fragment {
                 } else {
                     url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key=" + BuildConfig.MOBDB_API_KEY);  //sort by ratings
                 }
-                Log.v(LOG_TAG, String.valueOf(url));
+
                 movieDbUrl = url.toString();
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -317,12 +315,14 @@ public class MainActivityFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     tabletSize = getResources().getBoolean(R.bool.isTab);
-                    if (!tabletSize) {
+                    try {
+                        if (MainActivity.f.isInLayout()) {
+                            com.respond(listSM.get(position));
+                        }
+                    } catch (Exception e) {
                         Intent switchIntent = new Intent(getContext(), DetailsActivity.class)
                                 .putExtra("Poster", listSM.get(position));
                         startActivity(switchIntent);
-                    } else {
-                        com.respond(listSM.get(position));
                     }
 
                 }

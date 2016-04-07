@@ -3,7 +3,6 @@ package io.github.the_dagger.movies;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -64,7 +63,6 @@ public class DetailsActivity extends AppCompatActivity {
     Boolean setAsFav = false;
     @Bind(R.id.language)
     TextView language;
-//    List<SingleMovie> listsharedPref = new ArrayList<>();
     private Trailers trailers;
     Call<Reviews> callRv;
     TmdbAPI tmdbApi;
@@ -72,7 +70,6 @@ public class DetailsActivity extends AppCompatActivity {
     List<Reviews.SingleReview> listRv;
     String Base_URL = "http://api.themoviedb.org/3/";
     SingleMovie movie;
-    private static final int CURSOR_LOADER_ID = 0;
     private Reviews reviews;
     private ReviewAdapter reviewAdapter;
 
@@ -101,7 +98,6 @@ public class DetailsActivity extends AppCompatActivity {
                     shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
                     shareActionProvider.setShareIntent(shareIntent);
                 } catch (Exception e) {
-//                    Log.e("exception","Exception");
                     e.printStackTrace();
                     Toast toast = null;
                     if (response.code() == 401) {
@@ -127,7 +123,6 @@ public class DetailsActivity extends AppCompatActivity {
         callRv.enqueue(new Callback<Reviews>() {
             @Override
             public void onResponse(Response<Reviews> response) {
-//                    Log.e(getClass().getSimpleName(),response.raw().toString());
                 try {
                     reviews = response.body();
                     listRv = reviews.getReviews();
@@ -173,22 +168,10 @@ public class DetailsActivity extends AppCompatActivity {
         trailersAdapter = new TrailersAdapter(listTr, this);
         RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
         rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                super.onDraw(c, parent, state);
-            }
-        });
         rvTrailer.setAdapter(trailersAdapter);
         reviewAdapter = new ReviewAdapter(listRv, this);
         RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
-        rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvTrailer.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                super.onDraw(c, parent, state);
-            }
-        });
+        rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvReview.setAdapter(reviewAdapter);
         title.setText(movie.movieTitle);
         Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
@@ -244,10 +227,8 @@ public class DetailsActivity extends AppCompatActivity {
         shareItem = menu.findItem(R.id.action_share);
         shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-//        Log.e("key2",key);
         shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + EXTRA_MESSAGE);
         ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
-//        shareActionProvider.setOnShareTargetSelectedListener(this);
         shareActionProvider.setShareIntent(shareIntent);
 
         return true;
