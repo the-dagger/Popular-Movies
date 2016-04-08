@@ -181,16 +181,15 @@ public class DetailsActivity extends AppCompatActivity {
         rb.setRating((Math.round(d) / 2));
         releaseTextView.setText(movie.movieReleaseDate);
         for (String sum : overView.split("(?<=[.])\\s+"))
-            if (summary == "")
+            if (summary.equals(""))
                 summary = sum;
             else
                 summary = summary + "\n" + sum;
         overviewTextView.setText(summary);
         Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
-        if (sharedpreferences.contains(movie.getId())){
+        if (sharedpreferences.contains(movie.getId())) {
             f.setImageResource(R.drawable.ic_favorite_white_24dp);
-        }
-        else
+        } else
             f.setImageResource(R.drawable.ic_favorite_border_white_24dp);
         f.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,8 +214,8 @@ public class DetailsActivity extends AppCompatActivity {
         try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException e) {
+            e.printStackTrace();
         }
-        ;
         getSupportActionBar().setTitle("");
     }
 

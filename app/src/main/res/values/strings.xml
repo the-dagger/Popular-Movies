@@ -14,7 +14,7 @@
     <string name="Backdrop">Backdrop</string>
     <string name="sort_rat">Sorted by Ratings</string>
     <string name="sort_pop">Sorted by Popularity</string>
-    <string name="no_net">No network Connection (._.')</string>
+    <string name="no_net">No network Connection</string>
     <string name="Rating">Rating</string>
     <string name="ReleaseDate">ReleaseDate</string>
     <string name="transition_album_cover">transition</string>

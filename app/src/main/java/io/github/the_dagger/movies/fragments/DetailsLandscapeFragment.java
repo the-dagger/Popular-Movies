@@ -74,7 +74,6 @@ public class DetailsLandscapeFragment extends Fragment {
     Boolean setAsFav = false;
 
     public void getMovie(SingleMovie singleMovie) {
-        Log.e("getmovie", "getmovie ran");
         movie = singleMovie;
         if (movie != null) {
             Retrofit retrofit = new Retrofit.Builder()
@@ -87,7 +86,6 @@ public class DetailsLandscapeFragment extends Fragment {
                 callTr.enqueue(new Callback<Trailers>() {
                     @Override
                     public void onResponse(Response<Trailers> response) {
-//                        Log.e(getClass().getSimpleName(), response.raw().toString());
                         try {
                             trailers = response.body();
                             listTr = trailers.getTrailers();
@@ -97,7 +95,6 @@ public class DetailsLandscapeFragment extends Fragment {
                             shareActionProvider.setShareIntent(shareIntent);
 //                        trailersAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
-                            Log.e("Exception", "Exception");   //This statement is executed
                             e.printStackTrace();
                             Toast toast = null;
                             if (response.code() == 401) {
@@ -124,7 +121,6 @@ public class DetailsLandscapeFragment extends Fragment {
                 callRv.enqueue(new Callback<Reviews>() {
                     @Override
                     public void onResponse(Response<Reviews> response) {
-                        Log.e(getClass().getSimpleName(), response.raw().toString());
                         try {
                             reviews = response.body();
                             listRv = reviews.getReviews();
@@ -201,7 +197,6 @@ public class DetailsLandscapeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState == null || !savedInstanceState.containsKey("movie2")) {
-//            getMovie(movie);
         } else {
             movie = savedInstanceState.getParcelable("movie2");
         }
