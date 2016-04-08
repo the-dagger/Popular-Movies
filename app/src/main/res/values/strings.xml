@@ -7,9 +7,16 @@
     <string name="Title">Title</string>
     <string name="action_share">Share</string>
     <string name="action_fav">Favourites</string>
+    <string name="add_fav">Added to Favourites</string>
+    <string name="message">Sent via Popular Movies app</string>
+    <string name="add_fav">Added to Favourites</string>
+    <string name="add_fav">Added to Favourites</string>
+    <string name="rem_fav">Removed from Favourites</string>
     <string name="OverView">OverView</string>
     <string name="Backdrop">Backdrop</string>
-
+    <string name="sort_rat">Sorted by Ratings</string>
+    <string name="sort_pop">Sorted by Popularity</string>
+    <string name="no_net">No network Connection (._.')</string>
     <string name="Rating">Rating</string>
     <string name="ReleaseDate">ReleaseDate</string>
     <string name="transition_album_cover">transition</string>

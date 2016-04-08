@@ -93,7 +93,7 @@ public class DetailsLandscapeFragment extends Fragment {
                             listTr = trailers.getTrailers();
                             listTr.size();       //ListTr is null here
                             trailersAdapter.swapList(listTr);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
                             shareActionProvider.setShareIntent(shareIntent);
 //                        trailersAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
@@ -180,8 +180,6 @@ public class DetailsLandscapeFragment extends Fragment {
         }
     }
 
-    String EXTRA_MESSAGE = "Sent via Popular Movies app";
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
@@ -189,7 +187,7 @@ public class DetailsLandscapeFragment extends Fragment {
         MenuItem shareItem = menu.findItem(R.id.action_share);
         shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + EXTRA_MESSAGE);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + getResources().getString(R.string.message));
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(shareIntent);
     }
@@ -202,7 +200,6 @@ public class DetailsLandscapeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.e("getmovie", "oncreate ran");
         if (savedInstanceState == null || !savedInstanceState.containsKey("movie2")) {
 //            getMovie(movie);
         } else {
@@ -218,7 +215,6 @@ public class DetailsLandscapeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e("getmovie", "oncreateview ran");
         View view = inflater.inflate(R.layout.details_land_frag, container, false);
         title = (TextView) view.findViewById(R.id.movieDetailTitle1);
         language = (TextView) view.findViewById(R.id.language1);
@@ -253,14 +249,14 @@ public class DetailsLandscapeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!sharedpreferences.contains(movie.getId())) {
-                    Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, getResources().getText(R.string.add_fav), Snackbar.LENGTH_LONG).show();
                     editor.putInt(movie.getId(), Integer.parseInt(movie.getId()));
                     editor.apply();
                     setAsFav = true;
                     fab.setImageResource(R.drawable.ic_favorite_white_24dp);
 
                 } else {
-                    Snackbar.make(view, "Removed from Favourites", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
                     editor.remove(movie.getId());
                     editor.apply();
                     setAsFav = false;

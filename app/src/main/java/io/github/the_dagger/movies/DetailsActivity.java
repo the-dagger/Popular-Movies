@@ -74,7 +74,6 @@ public class DetailsActivity extends AppCompatActivity {
     private ReviewAdapter reviewAdapter;
 
     private TrailersAdapter trailersAdapter;
-    String EXTRA_MESSAGE = "Sent via Popular Movies app";
     Intent shareIntent;
     MenuItem shareItem;
     ShareActionProvider shareActionProvider;
@@ -95,7 +94,7 @@ public class DetailsActivity extends AppCompatActivity {
                     trailers = response.body();
                     listTr = trailers.getTrailers();
                     trailersAdapter.swapList(listTr);
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + EXTRA_MESSAGE);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
                     shareActionProvider.setShareIntent(shareIntent);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -197,14 +196,14 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!setAsFav && !sharedpreferences.contains(movie.getId())) {
-                    Snackbar.make(view, "Added to Favourites", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, getResources().getText(R.string.add_fav), Snackbar.LENGTH_LONG).show();
                     editor.putInt(movie.getId(), Integer.parseInt(movie.getId()));
                     editor.apply();
                     setAsFav = true;
                     f.setImageResource(R.drawable.ic_favorite_white_24dp);
 
                 } else {
-                    Snackbar.make(view, "Removed from Favourites", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
                     editor.remove(movie.getId());
                     editor.apply();
                     setAsFav = false;
@@ -227,7 +226,7 @@ public class DetailsActivity extends AppCompatActivity {
         shareItem = menu.findItem(R.id.action_share);
         shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + EXTRA_MESSAGE);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + getResources().getString(R.string.message));
         ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(shareIntent);
 

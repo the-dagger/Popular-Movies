@@ -122,7 +122,7 @@ public class MainActivityFragment extends Fragment {
         if (id == R.id.action_settings) {
             FetchMovies weather = new FetchMovies();
             sort = true;
-            Snackbar.make(getView(), "Sorted by Ratings", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(getView(), getResources().getText(R.string.sort_rat), Snackbar.LENGTH_LONG).show();
             weather.execute();
             rv.setAdapter(adapter);
             return true;
@@ -130,7 +130,7 @@ public class MainActivityFragment extends Fragment {
         if (id == R.id.action_sort) {
             FetchMovies weather = new FetchMovies();
             sort = false;
-            Snackbar.make(getView(), "Sorted by Popularity", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(getView(), getResources().getText(R.string.sort_pop), Snackbar.LENGTH_LONG).show();
             weather.execute();
             rv.setAdapter(adapter);
             return true;
@@ -197,7 +197,7 @@ public class MainActivityFragment extends Fragment {
             if(activeNetworkInfo == null){
                 if (dialog.isShowing()) {
                     dialog.dismiss();
-                    Snackbar.make(getView(),"No network Connection (._.')",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(),getResources().getText(R.string.no_net),Snackbar.LENGTH_LONG).show();
                 }
             }
             else {
