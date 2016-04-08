@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -66,6 +68,8 @@ public class MainActivityFragment extends Fragment {
     ImageView poster;
     RecyclerView rv;
     SharedPreferences sharedpreferences;
+    ConnectivityManager connectivityManager;
+    NetworkInfo activeNetworkInfo;
 
     public MainActivityFragment() {
 
@@ -82,12 +86,19 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (savedInstanceState == null) {
             list = new ArrayList<>(Arrays.asList(movieList));
             testList = new ArrayList<>(Arrays.asList(testListArray));
             weather1 = new FetchMovies();
             sort = true;
-            weather1.execute();
+            if(activeNetworkInfo == null){
+
+            }
+            else{
+                weather1.execute();
+            }
             sharedpreferences = getActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE);
         } else {
             list = savedInstanceState.getParcelableArrayList("movies");
@@ -154,7 +165,6 @@ public class MainActivityFragment extends Fragment {
     HttpURLConnection urlConnection = null;
     BufferedReader reader = null;
     String movieinfo = null;
-    private final String LOG_TAG = FetchMovies.class.getSimpleName();
 
 
     @Override
@@ -182,27 +192,36 @@ public class MainActivityFragment extends Fragment {
 
         @Override
         protected void onPostExecute(SingleMovie[] singleMovies) {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-            if (singleMovies != null) {
-                list.clear();
-                for (int i = 0; i < singleMovies.length; i++) {
-                    SingleMovie oneMovie = singleMovies[i];
-                    list.add(oneMovie);
-                    testList.add(oneMovie);
+            connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            if(activeNetworkInfo == null){
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                    Snackbar.make(getView(),"No network Connection (._.')",Snackbar.LENGTH_LONG).show();
                 }
             }
-            com.respond(singleMovies[0]);
-            if (!debug)
-                adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
-            if (debug) {
-                FetchMovies weatherdebug = new FetchMovies();   //Did this to load both popular and top rated in the testList for comparison with sharedPrefs
-                sort = false;
-                debug = false;
-                weatherdebug.execute();
+            else {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                if (singleMovies != null) {
+                    list.clear();
+                    for (int i = 0; i < singleMovies.length; i++) {
+                        SingleMovie oneMovie = singleMovies[i];
+                        list.add(oneMovie);
+                        testList.add(oneMovie);
+                    }
+                    com.respond(singleMovies[0]);
+                }
+                if (!debug)
+                    adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
+                if (debug) {
+                    FetchMovies weatherdebug = new FetchMovies();   //Did this to load both popular and top rated in the testList for comparison with sharedPrefs
+                    sort = false;
+                    debug = false;
+                    weatherdebug.execute();
+                }
             }
-//            favAdapter.notifyDataSetChanged();
             super.onPostExecute(singleMovies);
         }
 
@@ -266,6 +285,7 @@ public class MainActivityFragment extends Fragment {
                 movieinfo = buffer.toString();
             } catch (IOException e) {
                 Log.e("PlaceholderFragment", "Error ", e);
+
                 return null;
             } finally {
                 if (urlConnection != null) {

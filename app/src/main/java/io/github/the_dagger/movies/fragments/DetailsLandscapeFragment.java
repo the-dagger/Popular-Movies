@@ -156,17 +156,16 @@ public class DetailsLandscapeFragment extends Fragment {
                 );
                 String overView = movie.movieOverView;
                 String summary = "";
-                if (sharedpreferences.contains(movie.getId())){
+                if (sharedpreferences.contains(movie.getId())) {
                     fab.setImageResource(R.drawable.ic_favorite_white_24dp);
-                }
-                else
+                } else
                     fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
                 float d = Float.parseFloat(movie.movieRating);
                 rb.setRating((Math.round(d) / 2));
                 language.setText(movie.language.toUpperCase());
                 releaseTextView.setText(movie.movieReleaseDate);
                 for (String sum : overView.split("(?<=[.])\\s+"))
-                    if (summary == "")
+                    if (summary.equals(""))
                         summary = sum;
                     else
                         summary = summary + "\n" + sum;
@@ -174,6 +173,7 @@ public class DetailsLandscapeFragment extends Fragment {
                 try {
                     Picasso.with(getActivity()).load(movie.movieBackDropImage).into(backdrop);
                 } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -220,8 +220,6 @@ public class DetailsLandscapeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.e("getmovie", "oncreateview ran");
         View view = inflater.inflate(R.layout.details_land_frag, container, false);
-//        if(movie==null)
-//            view.setVisibility(View.INVISIBLE);
         title = (TextView) view.findViewById(R.id.movieDetailTitle1);
         language = (TextView) view.findViewById(R.id.language1);
         overviewTextView = (TextView) view.findViewById(R.id.movieSummary1);
