@@ -93,7 +93,6 @@ public class DetailsLandscapeFragment extends Fragment {
                             trailersAdapter.swapList(listTr);
                             shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
                             shareActionProvider.setShareIntent(shareIntent);
-//                        trailersAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast toast = null;
@@ -116,7 +115,6 @@ public class DetailsLandscapeFragment extends Fragment {
                         Log.e("getQuestions threw: ", t.getMessage());
                     }
                 });
-//        if(movie!=null) {
                 callRv = tmdbApi.getReview(movie.id);
                 callRv.enqueue(new Callback<Reviews>() {
                     @Override
@@ -125,7 +123,6 @@ public class DetailsLandscapeFragment extends Fragment {
                             reviews = response.body();
                             listRv = reviews.getReviews();
                             reviewAdapter.swapList(listRv);
-//                        trailersAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             Toast toast = null;
                             if (response.code() == 401) {

@@ -1,8 +1,5 @@
 package io.github.the_dagger.movies;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,13 +11,9 @@ import io.github.the_dagger.movies.objects.SingleMovie;
 public class MainActivity extends AppCompatActivity implements Communicator {
     public static DetailsLandscapeFragment f;
     SingleMovie Movie;
-    ConnectivityManager connectivityManager;
-    NetworkInfo activeNetworkInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
