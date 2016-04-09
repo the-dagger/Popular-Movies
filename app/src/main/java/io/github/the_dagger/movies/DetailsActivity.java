@@ -79,8 +79,39 @@ public class DetailsActivity extends AppCompatActivity {
     ShareActionProvider shareActionProvider;
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_details);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        Intent intent = getIntent();
+        movie = intent.getParcelableExtra("Poster");
+        language.setText(movie.language.toUpperCase());
+        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
+        trailersAdapter = new TrailersAdapter(listTr, this);
+        RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
+        rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvTrailer.setAdapter(trailersAdapter);
+        reviewAdapter = new ReviewAdapter(listRv, this);
+        RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
+        rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvReview.setAdapter(reviewAdapter);
+        title.setText(movie.movieTitle);
+        Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
+        );
+        String overView = movie.movieOverView;
+        String summary = "";
+        float d = Float.parseFloat(movie.movieRating);
+        rb.setRating((Math.round(d) / 2));
+        releaseTextView.setText(movie.movieReleaseDate);
+        for (String sum : overView.split("(?<=[.])\\s+"))
+            if (summary.equals(""))
+                summary = sum;
+            else
+                summary = summary + "\n" + sum;
+        overviewTextView.setText(summary);
+        Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Base_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -151,42 +182,6 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        Intent intent = getIntent();
-        movie = intent.getParcelableExtra("Poster");
-        language.setText(movie.language.toUpperCase());
-        sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
-        editor = sharedpreferences.edit();
-        trailersAdapter = new TrailersAdapter(listTr, this);
-        RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
-        rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvTrailer.setAdapter(trailersAdapter);
-        reviewAdapter = new ReviewAdapter(listRv, this);
-        RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
-        rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvReview.setAdapter(reviewAdapter);
-        title.setText(movie.movieTitle);
-        Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
-        );
-        String overView = movie.movieOverView;
-        String summary = "";
-        float d = Float.parseFloat(movie.movieRating);
-        rb.setRating((Math.round(d) / 2));
-        releaseTextView.setText(movie.movieReleaseDate);
-        for (String sum : overView.split("(?<=[.])\\s+"))
-            if (summary.equals(""))
-                summary = sum;
-            else
-                summary = summary + "\n" + sum;
-        overviewTextView.setText(summary);
-        Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
         if (sharedpreferences.contains(movie.getId())) {
             f.setImageResource(R.drawable.ic_favorite_white_24dp);
         } else
