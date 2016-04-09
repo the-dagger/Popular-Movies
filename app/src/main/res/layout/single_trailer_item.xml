@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-<ImageView android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:id="@+id/singleTrailerImageView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:scaleType="fitCenter"
-    android:layout_weight="1"
-    android:paddingTop="4dp"
-    android:paddingLeft="4dp"
-    android:paddingBottom="4dp" />
-<TextView
-    android:layout_width="0dp"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:textAppearance="@android:style/TextAppearance.Material.Body1"
-    android:id="@+id/trailer_name"
-    android:maxLines="1"
-    android:typeface="sans"
-    android:layout_weight="1"
     android:layout_margin="4dp"
-    android:textColor="#000"
-    android:textSize="14sp"
-    android:ellipsize="end"
-    tools:targetApi="lollipop" />
- </LinearLayout>
+    android:background="#ffe5e5e5"
+    android:elevation="8dp"
+    app:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/singleTrailerImageView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="4dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/trailer_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+            android:textColor="#000"
+            android:textSize="14sp"
+            android:typeface="sans"
+            tools:targetApi="lollipop" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

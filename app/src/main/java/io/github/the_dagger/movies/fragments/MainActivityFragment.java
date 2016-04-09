@@ -39,7 +39,6 @@ public class MainActivityFragment extends Fragment {
     FetchMovies weather1;
     MovieAdapter movieAdapter;
     FetchMovies fetchMovies;
-    boolean debug = true;  //For running 2 asynctasks on first launch
     SingleMovie[] movieList = {};
     SingleMovie[] favouriteList = {};
     SingleMovie[] testListArray = {};

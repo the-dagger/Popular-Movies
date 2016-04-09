@@ -43,7 +43,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_movie_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -51,7 +51,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.tView.setText(listSM.get(position).movieTitle);
         Picasso.with(this.c).load(listSM.get(position).movieImage).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED_DARK)
-                .intoBackground(holder.tView));
+                .intoBackground(holder.tView).intoBackground(holder.dView));
+        holder.dView.setText(listSM.get(position).movieReleaseDate);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,12 +79,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         ImageView iView;
         View mView;
         TextView tView;
+        TextView dView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             iView = (ImageView) itemView.findViewById(R.id.movie_poster_image);
             tView = (TextView) itemView.findViewById(R.id.movie_name);
+            dView = (TextView) itemView.findViewById(R.id.releaseDateMainActivit);
         }
 
     }
