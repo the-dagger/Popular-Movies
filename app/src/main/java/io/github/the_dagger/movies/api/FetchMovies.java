@@ -41,7 +41,7 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
     String movieDbUrl = null;
     Context c;
     MainActivityFragment mainActivityFragment = new MainActivityFragment();
-    public static ProgressDialog progressDialog;
+    public ProgressDialog progressDialog;
 
     public FetchMovies(Activity a, View v, Context c) {
         this.activity = a;
@@ -64,7 +64,11 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
         activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (activeNetworkInfo == null) {
             progressDialog.dismiss();
-            Snackbar.make(v, activity.getResources().getText(R.string.no_net), Snackbar.LENGTH_LONG).show();
+            try {
+                Snackbar.make(v, activity.getResources().getText(R.string.no_net), Snackbar.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             progressDialog.dismiss();
             if (singleMovies != null) {

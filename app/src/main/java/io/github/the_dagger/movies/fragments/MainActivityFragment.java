@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -99,8 +100,8 @@ public class MainActivityFragment extends Fragment {
             FetchMovies weather = new FetchMovies(getActivity(),getView(),getContext());
             sort = true;
             Snackbar.make(getView(), getResources().getText(R.string.sort_rat), Snackbar.LENGTH_LONG).show();
-            FetchMovies.progressDialog.show();
             weather.execute();
+            weather.progressDialog.show();
             rv.setAdapter(adapter);
             return true;
         }
@@ -108,8 +109,8 @@ public class MainActivityFragment extends Fragment {
             FetchMovies weather = new FetchMovies(getActivity(),getView(),getContext());
             sort = false;
             Snackbar.make(getView(), getResources().getText(R.string.sort_pop), Snackbar.LENGTH_LONG).show();
-            FetchMovies.progressDialog.show();
             weather.execute();
+            weather.progressDialog.show();
             rv.setAdapter(adapter);
             return true;
         }
@@ -151,14 +152,19 @@ public class MainActivityFragment extends Fragment {
         rv.setAdapter(adapter);
         poster = (ImageView) rv.findViewById(R.id.movie_poster_image);
         com = (Communicator) getActivity();
-        if(activeNetworkInfo == null){
+        return rv;
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(activeNetworkInfo == null){
+            Snackbar.make(getView(),"No Network COnnection",Snackbar.LENGTH_LONG).show();
         }
         else{
             weather1.execute();
-            FetchMovies.progressDialog.show();
+            weather1.progressDialog.show();
         }
-        return rv;
     }
 
 }
