@@ -66,7 +66,7 @@
                         android:layout_width="180dp"
                         android:layout_height="250dp"
                         android:layout_marginTop="8dp"
-                        android:transitionName="@string/transition_album_cover"
+                        android:transitionName="@string/activity_image_trans"
                         tools:targetApi="lollipop" />
 
                     <LinearLayout

@@ -3,6 +3,8 @@ package io.github.the_dagger.movies.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +21,6 @@ import java.util.List;
 import io.github.the_dagger.movies.DetailsActivity;
 import io.github.the_dagger.movies.MainActivity;
 import io.github.the_dagger.movies.R;
-import io.github.the_dagger.movies.api.Communicator;
 import io.github.the_dagger.movies.fragments.MainActivityFragment;
 import io.github.the_dagger.movies.objects.SingleMovie;
 
@@ -28,12 +29,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     List<SingleMovie> listSM;
     Context c;
     Activity a;
-    View v;
-    Communicator com;
-
+    public View view;
+    MainActivityFragment mainActivityFragment = new MainActivityFragment();
     public MovieAdapter(Activity a, View v, Context c){
         this.a =a;
-        this.v = v;
+        this.view = v;
         this.c = c;
     }
     public MovieAdapter(FragmentActivity context, List<SingleMovie> resource) {
@@ -48,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tView.setText(listSM.get(position).movieTitle);
         Picasso.with(this.c).load(listSM.get(position).movieImage).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED_DARK)
                 .intoBackground(holder.tView).intoBackground(holder.dView));
@@ -58,12 +58,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             public void onClick(View v) {
                 try {
                     if (MainActivity.f.isInLayout()) {
-                        MainActivityFragment.com.respond(listSM.get(position));
+                        mainActivityFragment.com.respond(listSM.get(position));
                     }
                 } catch (Exception e) {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation(a, holder.iView,view.getResources().getString(R.string.activity_image_trans));
                     Intent switchIntent = new Intent(c, DetailsActivity.class)
                             .putExtra("Poster", listSM.get(position));
-                   c.startActivity(switchIntent);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        c.startActivity(switchIntent,options.toBundle());
+                    }
                 }
 
             }

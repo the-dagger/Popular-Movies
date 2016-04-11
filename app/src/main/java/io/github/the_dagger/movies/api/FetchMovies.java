@@ -40,6 +40,7 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
     String movieinfo = null;
     String movieDbUrl = null;
     Context c;
+    MainActivityFragment mainActivityFragment = new MainActivityFragment();
     public static ProgressDialog progressDialog;
 
     public FetchMovies(Activity a, View v, Context c) {
@@ -67,19 +68,19 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
         } else {
             progressDialog.dismiss();
             if (singleMovies != null) {
-                MainActivityFragment.list.clear();
+                mainActivityFragment.list.clear();
                 for (int i = 0; i < singleMovies.length; i++) {
                     SingleMovie oneMovie = singleMovies[i];
-                    MainActivityFragment.list.add(oneMovie);
-                    MainActivityFragment.testList.add(oneMovie);
+                    mainActivityFragment.list.add(oneMovie);
+                    mainActivityFragment.testList.add(oneMovie);
                 }
                 com.respond(singleMovies[0]);
             }
             if (!debug)
-                MainActivityFragment.adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
+                mainActivityFragment.adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
             else {
                 FetchMovies weatherdebug = new FetchMovies(activity, v, c);   //Did this to load both popular and top rated in the testList for comparison with sharedPrefs
-                MainActivityFragment.sort = false;
+                mainActivityFragment.sort = false;
                 debug = false;
                 weatherdebug.execute();
             }
@@ -107,16 +108,16 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
             String moviePosterendURL = currentMovie.getString(MDB_POSTER);
             String moviePosterURL = baseURL + moviePosterendURL;
             String language = currentMovie.getString("original_language");
-            MainActivityFragment.movieDetails[i] = new SingleMovie(moviePosterURL, movietitle, movietempOverView, temprating, tempreleaseDate, tempbackDropImage, movieID, language);
+            mainActivityFragment.movieDetails[i] = new SingleMovie(moviePosterURL, movietitle, movietempOverView, temprating, tempreleaseDate, tempbackDropImage, movieID, language);
         }
-        return MainActivityFragment.movieDetails;
+        return mainActivityFragment.movieDetails;
     }
 
     @Override
     protected SingleMovie[] doInBackground(Void... params) {
         try {
             URL url;
-            if (MainActivityFragment.sort) {
+            if (mainActivityFragment.sort) {
                 url = new URL("http://api.themoviedb.org/3/movie/popular?api_key=" + BuildConfig.MOBDB_API_KEY); //sort by popularity by default
             } else {
                 url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key=" + BuildConfig.MOBDB_API_KEY);  //sort by ratings

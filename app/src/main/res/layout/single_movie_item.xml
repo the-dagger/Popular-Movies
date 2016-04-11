@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:transitionName="@string/transition_album_cover" />
+            android:transitionName="@string/activity_image_trans"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/movie_name"

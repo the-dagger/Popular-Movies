@@ -30,19 +30,19 @@ import io.github.the_dagger.movies.objects.SingleMovie;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-    static public MovieAdapter adapter, favAdapter;
-    static public Boolean sort = false;  //false means sorted by ratings
-    static public SingleMovie[] movieDetails = new SingleMovie[20];
-    static public ArrayList<SingleMovie> list;
-    static public ArrayList<SingleMovie> testList;
-    static ArrayList<SingleMovie> favList;
+    public MovieAdapter adapter, favAdapter;
+    public Boolean sort = false;  //false means sorted by ratings
+    public SingleMovie[] movieDetails = new SingleMovie[20];
+    public ArrayList<SingleMovie> list;
+    public ArrayList<SingleMovie> testList;
+    ArrayList<SingleMovie> favList;
     FetchMovies weather1;
     MovieAdapter movieAdapter;
     FetchMovies fetchMovies;
     SingleMovie[] movieList = {};
     SingleMovie[] favouriteList = {};
     SingleMovie[] testListArray = {};
-    public static Communicator com;
+    public Communicator com;
     ImageView poster;
     RecyclerView rv;
     SharedPreferences sharedpreferences;
