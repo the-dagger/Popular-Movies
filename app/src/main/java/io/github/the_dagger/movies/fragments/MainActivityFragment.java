@@ -159,7 +159,7 @@ public class MainActivityFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(activeNetworkInfo == null){
-            Snackbar.make(getView(),"No Network COnnection",Snackbar.LENGTH_LONG).show();
+            Snackbar.make(getView(),getResources().getText(R.string.no_net),Snackbar.LENGTH_LONG).show();
         }
         else{
             weather1.execute();
