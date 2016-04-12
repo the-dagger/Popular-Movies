@@ -3,10 +3,9 @@ package io.github.the_dagger.movies.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,18 +57,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             public void onClick(View v) {
                 try {
                     if (MainActivity.f.isInLayout()) {
-                        mainActivityFragment.com.respond(listSM.get(position));
-                    }
-                } catch (Exception e) {
-                    ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation(a, holder.iView,view.getResources().getString(R.string.activity_image_trans));
-                    Intent switchIntent = new Intent(c, DetailsActivity.class)
-                            .putExtra("Poster", listSM.get(position));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        c.startActivity(switchIntent,options.toBundle());
+                        MainActivityFragment.com.respond(listSM.get(position));
                     }
                 }
-
+            catch (Exception e) {
+                    Log.e("error",e.getStackTrace().toString());
+//                    ActivityOptionsCompat options = ActivityOptionsCompat.
+//                            makeSceneTransitionAnimation(a, holder.iView,view.getResources().getString(R.string.activity_image_trans));
+                    Intent switchIntent = new Intent(c, DetailsActivity.class).putExtra("Poster", listSM.get(position));
+                        c.startActivity(switchIntent);
+                }
+//
             }
         });
     }

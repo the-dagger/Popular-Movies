@@ -31,11 +31,11 @@ import io.github.the_dagger.movies.objects.SingleMovie;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-    public MovieAdapter adapter, favAdapter;
-    public Boolean sort = false;  //false means sorted by ratings
-    public SingleMovie[] movieDetails = new SingleMovie[20];
-    public ArrayList<SingleMovie> list;
-    public ArrayList<SingleMovie> testList;
+    public static  MovieAdapter adapter, favAdapter;
+    public static Boolean sort = false;  //false means sorted by ratings
+    public static SingleMovie[] movieDetails = new SingleMovie[20];
+    public static ArrayList<SingleMovie> list;
+    public static ArrayList<SingleMovie> testList;
     ArrayList<SingleMovie> favList;
     FetchMovies weather1;
     MovieAdapter movieAdapter;
@@ -43,7 +43,7 @@ public class MainActivityFragment extends Fragment {
     SingleMovie[] movieList = {};
     SingleMovie[] favouriteList = {};
     SingleMovie[] testListArray = {};
-    public Communicator com;
+    public static Communicator com;
     ImageView poster;
     RecyclerView rv;
     SharedPreferences sharedpreferences;
@@ -59,7 +59,7 @@ public class MainActivityFragment extends Fragment {
         outState.putParcelableArrayList("movies", list);
         outState.putParcelableArrayList("favourites", favList);
         outState.putParcelableArrayList("test", testList);
-        outState.putBoolean("sort",sort);
+//        outState.putBoolean("sort",sort);
         super.onSaveInstanceState(outState);
     }
 
@@ -70,6 +70,7 @@ public class MainActivityFragment extends Fragment {
         activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         fetchMovies = new FetchMovies(getActivity(),getView(),getContext());
         weather1 = new FetchMovies(getActivity(),getView(),getContext());
+        com = (Communicator) getActivity();
         movieAdapter = new MovieAdapter(getActivity(),getView(),getContext());
         if (savedInstanceState == null) {
             list = new ArrayList<>(Arrays.asList(movieList));
@@ -81,7 +82,7 @@ public class MainActivityFragment extends Fragment {
             list = savedInstanceState.getParcelableArrayList("movies");
             favList = savedInstanceState.getParcelableArrayList("favourites");
             testList = savedInstanceState.getParcelableArrayList("test");
-            sort = savedInstanceState.getBoolean("sort");
+//            sort = savedInstanceState.getBoolean("sort");
         }
         setHasOptionsMenu(true);
     }

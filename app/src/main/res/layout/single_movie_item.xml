@@ -37,7 +37,6 @@
             android:textAppearance="@android:style/TextAppearance.Material.Title"
             android:textColor="#ffff"
             android:textSize="14sp"
-            android:typeface="sans"
             tools:targetApi="lollipop" />
 
         <TextView
