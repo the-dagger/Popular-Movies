@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     Context c;
     Activity a;
     public View view;
-    MainActivityFragment mainActivityFragment = new MainActivityFragment();
     public MovieAdapter(Activity a, View v, Context c){
         this.a =a;
         this.view = v;
@@ -55,20 +53,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
                     if (MainActivity.f.isInLayout()) {
                         MainActivityFragment.com.respond(listSM.get(position));
                     }
-                }
-            catch (Exception e) {
-                    Log.e("error",e.getStackTrace().toString());
-//                    ActivityOptionsCompat options = ActivityOptionsCompat.
-//                            makeSceneTransitionAnimation(a, holder.iView,view.getResources().getString(R.string.activity_image_trans));
-                    Intent switchIntent = new Intent(c, DetailsActivity.class).putExtra("Poster", listSM.get(position));
+                    else{
+                        Intent switchIntent = new Intent(c, DetailsActivity.class).putExtra("Poster", listSM.get(position));
                         c.startActivity(switchIntent);
+                    }
                 }
-//
-            }
         });
     }
 

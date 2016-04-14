@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -82,7 +83,6 @@ public class MainActivityFragment extends Fragment {
             list = savedInstanceState.getParcelableArrayList("movies");
             favList = savedInstanceState.getParcelableArrayList("favourites");
             testList = savedInstanceState.getParcelableArrayList("test");
-//            sort = savedInstanceState.getBoolean("sort");
         }
         setHasOptionsMenu(true);
     }
@@ -133,6 +133,7 @@ public class MainActivityFragment extends Fragment {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.e("MainAcFrag",e.toString());
                 }
 
             }
