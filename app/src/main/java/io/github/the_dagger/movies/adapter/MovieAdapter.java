@@ -53,14 +53,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
                     if (MainActivity.f.isInLayout()) {
                         MainActivityFragment.com.respond(listSM.get(position));
                     }
-                    else{
-                        Intent switchIntent = new Intent(c, DetailsActivity.class).putExtra("Poster", listSM.get(position));
-                        c.startActivity(switchIntent);
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Intent switchIntent = new Intent(c, DetailsActivity.class).putExtra("Poster", listSM.get(position));
+                    c.startActivity(switchIntent);
                 }
+            }
         });
     }
 

@@ -4,25 +4,46 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import ckm.simple.sql_provider.annotation.SimpleSQLColumn;
+import ckm.simple.sql_provider.annotation.SimpleSQLTable;
+
 /**
  * Created by Harshit on 1/6/2016.
  */
+@SimpleSQLTable(table = "movieTable", provider = "MovieProvider")
+
 public class SingleMovie implements Parcelable {
+
+    @SimpleSQLColumn("col_id")
+    public int id;
+
+    @SimpleSQLColumn("col_movieImage")
     public String movieImage;
+
+    @SimpleSQLColumn("col_movieTitle")
     public String movieTitle;
+
+    @SimpleSQLColumn("col_movieOverView")
     public String movieOverView;
+
+    @SimpleSQLColumn("col_movieRating")
     public String movieRating;
+
+    @SimpleSQLColumn("col_movieReleaseDate")
     public String movieReleaseDate;
-    public String id;
+
+    @SimpleSQLColumn("col_backDropImage")
     public String movieBackDropImage;
+
+    @SimpleSQLColumn("col_language")
     public String language;
 
-    SingleMovie(){
+    public SingleMovie(){
         movieImage = null;
         movieTitle = "Constructor was called";
     }
 
-    public SingleMovie(String image, String title, String overView, String rating, String releaseDate, String backDropImage, String id, String language) {
+    public SingleMovie(String image, String title, String overView, String rating, String releaseDate, String backDropImage, int id, String language) {
         this.movieImage = image;
         this.movieTitle = title;
         this.movieOverView = overView;
@@ -40,7 +61,7 @@ public class SingleMovie implements Parcelable {
         this.movieRating = in.readString();
         this.movieReleaseDate = in.readString();
         this.movieBackDropImage = in.readString();
-        this.id = in.readString();
+        this.id = in.readInt();
         this.language = in.readString();
     }
 
@@ -61,7 +82,7 @@ public class SingleMovie implements Parcelable {
         return 0;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -73,7 +94,7 @@ public class SingleMovie implements Parcelable {
         dest.writeString(movieRating);
         dest.writeString(movieReleaseDate);
         dest.writeString(movieBackDropImage);
-        dest.writeString(id);
+        dest.writeInt(id);
         dest.writeString(language);
     }
 

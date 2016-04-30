@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +20,13 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import io.github.the_dagger.movies.R;
 import io.github.the_dagger.movies.adapter.MovieAdapter;
 import io.github.the_dagger.movies.api.Communicator;
 import io.github.the_dagger.movies.api.FetchMovies;
+import io.github.the_dagger.movies.objects.MovieTableTable;
 import io.github.the_dagger.movies.objects.SingleMovie;
 
 /**
@@ -36,14 +37,11 @@ public class MainActivityFragment extends Fragment {
     public static Boolean sort = false;  //false means sorted by ratings
     public static SingleMovie[] movieDetails = new SingleMovie[20];
     public static ArrayList<SingleMovie> list;
-    public static ArrayList<SingleMovie> testList;
-    ArrayList<SingleMovie> favList;
     FetchMovies weather1;
+    List<SingleMovie> favMovieAsList;
     MovieAdapter movieAdapter;
     FetchMovies fetchMovies;
     SingleMovie[] movieList = {};
-    SingleMovie[] favouriteList = {};
-    SingleMovie[] testListArray = {};
     public static Communicator com;
     ImageView poster;
     RecyclerView rv;
@@ -58,9 +56,6 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("movies", list);
-        outState.putParcelableArrayList("favourites", favList);
-        outState.putParcelableArrayList("test", testList);
-//        outState.putBoolean("sort",sort);
         super.onSaveInstanceState(outState);
     }
 
@@ -75,14 +70,11 @@ public class MainActivityFragment extends Fragment {
         movieAdapter = new MovieAdapter(getActivity(),getView(),getContext());
         if (savedInstanceState == null) {
             list = new ArrayList<>(Arrays.asList(movieList));
-            testList = new ArrayList<>(Arrays.asList(testListArray));
             weather1 = new FetchMovies(getActivity(),getView(),getContext());
             sort = true;
             sharedpreferences = getActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE);
         } else {
             list = savedInstanceState.getParcelableArrayList("movies");
-            favList = savedInstanceState.getParcelableArrayList("favourites");
-            testList = savedInstanceState.getParcelableArrayList("test");
         }
         setHasOptionsMenu(true);
     }
@@ -116,27 +108,8 @@ public class MainActivityFragment extends Fragment {
             return true;
         }
         if (id == R.id.action_fav) {
+            favAdapter.notifyDataSetChanged();
             rv.setAdapter(favAdapter);
-            sharedpreferences = getActivity().getSharedPreferences("mypref", Context.MODE_PRIVATE);
-            for (int i = 0; i < 40; i++) {
-                try {
-                    if (sharedpreferences.contains(testList.get(i).getId())) {    //If the movie is stored in the sharedPref
-                        if (favList.contains(testList.get(i))) {
-                        } else {
-                            favList.add(testList.get(i));
-                            favAdapter.notifyDataSetChanged();
-                        }
-                        //Add that movie to the favList arraylist
-                    } else {
-                        favList.remove(testList.get(i));
-                        favAdapter.notifyDataSetChanged();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e("MainAcFrag",e.toString());
-                }
-
-            }
         }
 
 
@@ -146,9 +119,10 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        favList = new ArrayList<>(Arrays.asList(favouriteList));
+        favMovieAsList = MovieTableTable.getRows(getActivity().getContentResolver().query(MovieTableTable.CONTENT_URI,null,null,null,null),true);
         adapter = new MovieAdapter(getActivity(), list);
-        favAdapter = new MovieAdapter(getActivity(), favList);
+        favAdapter = new MovieAdapter(getActivity(), favMovieAsList);
+        favAdapter.notifyDataSetChanged();
         rv = (RecyclerView) inflater.inflate(R.layout.fragment_main, container, false);
         rv.setLayoutManager(new GridLayoutManager(rv.getContext(), 2));
         rv.setAdapter(adapter);

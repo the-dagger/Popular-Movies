@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.the_dagger.movies">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
@@ -30,6 +31,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.github.the_dagger.movies.MainActivity" />
         </activity>
+        <provider
+            android:authorities="io.github.the_dagger.movies"
+            android:name="io.github.the_dagger.movies.data.MovieProvider"/>
     </application>
 
 </manifest>

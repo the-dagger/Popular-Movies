@@ -72,23 +72,15 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
         } else {
             progressDialog.dismiss();
             if (singleMovies != null) {
-                mainActivityFragment.list.clear();
+                MainActivityFragment.list.clear();
                 for (int i = 0; i < singleMovies.length; i++) {
                     SingleMovie oneMovie = singleMovies[i];
-                    mainActivityFragment.list.add(oneMovie);
-                    mainActivityFragment.testList.add(oneMovie);
+                    MainActivityFragment.list.add(oneMovie);
+//                    mainActivityFragment.testList.add(oneMovie);
                 }
                 com.respond(singleMovies[0]);
-            }
-            if (!debug)
-                mainActivityFragment.adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
-            else {
-                FetchMovies weatherdebug = new FetchMovies(activity, v, c);   //Did this to load both popular and top rated in the testList for comparison with sharedPrefs
-                mainActivityFragment.sort = false;
-                debug = false;
-                weatherdebug.execute();
-            }
-        }
+                MainActivityFragment.adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
+        }}
         super.onPostExecute(singleMovies);
     }
 
@@ -103,7 +95,7 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
         String baseURL = "http://image.tmdb.org/t/p/w500/";
         for (int i = 0; i < 20; i++) {
             JSONObject currentMovie = movieArray.getJSONObject(i);
-            String movieID = currentMovie.getString("id");
+            int movieID = Integer.parseInt(currentMovie.getString("id"));
             String tempbackDropImage = baseURL + currentMovie.getString("backdrop_path");
             String tempreleaseDate = currentMovie.getString("release_date");
             String movietempOverView = currentMovie.getString("overview");
@@ -112,16 +104,16 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
             String moviePosterendURL = currentMovie.getString(MDB_POSTER);
             String moviePosterURL = baseURL + moviePosterendURL;
             String language = currentMovie.getString("original_language");
-            mainActivityFragment.movieDetails[i] = new SingleMovie(moviePosterURL, movietitle, movietempOverView, temprating, tempreleaseDate, tempbackDropImage, movieID, language);
+            MainActivityFragment.movieDetails[i] = new SingleMovie(moviePosterURL, movietitle, movietempOverView, temprating, tempreleaseDate, tempbackDropImage, movieID, language);
         }
-        return mainActivityFragment.movieDetails;
+        return MainActivityFragment.movieDetails;
     }
 
     @Override
     protected SingleMovie[] doInBackground(Void... params) {
         try {
             URL url;
-            if (mainActivityFragment.sort) {
+            if (MainActivityFragment.sort) {
                 url = new URL("http://api.themoviedb.org/3/movie/popular?api_key=" + BuildConfig.MOBDB_API_KEY); //sort by popularity by default
             } else {
                 url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key=" + BuildConfig.MOBDB_API_KEY);  //sort by ratings

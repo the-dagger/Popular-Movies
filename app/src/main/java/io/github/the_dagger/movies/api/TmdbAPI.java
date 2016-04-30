@@ -13,11 +13,11 @@ import retrofit2.http.Path;
     public interface TmdbAPI {
         @GET ("movie/{id}/videos?api_key="+ BuildConfig.MOBDB_API_KEY)
         Call<Trailers> getTrailers(
-            @Path("id") String id
+            @Path("id") int id
 
         );
         @GET ("movie/{id}/reviews?api_key="+BuildConfig.MOBDB_API_KEY)
         Call<Reviews> getReview(
-                @Path("id") String id
+                @Path("id") int id
         );
     }

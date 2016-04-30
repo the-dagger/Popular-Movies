@@ -28,6 +28,7 @@
     <output-test url="file://$MODULE_DIR$/build/intermediates/classes/test/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
@@ -86,14 +87,14 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/palette-v7/23.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/design/23.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/palette-v7/23.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.florent37/picassopalette/1.0.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.techery/ProperRatingBar/v0.0.3/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
@@ -104,6 +105,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/restart-dex" />
@@ -116,26 +118,29 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform (1)" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="support-v4-23.2.1" level="project" />
     <orderEntry type="library" exported="" name="picassopalette-1.0.2" level="project" />
+    <orderEntry type="library" exported="" name="design-23.3.0" level="project" />
+    <orderEntry type="library" exported="" name="support-vector-drawable-23.3.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-7.0.1" level="project" />
-    <orderEntry type="library" exported="" name="design-23.2.1" level="project" />
-    <orderEntry type="library" exported="" name="retrofit-2.0.0-beta3" level="project" />
+    <orderEntry type="library" exported="" name="simple_sql_provider_annotation-1.0.6" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.0.0-RC1" level="project" />
-    <orderEntry type="library" exported="" name="converter-gson-2.0.0-beta3" level="project" />
+    <orderEntry type="library" exported="" name="retrofit-2.0.0-beta3" level="project" />
     <orderEntry type="library" exported="" name="logging-interceptor-3.0.0-RC1" level="project" />
+    <orderEntry type="library" exported="" name="converter-gson-2.0.0-beta3" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-23.3.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
-    <orderEntry type="library" exported="" name="animated-vector-drawable-23.2.1" level="project" />
-    <orderEntry type="library" exported="" name="recyclerview-v7-23.2.1" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-23.2.1" level="project" />
-    <orderEntry type="library" exported="" name="palette-v7-23.2.1" level="project" />
-    <orderEntry type="library" exported="" name="support-vector-drawable-23.2.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.3.0" level="project" />
+    <orderEntry type="library" exported="" name="simple_sql_provider_processor-1.0.6" level="project" />
+    <orderEntry type="library" exported="" name="palette-v7-23.3.0" level="project" />
+    <orderEntry type="library" exported="" name="cardview-v7-23.3.0" level="project" />
+    <orderEntry type="library" exported="" name="animated-vector-drawable-23.3.0" level="project" />
     <orderEntry type="library" exported="" name="okio-1.6.0" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-23.2.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-23.3.0" level="project" />
     <orderEntry type="library" exported="" name="ProperRatingBar-v0.0.3" level="project" />
-    <orderEntry type="library" exported="" name="cardview-v7-23.2.1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.4" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-23.3.0" level="project" />
+    <orderEntry type="library" exported="" name="javapoet-1.2.0" level="project" />
   </component>
 </module>

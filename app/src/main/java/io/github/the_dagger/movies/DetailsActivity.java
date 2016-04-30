@@ -32,6 +32,8 @@ import butterknife.ButterKnife;
 import io.github.the_dagger.movies.adapter.ReviewAdapter;
 import io.github.the_dagger.movies.adapter.TrailersAdapter;
 import io.github.the_dagger.movies.api.TmdbAPI;
+import io.github.the_dagger.movies.fragments.MainActivityFragment;
+import io.github.the_dagger.movies.objects.MovieTableTable;
 import io.github.the_dagger.movies.objects.Reviews;
 import io.github.the_dagger.movies.objects.SingleMovie;
 import io.github.the_dagger.movies.objects.Trailers;
@@ -60,7 +62,6 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView posterImage;
     @Bind(R.id.ratingBar1)
     RatingBar rb;
-    Boolean setAsFav = false;
     @Bind(R.id.language)
     TextView language;
     private Trailers trailers;
@@ -182,26 +183,28 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
-        if (sharedpreferences.contains(movie.getId())) {
+        if (sharedpreferences.contains(String.valueOf(movie.id))) {
             f.setImageResource(R.drawable.ic_favorite_white_24dp);
         } else
             f.setImageResource(R.drawable.ic_favorite_border_white_24dp);
         f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!setAsFav && !sharedpreferences.contains(movie.getId())) {
+                if (!sharedpreferences.contains(String.valueOf(movie.id))) {
                     Snackbar.make(view, getResources().getText(R.string.add_fav), Snackbar.LENGTH_LONG).show();
-                    editor.putInt(movie.getId(), Integer.parseInt(movie.getId()));
+                    editor.putInt(String.valueOf(movie.id), movie.id);
                     editor.apply();
-                    setAsFav = true;
+                    getContentResolver().insert(MovieTableTable.CONTENT_URI,MovieTableTable.getContentValues(movie,false));
                     f.setImageResource(R.drawable.ic_favorite_white_24dp);
-
+                    MainActivityFragment.favAdapter.notifyDataSetChanged();
                 } else {
                     Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
-                    editor.remove(movie.getId());
+                    int result = getContentResolver().delete(MovieTableTable.CONTENT_URI,MovieTableTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(movie.id)});
+                    Log.e("Result", String.valueOf(movie.id));
+                    editor.remove(String.valueOf(movie.id));
                     editor.apply();
-                    setAsFav = false;
                     f.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                    MainActivityFragment.favAdapter.notifyDataSetChanged();
                 }
 
             }
@@ -223,7 +226,6 @@ public class DetailsActivity extends AppCompatActivity {
         shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + getResources().getString(R.string.message));
         ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(shareIntent);
-
         return true;
     }
 }
