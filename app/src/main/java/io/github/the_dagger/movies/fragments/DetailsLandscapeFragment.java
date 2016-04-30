@@ -32,12 +32,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import io.github.the_dagger.movies.R;
-import io.github.the_dagger.movies.objects.Reviews;
-import io.github.the_dagger.movies.objects.SingleMovie;
-import io.github.the_dagger.movies.api.TmdbAPI;
-import io.github.the_dagger.movies.objects.Trailers;
 import io.github.the_dagger.movies.adapter.ReviewAdapter;
 import io.github.the_dagger.movies.adapter.TrailersAdapter;
+import io.github.the_dagger.movies.api.TmdbAPI;
+import io.github.the_dagger.movies.objects.MovieTableTable;
+import io.github.the_dagger.movies.objects.Reviews;
+import io.github.the_dagger.movies.objects.SingleMovie;
+import io.github.the_dagger.movies.objects.Trailers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -71,7 +72,6 @@ public class DetailsLandscapeFragment extends Fragment {
     private ReviewAdapter reviewAdapter;
     private TrailersAdapter trailersAdapter;
     Intent shareIntent;
-    Boolean setAsFav = false;
 
     public void getMovie(SingleMovie singleMovie) {
         movie = singleMovie;
@@ -149,7 +149,7 @@ public class DetailsLandscapeFragment extends Fragment {
                 );
                 String overView = movie.movieOverView;
                 String summary = "";
-                if (sharedpreferences.contains(movie.getId())) {
+                if (sharedpreferences.contains(String.valueOf(movie.getId()))) {
                     fab.setImageResource(R.drawable.ic_favorite_white_24dp);
                 } else
                     fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
@@ -236,23 +236,24 @@ public class DetailsLandscapeFragment extends Fragment {
             }
         });
         rvReview.setAdapter(reviewAdapter);
-        getMovie(movie);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!sharedpreferences.contains(movie.getId())) {
+                if (!sharedpreferences.contains(String.valueOf(movie.id))) {
                     Snackbar.make(view, getResources().getText(R.string.add_fav), Snackbar.LENGTH_LONG).show();
-                    editor.putInt(movie.getId(), Integer.parseInt(movie.getId()));
+                    editor.putInt(String.valueOf(movie.id), movie.id);
                     editor.apply();
-                    setAsFav = true;
+                    getActivity().getContentResolver().insert(MovieTableTable.CONTENT_URI,MovieTableTable.getContentValues(movie,false));
                     fab.setImageResource(R.drawable.ic_favorite_white_24dp);
-
+                    MainActivityFragment.favAdapter.notifyDataSetChanged();
                 } else {
                     Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
-                    editor.remove(movie.getId());
+                    int result = getActivity().getContentResolver().delete(MovieTableTable.CONTENT_URI,MovieTableTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(movie.id)});
+                    Log.e("Result", String.valueOf(movie.id));
+                    editor.remove(String.valueOf(movie.id));
                     editor.apply();
-                    setAsFav = false;
                     fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                    MainActivityFragment.favAdapter.notifyDataSetChanged();
                 }
 
             }
