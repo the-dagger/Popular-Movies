@@ -227,12 +227,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        onPause();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
     }

@@ -5,9 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    android:id="@+id/cardView_single_movie"
+    android:transitionName="@string/transition_string"
     android:background="?attr/selectableItemBackground"
     android:elevation="8dp"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="4dp"
+    tools:targetApi="lollipop">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:layout_gravity="center"
-            android:transitionName="@string/activity_image_trans"
             android:scaleType="centerCrop" />
 
         <TextView

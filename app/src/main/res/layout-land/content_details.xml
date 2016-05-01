@@ -68,7 +68,7 @@
                         android:layout_height="250dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
-                        android:transitionName="@string/transition_album_cover" />
+                        android:transitionName="@string/transition_string" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"

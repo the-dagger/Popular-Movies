@@ -2,6 +2,7 @@
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="actionBarWidgetTheme">@style/Theme.AppCompat.CustomShareIcon</item>
         <item name="android:actionBarWidgetTheme">@style/Theme.AppCompat.CustomShareIcon</item>
         <item name="windowNoTitle">true</item>
