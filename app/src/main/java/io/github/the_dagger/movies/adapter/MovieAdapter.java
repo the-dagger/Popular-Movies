@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.florent37.picassopalette.PicassoPalette;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -47,8 +46,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tView.setText(listSM.get(position).movieTitle);
-        Picasso.with(this.c).load(listSM.get(position).movieImage).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED_DARK)
-                .intoBackground(holder.tView).intoBackground(holder.dView));
+//        Picasso.with(this.c).load(listSM.get(position).movieImage).into(holder.iView, PicassoPalette.with(listSM.get(position).movieImage, holder.iView).use(PicassoPalette.Profile.MUTED_DARK)
+//                .intoBackground(holder.tView).intoBackground(holder.dView));
+        Glide.with(this.c).load(listSM.get(position).movieImage).crossFade().placeholder(R.drawable.sad).error(R.drawable.sad).into(holder.iView);
         holder.dView.setText(listSM.get(position).movieReleaseDate);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

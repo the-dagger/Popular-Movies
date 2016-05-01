@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.github.the_dagger.movies.MainActivity;
 import io.github.the_dagger.movies.R;
 import io.github.the_dagger.movies.adapter.MovieAdapter;
 import io.github.the_dagger.movies.api.Communicator;
@@ -96,6 +97,7 @@ public class MainActivityFragment extends Fragment {
             weather.execute();
             weather.progressDialog.show();
             rv.setAdapter(adapter);
+            MainActivity.toolbar.setTitle("Top Rated");
             return true;
         }
         if (id == R.id.action_sort) {
@@ -105,11 +107,14 @@ public class MainActivityFragment extends Fragment {
             weather.execute();
             weather.progressDialog.show();
             rv.setAdapter(adapter);
+            MainActivity.toolbar.setTitle("Popular");
             return true;
         }
         if (id == R.id.action_fav) {
-            favAdapter.notifyDataSetChanged();
+            favAdapter = new MovieAdapter(getActivity(), favMovieAsList);
+//            favAdapter.notifyDataSetChanged();
             rv.setAdapter(favAdapter);
+            MainActivity.toolbar.setTitle("Favourites");
         }
 
 
@@ -120,12 +125,17 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         favMovieAsList = MovieTableTable.getRows(getActivity().getContentResolver().query(MovieTableTable.CONTENT_URI,null,null,null,null),true);
+        
         adapter = new MovieAdapter(getActivity(), list);
-        favAdapter = new MovieAdapter(getActivity(), favMovieAsList);
-        favAdapter.notifyDataSetChanged();
+//        favAdapter.notifyDataSetChanged();
         rv = (RecyclerView) inflater.inflate(R.layout.fragment_main, container, false);
         rv.setLayoutManager(new GridLayoutManager(rv.getContext(), 2));
-        rv.setAdapter(adapter);
+        if(activeNetworkInfo == null){
+            rv.setAdapter(favAdapter);
+        }
+        else{
+            rv.setAdapter(adapter);
+        }
         poster = (ImageView) rv.findViewById(R.id.movie_poster_image);
         com = (Communicator) getActivity();
         return rv;
@@ -136,6 +146,7 @@ public class MainActivityFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if(activeNetworkInfo == null){
             Snackbar.make(getView(),getResources().getText(R.string.no_net),Snackbar.LENGTH_LONG).show();
+            rv.setAdapter(favAdapter);
         }
         else{
             weather1.execute();

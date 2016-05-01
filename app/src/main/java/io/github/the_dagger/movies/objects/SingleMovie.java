@@ -1,6 +1,5 @@
 package io.github.the_dagger.movies.objects;
 
-import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -98,8 +97,4 @@ public class SingleMovie implements Parcelable {
         dest.writeString(language);
     }
 
-    public static SingleMovie fromCursor(Cursor cursor) {
-        SingleMovie singleMovie = new SingleMovie();
-        return singleMovie;
-    }
 }

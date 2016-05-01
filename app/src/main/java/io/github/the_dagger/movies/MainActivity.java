@@ -11,13 +11,14 @@ import io.github.the_dagger.movies.objects.SingleMovie;
 public class MainActivity extends AppCompatActivity implements Communicator {
     public static DetailsLandscapeFragment f;
     SingleMovie Movie;
-
+    public static Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Top Rated");
         f = (DetailsLandscapeFragment) getFragmentManager().findFragmentById(R.id.fragment2);
     }
 
@@ -27,11 +28,6 @@ public class MainActivity extends AppCompatActivity implements Communicator {
         if (f != null && f.isVisible()) {
             f.getMovie(movie);
         }
-//        else{
-//            Intent switchIntent = new Intent(this, DetailsActivity.class)
-//                        .putExtra(getString(R.string.Poster), movie);
-//            startActivity(switchIntent);
-//        }
     }
 
 

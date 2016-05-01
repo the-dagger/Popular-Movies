@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -41,7 +41,8 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         this.position = position;
         for (int i = 0; i < getItemCount(); i++) {
-            Picasso.with(c).load("http://img.youtube.com/vi/" + list.get(position).getKey() + "/0.jpg").into(holder.i);
+//            Picasso.with(c).load("http://img.youtube.com/vi/" + list.get(position).getKey() + "/0.jpg").into(holder.i);
+            Glide.with(this.c).load("http://img.youtube.com/vi/" + list.get(position).getKey() + "/0.jpg").crossFade().placeholder(R.drawable.placeholderbackdrop).error(R.drawable.placeholderbackdrop).centerCrop().into(holder.i);
             holder.t.setText(list.get(position).getTitle());
         }
     }

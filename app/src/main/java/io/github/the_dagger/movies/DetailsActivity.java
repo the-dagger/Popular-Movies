@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
@@ -21,9 +22,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.florent37.picassopalette.BitmapPalette;
-import com.github.florent37.picassopalette.PicassoPalette;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -32,7 +31,6 @@ import butterknife.ButterKnife;
 import io.github.the_dagger.movies.adapter.ReviewAdapter;
 import io.github.the_dagger.movies.adapter.TrailersAdapter;
 import io.github.the_dagger.movies.api.TmdbAPI;
-import io.github.the_dagger.movies.fragments.MainActivityFragment;
 import io.github.the_dagger.movies.objects.MovieTableTable;
 import io.github.the_dagger.movies.objects.Reviews;
 import io.github.the_dagger.movies.objects.SingleMovie;
@@ -80,6 +78,12 @@ public class DetailsActivity extends AppCompatActivity {
     ShareActionProvider shareActionProvider;
 
     @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+//        outState.put
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
@@ -99,8 +103,11 @@ public class DetailsActivity extends AppCompatActivity {
         rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvReview.setAdapter(reviewAdapter);
         title.setText(movie.movieTitle);
-        Picasso.with(getApplicationContext()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
-        );
+//        Picasso.with(getApplicationContext()).load(movie.movieImage).networkPolicy(NetworkPolicy.OFFLINE).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
+//        );
+
+        Glide.with(getApplicationContext()).load(movie.movieImage).crossFade().placeholder(R.drawable.sad).error(R.drawable.sad).into(posterImage);
+
         String overView = movie.movieOverView;
         String summary = "";
         float d = Float.parseFloat(movie.movieRating);
@@ -112,7 +119,8 @@ public class DetailsActivity extends AppCompatActivity {
             else
                 summary = summary + "\n" + sum;
         overviewTextView.setText(summary);
-        Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).into(backDrop);
+//        Picasso.with(getApplicationContext()).load(movie.movieBackDropImage).networkPolicy(NetworkPolicy.OFFLINE).into(backDrop);
+        Glide.with(getApplicationContext()).load(movie.movieBackDropImage).crossFade().placeholder(R.drawable.placeholderbackdrop).error(R.drawable.placeholderbackdrop).into(backDrop);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Base_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -195,8 +203,9 @@ public class DetailsActivity extends AppCompatActivity {
                     editor.putInt(String.valueOf(movie.id), movie.id);
                     editor.apply();
                     getContentResolver().insert(MovieTableTable.CONTENT_URI,MovieTableTable.getContentValues(movie,false));
+                    getContentResolver().notifyChange(MovieTableTable.CONTENT_URI,null);
                     f.setImageResource(R.drawable.ic_favorite_white_24dp);
-                    MainActivityFragment.favAdapter.notifyDataSetChanged();
+//                    MainActivityFragment.favAdapter.notifyDataSetChanged();
                 } else {
                     Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
                     int result = getContentResolver().delete(MovieTableTable.CONTENT_URI,MovieTableTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(movie.id)});
@@ -204,7 +213,7 @@ public class DetailsActivity extends AppCompatActivity {
                     editor.remove(String.valueOf(movie.id));
                     editor.apply();
                     f.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-                    MainActivityFragment.favAdapter.notifyDataSetChanged();
+//                    MainActivityFragment.favAdapter.notifyDataSetChanged();
                 }
 
             }
@@ -218,6 +227,17 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.share, menu);
         shareItem = menu.findItem(R.id.action_share);
@@ -228,5 +248,6 @@ public class DetailsActivity extends AppCompatActivity {
         shareActionProvider.setShareIntent(shareIntent);
         return true;
     }
+
 }
 

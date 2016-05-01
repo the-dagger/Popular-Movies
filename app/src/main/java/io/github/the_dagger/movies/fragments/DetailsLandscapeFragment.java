@@ -25,9 +25,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.florent37.picassopalette.BitmapPalette;
-import com.github.florent37.picassopalette.PicassoPalette;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -145,8 +143,9 @@ public class DetailsLandscapeFragment extends Fragment {
                     }
                 });
                 title.setText(movie.movieTitle);
-                Picasso.with(getActivity()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
-                );
+//                Picasso.with(getActivity()).load(movie.movieImage).into(posterImage, PicassoPalette.with(movie.movieImage, posterImage).use(BitmapPalette.Profile.MUTED)
+//                );
+                Glide.with(getActivity()).load(movie.movieImage).crossFade().placeholder(R.drawable.sad).error(R.drawable.sad).into(posterImage);
                 String overView = movie.movieOverView;
                 String summary = "";
                 if (sharedpreferences.contains(String.valueOf(movie.getId()))) {
@@ -164,7 +163,8 @@ public class DetailsLandscapeFragment extends Fragment {
                         summary = summary + "\n" + sum;
                 overviewTextView.setText(summary);
                 try {
-                    Picasso.with(getActivity()).load(movie.movieBackDropImage).into(backdrop);
+//                    Picasso.with(getActivity()).load(movie.movieBackDropImage).into(backdrop);
+                    Glide.with(getActivity()).load(movie.movieBackDropImage).crossFade().placeholder(R.drawable.placeholderbackdrop).error(R.drawable.placeholderbackdrop).into(backdrop);
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
                 }
