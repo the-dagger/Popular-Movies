@@ -86,6 +86,8 @@ public class MainActivityFragment extends Fragment {
         } else {
             list = savedInstanceState.getParcelableArrayList("movies");
         }
+        if(activeNetworkInfo == null)
+            currstate = 3;
         setHasOptionsMenu(true);
     }
 
@@ -168,6 +170,7 @@ public class MainActivityFragment extends Fragment {
             favAdapter = new MovieAdapter(getActivity(), favMovieAsList);
             rv.setAdapter(favAdapter);
             com.respond(favMovieAsList.get(0));
+            currstate = 3;
         } else {
             weather1.execute();
             weather1.progressDialog.show();
