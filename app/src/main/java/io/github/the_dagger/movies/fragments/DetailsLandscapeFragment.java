@@ -236,28 +236,33 @@ public class DetailsLandscapeFragment extends Fragment {
             }
         });
         rvReview.setAdapter(reviewAdapter);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!sharedpreferences.contains(String.valueOf(movie.id))) {
-                    Snackbar.make(view, getResources().getText(R.string.add_fav), Snackbar.LENGTH_LONG).show();
-                    editor.putInt(String.valueOf(movie.id), movie.id);
-                    editor.apply();
-                    getActivity().getContentResolver().insert(MovieTableTable.CONTENT_URI,MovieTableTable.getContentValues(movie,false));
-                    fab.setImageResource(R.drawable.ic_favorite_white_24dp);
-                    MainActivityFragment.favAdapter.notifyDataSetChanged();
-                } else {
-                    Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
-                    int result = getActivity().getContentResolver().delete(MovieTableTable.CONTENT_URI,MovieTableTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(movie.id)});
-                    Log.e("Result", String.valueOf(movie.id));
-                    editor.remove(String.valueOf(movie.id));
-                    editor.apply();
-                    fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-                    MainActivityFragment.favAdapter.notifyDataSetChanged();
-                }
 
-            }
-        });
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        if (!sharedpreferences.contains(String.valueOf(movie.id))) {
+                            Snackbar.make(view, getResources().getText(R.string.add_fav), Snackbar.LENGTH_LONG).show();
+                            editor.putInt(String.valueOf(movie.id), movie.id);
+                            editor.apply();
+                            getActivity().getContentResolver().insert(MovieTableTable.CONTENT_URI,MovieTableTable.getContentValues(movie,false));
+                            fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+        //                    MainActivityFragment.favAdapter.notifyDataSetChanged();
+                        } else {
+                            Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
+                            int result = getActivity().getContentResolver().delete(MovieTableTable.CONTENT_URI,MovieTableTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(movie.id)});
+                            Log.e("Result", String.valueOf(movie.id));
+                            editor.remove(String.valueOf(movie.id));
+                            editor.apply();
+                            fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+        //                    MainActivityFragment.favAdapter.notifyDataSetChanged();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
         return view;
     }
 }

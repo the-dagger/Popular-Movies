@@ -69,7 +69,7 @@ public class MainActivityFragment extends Fragment {
         fetchMovies = new FetchMovies(getActivity(),getView(),getContext());
         weather1 = new FetchMovies(getActivity(),getView(),getContext());
         com = (Communicator) getActivity();
-        movieAdapter = new MovieAdapter(getActivity(),getView(),getContext());
+//        movieAdapter = new MovieAdapter(getActivity(),getView(),getContext());
         if (savedInstanceState == null) {
             list = new ArrayList<>(Arrays.asList(movieList));
             weather1 = new FetchMovies(getActivity(),getView(),getContext());
@@ -127,7 +127,6 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         favMovieAsList = MovieTableTable.getRows(getActivity().getContentResolver().query(MovieTableTable.CONTENT_URI,null,null,null,null),true);
-
         adapter = new MovieAdapter(getActivity(), list);
 //        favAdapter.notifyDataSetChanged();
         rv = (RecyclerView) inflater.inflate(R.layout.fragment_main, container, false);
@@ -142,11 +141,15 @@ public class MainActivityFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if(activeNetworkInfo == null){
             Snackbar.make(getView(),getResources().getText(R.string.no_net),Snackbar.LENGTH_LONG).show();
-//            rv.setAdapter(favAdapter);
+            favMovieAsList = MovieTableTable.getRows(getActivity().getContentResolver().query(MovieTableTable.CONTENT_URI,null,null,null,null),true);
+            favAdapter = new MovieAdapter(getActivity(), favMovieAsList);
+            rv.setAdapter(favAdapter);
+            com.respond(favMovieAsList.get(0));
         }
         else{
             weather1.execute();
             weather1.progressDialog.show();
+            rv.setAdapter(adapter);
         }
     }
 
