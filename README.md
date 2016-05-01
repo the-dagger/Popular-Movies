@@ -1,4 +1,4 @@
-# Movies
+# Popular Movies
 An app that displays details about popular playing movies.<br />
 It also allows the user to view and explore his favourite movies while in offline mode. <br />
 Created as a part of Android Developer Nanodegree provided by Udacity.<br /><b>Note</b>: In order to run the app, add your own API key obtained from themoviedb.org to ```build.gradle:Module``` as 
@@ -16,3 +16,4 @@ Replace api_key with your own API KEY.<br />
 [Simple Sql Provider](https://github.com/ckurtm/simple-sql-provider)<br />
 
 #Screenshots
+Full res screenshots [here](http://imgur.com/a/Ijzy2) 
