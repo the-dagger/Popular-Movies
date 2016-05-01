@@ -137,6 +137,14 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        favMovieAsList = MovieTableTable.getRows(getActivity().getContentResolver().query(MovieTableTable.CONTENT_URI,null,null,null,null),true);
+        favAdapter = new MovieAdapter(getActivity(), favMovieAsList);
+        rv.setAdapter(favAdapter);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(activeNetworkInfo == null){
