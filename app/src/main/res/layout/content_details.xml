@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/place"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="280dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -19,8 +19,6 @@
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-
             <ImageView
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
@@ -56,26 +54,36 @@
                 android:elevation="8dp"
                 tools:targetApi="lollipop">
 
-                <RelativeLayout
-                    android:id="@+id/detail_activity_relative_layout"
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/detail_activity_relative_layout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:orientation="horizontal">
                     <ImageView
                         android:id="@+id/posterImageDetail"
                         android:layout_width="180dp"
-                        android:layout_height="250dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
+                        android:scaleType="fitXY"
                         android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:transitionName="@string/activity_image_trans"
                         tools:targetApi="lollipop" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_margin="8dp"
+                        android:gravity="center"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_toRightOf="@id/posterImageDetail">
+                        android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -119,12 +127,10 @@
                             android:typeface="sans"
                             tools:targetApi="lollipop" />
                     </LinearLayout>
-
                     <TextView
                         android:id="@+id/movieDetailTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/posterImageDetail"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
@@ -134,24 +140,23 @@
                         android:textStyle="bold"
                         android:typeface="sans"
                         tools:targetApi="lollipop" />
-
-                    <TextView
-                        android:id="@+id/movieSummary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/movieDetailTitle"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
-                        android:singleLine="false"
-                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
-                        android:textColor="#000"
-                        android:textSize="14sp"
-                        android:typeface="sans"
-                        tools:targetApi="lollipop" />
-                </RelativeLayout>
-
+                    </LinearLayout>
+                <TextView
+                    android:id="@+id/movieSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:singleLine="false"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:typeface="sans"
+                    tools:targetApi="lollipop" />
+                <!--</RelativeLayout>-->
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -221,6 +226,7 @@
                         android:text="Trailers"
                         android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textSize="20sp"
+                        android:id="@+id/trailersText"
                         android:textStyle="bold"
                         android:typeface="sans"
                         tools:targetApi="lollipop" />
@@ -236,6 +242,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
+                android:id="@+id/reviewCardView"
                 android:background="#ffe5e5e5"
                 android:elevation="8dp">
 

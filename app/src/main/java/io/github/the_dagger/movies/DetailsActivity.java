@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
@@ -62,6 +64,10 @@ public class DetailsActivity extends AppCompatActivity {
     RatingBar rb;
     @Bind(R.id.language)
     TextView language;
+    @Nullable @Bind(R.id.trailerCardView)
+    CardView trailerCardView;
+    @Bind(R.id.trailersText)
+    TextView trailersText;
     private Trailers trailers;
     Call<Reviews> callRv;
     TmdbAPI tmdbApi;
@@ -71,7 +77,8 @@ public class DetailsActivity extends AppCompatActivity {
     SingleMovie movie;
     private Reviews reviews;
     private ReviewAdapter reviewAdapter;
-
+    @Bind(R.id.reviewCardView)
+    CardView reviewCard;
     private TrailersAdapter trailersAdapter;
     Intent shareIntent;
     MenuItem shareItem;
@@ -80,7 +87,6 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-//        outState.put
     }
 
     @Override
@@ -88,6 +94,8 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
+        reviewCard.setVisibility(View.GONE);
+        trailersText.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("Poster");
@@ -95,9 +103,10 @@ public class DetailsActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
         trailersAdapter = new TrailersAdapter(listTr, this);
-        RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
+        final RecyclerView rvTrailer = (RecyclerView) findViewById(R.id.trailerRv);
         rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvTrailer.setAdapter(trailersAdapter);
+        rvTrailer.setVisibility(View.GONE);
         reviewAdapter = new ReviewAdapter(listRv, this);
         RecyclerView rvReview = (RecyclerView) findViewById(R.id.reviewRv);
         rvReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -134,6 +143,11 @@ public class DetailsActivity extends AppCompatActivity {
                     trailers = response.body();
                     listTr = trailers.getTrailers();
                     trailersAdapter.swapList(listTr);
+                    if (!listTr.isEmpty()){
+                        trailersText.setVisibility(View.VISIBLE);
+                        rvTrailer.setVisibility(View.VISIBLE);
+                        trailerCardView.setVisibility(View.VISIBLE);
+                    }
                     shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
                     shareActionProvider.setShareIntent(shareIntent);
                 } catch (Exception e) {
@@ -165,6 +179,9 @@ public class DetailsActivity extends AppCompatActivity {
                 try {
                     reviews = response.body();
                     listRv = reviews.getReviews();
+                    if(!listRv.isEmpty()){
+                        reviewCard.setVisibility(View.VISIBLE);
+                    }
                     reviewAdapter.swapList(listRv);
                 } catch (Exception e) {
                     Toast toast = null;
@@ -205,7 +222,6 @@ public class DetailsActivity extends AppCompatActivity {
                     getContentResolver().insert(MovieTableTable.CONTENT_URI,MovieTableTable.getContentValues(movie,false));
                     getContentResolver().notifyChange(MovieTableTable.CONTENT_URI,null);
                     f.setImageResource(R.drawable.ic_favorite_white_24dp);
-//                    MainActivityFragment.favAdapter.notifyDataSetChanged();
                 } else {
                     Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
                     int result = getContentResolver().delete(MovieTableTable.CONTENT_URI,MovieTableTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(movie.id)});
@@ -213,7 +229,6 @@ public class DetailsActivity extends AppCompatActivity {
                     editor.remove(String.valueOf(movie.id));
                     editor.apply();
                     f.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-//                    MainActivityFragment.favAdapter.notifyDataSetChanged();
                 }
 
             }
@@ -224,11 +239,6 @@ public class DetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         getSupportActionBar().setTitle("");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override

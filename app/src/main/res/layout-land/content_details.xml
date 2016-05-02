@@ -180,6 +180,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
+                android:id="@+id/trailerCardView"
+                android:visibility="gone"
                 android:background="#ffe5e5e5"
                 android:elevation="8dp">
 
@@ -194,6 +196,7 @@
                         android:text="Trailers"
                         android:textAppearance="@android:style/TextAppearance.Material.Title"
                         android:textSize="20sp"
+                        android:id="@+id/trailersText"
                         android:textStyle="bold"
                         android:typeface="sans"
                         tools:targetApi="lollipop" />
@@ -210,6 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
+                android:id="@+id/reviewCardView"
                 android:background="#ffe5e5e5"
                 android:elevation="8dp">
 

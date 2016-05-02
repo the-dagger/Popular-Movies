@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:id="@+id/cardView_single_movie"
+    android:transitionName="@string/transition_string"
+    android:background="?attr/selectableItemBackground"
+    android:elevation="8dp"
+    app:cardCornerRadius="4dp"
+    tools:targetApi="lollipop">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/movie_poster_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/movie_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:background="#212121"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxLines="1"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:textColor="#ffff"
+            android:textSize="14sp"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:id="@+id/releaseDateMainActivit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="8dp"
+            android:background="#212121"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:textColor="#ffff"
+            android:textSize="14sp"
+            tools:targetApi="lollipop" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
