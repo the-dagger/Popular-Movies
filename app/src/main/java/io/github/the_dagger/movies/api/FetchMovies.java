@@ -34,7 +34,7 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
     View v;
     ConnectivityManager connectivityManager;
     NetworkInfo activeNetworkInfo;
-    static boolean debug = true;   //For running 2 asynctasks on first launch
+    public static boolean hasLoaded = false;   //For running 2 asynctasks on first launch
     HttpURLConnection urlConnection = null;
     BufferedReader reader = null;
     String movieinfo = null;
@@ -76,9 +76,9 @@ public class FetchMovies extends AsyncTask<Void, Void, SingleMovie[]> {
                 for (int i = 0; i < singleMovies.length; i++) {
                     SingleMovie oneMovie = singleMovies[i];
                     MainActivityFragment.list.add(oneMovie);
-//                    mainActivityFragment.testList.add(oneMovie);
                 }
                 com.respond(singleMovies[0]);
+                hasLoaded = true;
                 MainActivityFragment.adapter.notifyDataSetChanged();       //Don't show the ratings movie while loading it for testList
         }}
         super.onPostExecute(singleMovies);
