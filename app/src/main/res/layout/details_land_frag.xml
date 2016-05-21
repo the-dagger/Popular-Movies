@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffe5e5e5"
+    android:id="@+id/coordinator_layout"
     tools:context="io.github.the_dagger.movies.DetailsActivity">
 
     <android.support.design.widget.AppBarLayout

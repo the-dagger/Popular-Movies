@@ -169,7 +169,11 @@ public class MainActivityFragment extends Fragment {
             favMovieAsList = MovieTableTable.getRows(getActivity().getContentResolver().query(MovieTableTable.CONTENT_URI, null, null, null, null), true);
             favAdapter = new MovieAdapter(getActivity(), favMovieAsList);
             rv.setAdapter(favAdapter);
-            com.respond(favMovieAsList.get(0));
+            try {
+                com.respond(favMovieAsList.get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             currstate = 3;
         } else {
             weather1.execute();
