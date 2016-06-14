@@ -1,0 +1,26 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <fragment  android:id="@+id/fragment"
+        android:name="io.github.the_dagger.movies.fragments.MainActivityFragment"
+        android:layout_width="0dp" android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:layout="@layout/fragment_main" />
+
+    <fragment
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:name="io.github.the_dagger.movies.fragments.DetailsLandscapeFragment"
+        android:id="@+id/fragment2"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_gravity="center_vertical"
+        tools:layout="@layout/details_land_frag" />
+</LinearLayout>

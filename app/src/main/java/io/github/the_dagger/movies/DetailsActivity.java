@@ -148,8 +148,6 @@ public class DetailsActivity extends AppCompatActivity {
                         rvTrailer.setVisibility(View.VISIBLE);
                         trailerCardView.setVisibility(View.VISIBLE);
                     }
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
-                    shareActionProvider.setShareIntent(shareIntent);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast = null;
@@ -164,6 +162,12 @@ public class DetailsActivity extends AppCompatActivity {
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
+                }
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
+                try {
+                    shareActionProvider.setShareIntent(shareIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -246,12 +250,26 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
+        shareActionProvider.setShareIntent(shareIntent);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.share, menu);
         shareItem = menu.findItem(R.id.action_share);
         shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + "\n" + getResources().getString(R.string.message));
+        String key = null;
+        try {
+            key = listTr.get(0).getKey();
+        } catch (Exception e) {
+            e.printStackTrace();
+            key="";
+        }
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" +key+ "\n" + getResources().getString(R.string.message));
         ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(shareIntent);
         return true;
