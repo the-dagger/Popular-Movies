@@ -64,7 +64,8 @@ public class DetailsActivity extends AppCompatActivity {
     RatingBar rb;
     @Bind(R.id.language)
     TextView language;
-    @Nullable @Bind(R.id.trailerCardView)
+    @Nullable
+    @Bind(R.id.trailerCardView)
     CardView trailerCardView;
     @Bind(R.id.trailersText)
     TextView trailersText;
@@ -143,11 +144,13 @@ public class DetailsActivity extends AppCompatActivity {
                     trailers = response.body();
                     listTr = trailers.getTrailers();
                     trailersAdapter.swapList(listTr);
-                    if (!listTr.isEmpty()){
+                    if (!listTr.isEmpty()) {
                         trailersText.setVisibility(View.VISIBLE);
                         rvTrailer.setVisibility(View.VISIBLE);
                         trailerCardView.setVisibility(View.VISIBLE);
                     }
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
+                    shareActionProvider.setShareIntent(shareIntent);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast = null;
@@ -187,7 +190,7 @@ public class DetailsActivity extends AppCompatActivity {
                 try {
                     reviews = response.body();
                     listRv = reviews.getReviews();
-                    if(!listRv.isEmpty()){
+                    if (!listRv.isEmpty()) {
                         reviewCard.setVisibility(View.VISIBLE);
                     }
                     reviewAdapter.swapList(listRv);
@@ -227,12 +230,12 @@ public class DetailsActivity extends AppCompatActivity {
                     Snackbar.make(view, getResources().getText(R.string.add_fav), Snackbar.LENGTH_LONG).show();
                     editor.putInt(String.valueOf(movie.id), movie.id);
                     editor.apply();
-                    getContentResolver().insert(MovieTableTable.CONTENT_URI,MovieTableTable.getContentValues(movie,false));
-                    getContentResolver().notifyChange(MovieTableTable.CONTENT_URI,null);
+                    getContentResolver().insert(MovieTableTable.CONTENT_URI, MovieTableTable.getContentValues(movie, false));
+                    getContentResolver().notifyChange(MovieTableTable.CONTENT_URI, null);
                     f.setImageResource(R.drawable.ic_favorite_white_24dp);
                 } else {
                     Snackbar.make(view, getResources().getText(R.string.rem_fav), Snackbar.LENGTH_LONG).show();
-                    int result = getContentResolver().delete(MovieTableTable.CONTENT_URI,MovieTableTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(movie.id)});
+                    int result = getContentResolver().delete(MovieTableTable.CONTENT_URI, MovieTableTable.FIELD_COL_ID + "=?", new String[]{String.valueOf(movie.id)});
                     Log.e("Result", String.valueOf(movie.id));
                     editor.remove(String.valueOf(movie.id));
                     editor.apply();
@@ -249,12 +252,15 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
-        shareActionProvider.setShareIntent(shareIntent);
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (listTr != null) {
+//            shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + listTr.get(0).getKey() + "\n" + getResources().getString(R.string.message));
+//            shareActionProvider.setShareIntent(shareIntent);
+//        }
+//    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -267,9 +273,9 @@ public class DetailsActivity extends AppCompatActivity {
             key = listTr.get(0).getKey();
         } catch (Exception e) {
             e.printStackTrace();
-            key="";
+            key = "";
         }
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" +key+ "\n" + getResources().getString(R.string.message));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + key + "\n" + getResources().getString(R.string.message));
         ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         shareActionProvider.setShareIntent(shareIntent);
         return true;
